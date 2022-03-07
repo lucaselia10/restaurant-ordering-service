@@ -1,4 +1,4 @@
-# [Team name] Reflection
+# Lucas and the Willies Reflection
 
 ## Instructions
 
