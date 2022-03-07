@@ -35,9 +35,9 @@ These resources may be helpful as you fill out your team charter. They are optio
 
 |Name            |Preferred Contact Method (Zoom, Slack, email, etc.) |
 |---	           |---                                           |
-|Team Member (a) |                                              |
-|Team Member (b) |                                              |
-|Team Member (c) |                                              |
+|Team Member (a) |  Will Kim - Slack/Discord                    |
+|Team Member (b) |  William Gibson - Slack/Discord              |
+|Team Member (c) |  Lucas Elia - Slack/Discord                  |
 |Team Member (d) |                                              |
 
 ### Psychological safety
@@ -106,18 +106,18 @@ These resources may be helpful as you fill out your team charter. They are optio
 **What is personally important for each team member about joining BloomTech? About
 becoming an software engineer?**
 
-* *Team member name*:
-* *Team member name*:
-* *Team member name*:
+* *Team member name*: Will Kim - Learning how to be a effective software engineer through technical knowledge or soft skills.
+* *Team member name*: William Gibson - Learning important and marketable skill for his future.
+* *Team member name*: Lucas Elia - Gaining knowledge and skills that lead to a fullfilling career. 
 * *Team member name*:
 
 **What each team member wants to achieve: e.g. improve analytical skills, learn
 project management skills, develop public speaking skills, speak up more, speak
 up less, etc.**
 
-* *Team member name*:
-* *Team member name*:
-* *Team member name*:
+* *Team member name*: Will Kim - Team leadership/Effective leadership qualities.
+* *Team member name*: William Gibson - Knowledge in wide breadth of programming languages and skills.
+* *Team member name*: Lucas Elia - Technical skills/Leadership skills.
 * *Team member name*:
 
 ## Team Member Roles and Responsibilities
@@ -130,15 +130,15 @@ rotating or permanent roles as you go.*
 |**Role**               |**Responsibilities** |**Primary person** |**Secondary person** |
 |---                    |---                  |---                |---                  |
 |Liaison to Instructors | Main contact to instructor to give status updates, including team dynamics, project progress, etc |||
-|Rotating Role 1        |                     |                   |                     |
-|Rotating Role 2        |                     |                   |                     |
-|Rotating Role 3        |                     |                   |                     |
+|Scrum Master           | Liason/Scrum Leader | Will Kim          |                     |
+|Git Master             | All things git      | William Gibson    |                     |
+|Documents Master       | Updating documents  | Lucas Elia        |                     |
 
 ## Acknowledgement
 
 **I agree to the terms and conditions of these team agreements:**
 
-* Team member (a) Name & Date:
-* Team member (b) Name & Date:
-* Team member (c) Name & Date:
+* Team member (a) Name & Date: Will Kim 03/07/22
+* Team member (b) Name & Date: William Gibson 03/07/22
+* Team member (c) Name & Date: Lucas Elia 03/07/22
 * Team member (d) Name & Date:
