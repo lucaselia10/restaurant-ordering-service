@@ -1,4 +1,4 @@
-# [team name] Team Charter
+# Lucas ands the Willies Team Charter
 
 ## Instructions
 
