@@ -17,8 +17,10 @@ level of detail to aim for.*
 
 ## 1. Problem Statement
 
-*Explain clearly what problem you are trying to solve.*
-
+[comment]: <> (*Explain clearly what problem you are trying to solve.*)
+Here at Juicy Juicy Juicy Burgers, we've served our community for years. But the landscape is changing, and we're going
+to change with it. We've decided to expand our business by adding an online presence that allows our customers 
+to order food. The services will include a full menu with takeout and delivery services.
 
 ## 2. Top Questions to Resolve in Review
 
