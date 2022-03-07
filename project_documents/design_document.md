@@ -1,4 +1,4 @@
-# [team name] Design Document
+# Lucas and the Willies Design Document
 
 ## Instructions
 
