@@ -1,4 +1,4 @@
-# [Team Name] Project Rubric
+# Lucas and the Willies Project Rubric
 
 ## Background
 
