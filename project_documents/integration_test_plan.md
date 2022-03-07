@@ -1,4 +1,4 @@
-# [team name] Integration Test Plan
+# Lucas and the Willies Integration Test Plan
 
 ## Instructions
 
