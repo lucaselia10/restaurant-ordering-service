@@ -20,7 +20,7 @@ level of detail to aim for.*
 [comment]: <> (*Explain clearly what problem you are trying to solve.*)
 Here at Juicy Juicy Juicy Burgers, we've served our community for years. But the landscape is changing, and we're going
 to change with it. We've decided to expand our business by adding an online presence that allows our customers 
-to order food. The services will include a full menu with takeout and delivery services.
+to order food. The services will include online ordering capabilites available for pickup at the restaurant.
 
 ## 2. Top Questions to Resolve in Review
 
