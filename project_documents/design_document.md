@@ -13,7 +13,7 @@ italics)*
 this template for more guidance on the types of information to capture, and the
 level of detail to aim for.*
 
-## *Project Title* Design
+## *Juicy Burger Online Ordering* Design
 
 ## 1. Problem Statement
 
