@@ -64,12 +64,28 @@ your design.*
 - Substitions on menu items
 - Creating a user account
 - Delivery service
+- Order History
 
 
 # 5. Proposed Architecture Overview
 
 *Describe broadly how you are proposing to solve for the requirements you
 described in Section 2.*
+
+1) View the Juicy Burger menu
+   The front end Javascript will either have a get request to the database for a menu (list of MenuItems) or it will have
+   a menu pre coded into it. It will display the menu to the customer.
+2) Add menu items to a shopping cart 
+    The front end will have a put request to the Cart database with a MenuItem
+3) Update items in a shopping cart
+    The frontend will have an update request to the Cart database with a key for the MenuItem it's updating and an 
+    updated MenuItem
+4) Delete items from a shopping cart
+    The frontend will have a delete request to the Cart database with a key for the MenuItem it's deleting
+5) Place an order
+    The frontend sends a get request to the cart database for the Order and sends it to startOrder()? Also, possibly
+    creates a copy and sends it to the customer. 
+ 
 
 *This may include class diagram(s) showing what components you are planning to
 build.*
@@ -79,6 +95,12 @@ reasonable. That is, why it represents a good data flow and a good separation of
 concerns. Where applicable, argue why this architecture satisfies the stated
 requirements.*
 
+This model represents a solution for every use case we proposed. Each function is constrained to a specific task, and
+no function's use overlaps another. 
+
+It's reasonable because we all talked about it and we're super duper reasonable people. 
+
+
 # 6. API
 
 ## 6.1. Public Models
@@ -86,6 +108,24 @@ requirements.*
 *Define the data models your service will expose in its responses via your
 *`-Model`* package. These will be equivalent to the *`PlaylistModel`* and
 *`SongModel`* from the Unit 3 project.*
+
+Hamburger
+
+ChickenWings
+
+FrenchFries
+
+PotatoChips
+
+Coke
+
+Water
+
+Order
+
+Cart
+
+
 
 ## 6.2. *First Endpoint*
 
@@ -97,6 +137,8 @@ and back. This first endpoint can serve as a template for subsequent endpoints.
 (If there is a significant difference on a subsequent endpoint, review that with
 your team before building it!)*
 
+![](../project_documents/GetMenuActivity-SD.png)
+
 *(You should have a separate section for each of the endpoints you are expecting
 to build...)*
 
@@ -107,12 +149,20 @@ primarily the data in/out and error conditions. If the sequence diagram is
 nearly identical, you can say in a few words how it is the same/different from
 the first endpoint)*
 
+## 6.4 *Third Endpoint*
+
 # 7. Tables
 
 *Define the DynamoDB tables you will need for the data your service will use. It
 may be helpful to first think of what objects your service will need, then
 translate that to a table structure, like with the *`Playlist` POJO* versus the
 `playlists` table in the Unit 3 project.*
+
+MenuTable - holds menu items
+
+OrderTable - holds order items
+
+
 
 # 8. Pages
 
