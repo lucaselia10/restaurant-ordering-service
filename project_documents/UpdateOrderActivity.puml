@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Client" as client
+participant "API Gateway/Lambda" as apiGateway
+participant "UpdateMenuItemActivity" as updateMenuItemActivity
+participant "OrderDao" as OrderDao
+database "DynamoDB" as dynamoDB
+
+title Update MenuItem in Cart
+client -> apiGateway : HTTP Request
+
+activate apiGateway
+apiGateway -> updateMenuItemActivity : AddItemRequest
+deactivate apiGateway
+
+activate updateMenuItemActivity
+updateMenuItemActivity -> OrderDao : AddItemRequest
+deactivate updateMenuItemActivity
+
+activate OrderDao
+OrderDao -> dynamoDB : add MenuItem
+deactivate OrderDao
+
+activate dynamoDB
+dynamoDB -> OrderDao : Order
+deactivate dynamoDB
+
+activate OrderDao
+OrderDao -> updateMenuItemActivity : Order
+deactivate OrderDao
+
+activate updateMenuItemActivity
+updateMenuItemActivity -> apiGateway : Order
+deactivate updateMenuItemActivity
+
+activate apiGateway
+apiGateway -> client : Order
+deactivate apiGateway
+
+@enduml

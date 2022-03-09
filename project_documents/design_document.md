@@ -58,13 +58,13 @@ your design.*
 - Update items in a shopping cart
 - Delete items from a shopping cart
 - Place an order
+- Order History
 
 ### 4.2. Out of Scope
 
 - Substitions on menu items
 - Creating a user account
 - Delivery service
-- Order History
 
 
 # 5. Proposed Architecture Overview
@@ -123,11 +123,14 @@ Water
 
 Order
 
-Cart
+![](../project_documents/BackendFunctionality-Public_Models.png)
 
 
 
-## 6.2. *First Endpoint*
+
+
+
+## 6.2.1. *GetMenu Endpoint*
 
 *Describe the behavior of the first endpoint you will build into your service
 API. This should include what data it requires, what data it returns, and how it
@@ -142,7 +145,7 @@ your team before building it!)*
 *(You should have a separate section for each of the endpoints you are expecting
 to build...)*
 
-## 6.3 *Second Endpoint*
+## 6.2.2 *Second Endpoint*
 
 *(repeat, but you can use shorthand here, indicating what is different, likely
 primarily the data in/out and error conditions. If the sequence diagram is
@@ -173,3 +176,7 @@ pages. It should be clear what the interactions will be on the page, especially
 where customers enter and submit data. You may want to accompany the mockups
 with some description of behaviors of the page (e.g. “When customer submits the
 submit-dog-photo button, the customer is sent to the doggie detail page”)*
+
+![](../project_documents/front page.png)
+![](../project_documents/menu.png)
+![](../project_documents/cart.png)

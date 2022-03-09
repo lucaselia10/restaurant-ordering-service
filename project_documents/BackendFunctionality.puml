@@ -2,7 +2,7 @@
 'https://plantuml.com/class-diagram
 
 
-title pojos
+title Public Models
 
 Interface MenuItem
 Interface Entree
@@ -32,34 +32,31 @@ Drink <-- Water
 'DynamoDbTable holds each menu item as a key/value map pair with
 'the key being the MenuItem and the value being the specific price
 
-Class Order {
-- MenuItem [map<MenuItem menuItem, int quantity>]
-- orderId: String
-}
+Class Order
 
-newpage
-
-Class CreateOrderRequest {
--Order
--customerId
-}
-
-
-Class OrderDao {
-- DynamoDbMapper
-createOrder(Order)
-getOrder(orderId)
-updateOrder(orderId, Order)
-deleteOrder(orderId)
-}
-
-
-newpage
-title activities
-
-Class CreateOrderActivity{
--MenuItem
-}
+'newpage
+'
+'Class CreateOrderRequest {
+'-Order
+'-customerId
+'}
+'
+'
+'Class OrderDao {
+'- DynamoDbMapper
+'createOrder(Order)
+'getOrder(orderId)
+'updateOrder(orderId, Order)
+'deleteOrder(orderId)
+'}
+'
+'
+'newpage
+'title activities
+'
+'Class CreateOrderActivity{
+'-MenuItem
+'}
 
 
 
