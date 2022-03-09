@@ -27,8 +27,8 @@ to order food. The services will include online ordering capabilites available f
 *List the most important questions you have about your design, or things that
 you are still debating internally that you might like help working through.*
 
-1.   
-2.   
+1. Is the shopping cart handled by the Front End or the Back End?  
+2. Will the menu initially be hard coded on the Front End or a call to the database?  
 3.  
 
 ## 3. Use Cases
@@ -37,12 +37,12 @@ you are still debating internally that you might like help working through.*
 would like to do (and why). You may also include use cases for yourselves, or
 for the organization providing the product to customers.*
 
-U1. *As a [product] customer, I want to `<result>` when I `<action>`*
+U1. *As a Juciy Burger customer, I want to be able to view the menu when I go to the website*
 
-U2. *As a [product] customer, I want to view my grocery list when I log into the
-grocery list page*
+U2. *As a Juicy Burger customer, I want to be able to add, update, and delete menu items in my shopping cart*
     
-U3. ...
+U3. *As a Juicy Burger customer, I want to be able to place an order*
+
 
 ## 4. Project Scope
 
@@ -53,16 +53,18 @@ your design.*
 
 ### 4.1. In Scope
 
-*Which parts of the problem defined in Sections 1 and 2 will you solve with this
-design?*
+- View the Juicy Burger menu
+- Add menu items to a shopping cart
+- Update items in a shopping cart
+- Delete items from a shopping cart
+- Place an order
 
 ### 4.2. Out of Scope
 
-*Based on your problem description in Sections 1 and 2, are there any aspects
-you are not planning to solve? Do potential expansions or related problems occur
-to you that you want to explicitly say you are not worrying about now? Feel free
-to put anything here that you think your team can't accomplish in the unit, but
-would love to do with more time.*
+- Substitions on menu items
+- Creating a user account
+- Delivery service
+
 
 # 5. Proposed Architecture Overview
 
