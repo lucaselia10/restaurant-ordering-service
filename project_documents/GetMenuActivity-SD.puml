@@ -1,8 +1,4 @@
 @startuml
-'https://plantuml.com/sequence-diagram
-
-autonumber
-
 actor "Client" as client
 participant "API Gateway/Lambda" as apiGateway
 participant "GetMenuActivity" as getMenuActivity
@@ -12,33 +8,26 @@ database "DynamoDB" as dynamoDB
 title Get Menu for Customer
 
 client -> apiGateway : HTTP Request
-activate apiGateway
 
+activate apiGateway
 apiGateway -> getMenuActivity : GetMenuRequest
-deactivate apiGateway
 
 activate getMenuActivity
 getMenuActivity -> MenuDao : getMenu
-deactivate getMenuActivity
 
 activate MenuDao
 MenuDao -> dynamoDB : getMenu
-deactivate MenuDao
 
 activate dynamoDB
 dynamoDB -> MenuDao : return menu data
 deactivate dynamoDB
 
-activate MenuDao
 MenuDao -> getMenuActivity : Menu
 deactivate MenuDao
 
-activate getMenuActivity
 getMenuActivity -> apiGateway : Menu
 deactivate getMenuActivity
 
-activate apiGateway
 apiGateway -> client : Menu
 deactivate apiGateway
-
 @enduml

@@ -1,4 +1,6 @@
 @startuml
+
+title Entity Relationship Diagram
 entity Order {
   * orderId: String
   ..
@@ -15,5 +17,4 @@ entity MenuItems {
 }
 
 Order "1 " --{ "1..*" MenuItems
-
 @enduml
