@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.amazonaws:aws-java-sdk-dynamodb:1.11.1000">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-java-sdk-dynamodb/1.11.1000/49e2378bc8424d228de2e634b4d500b4d01c9c30/aws-java-sdk-dynamodb-1.11.1000.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-java-sdk-dynamodb/1.11.1000/e6e6b9699441031cb99276cd062de4bb03bbe0c1/aws-java-sdk-dynamodb-1.11.1000-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
