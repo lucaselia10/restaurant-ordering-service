@@ -28,8 +28,8 @@ to order food. The services will include online ordering capabilites available f
 you are still debating internally that you might like help working through.*
 
 1. Is the shopping cart handled by the Front End or the Back End?  
-2. Will the menu initially be hard coded on the Front End or a call to the database?  
-3.  
+2. Will the menu initially be hard coded on the Front End or a call to the database?
+3. How detailed should or menu items be, and how many database tables should they be stored on? 
 
 ## 3. Use Cases
 
@@ -42,6 +42,10 @@ U1. *As a Juciy Burger customer, I want to be able to view the menu when I go to
 U2. *As a Juicy Burger customer, I want to be able to add, update, and delete menu items in my shopping cart*
     
 U3. *As a Juicy Burger customer, I want to be able to place an order*
+
+U4. *As a Juicy Burger customer, I want to be able to view a previously placed order*
+
+
 
 
 ## 4. Project Scope
@@ -75,15 +79,14 @@ described in Section 2.*
 1) View the Juicy Burger menu
    The front end Javascript will make a get call to a Json file that will populate and display the menu to the customer.
 2) Add menu items to a shopping cart 
-    The front end will build an order with menu items, and quantity in the ShoppingCart.
+    The front end will build an order with menu items, and display the order to the customer as a shopping cart.
 3) Update items in a shopping cart
-    The frontend will have an update request to the ShoppingCart with a key for the MenuItem it's updating and an 
-    updated MenuItem
+    The frontend will have functionality to update the order.
 4) Delete items from a shopping cart
-    The frontend will have a delete request to the ShoppingCart with a key for the MenuItem it's deleting
+    The frontend will have functionality to delete items in the order.
 5) Place an order
-    The frontend sends a HandleRequest to the BackEnd database, checks the items validity, gets the price of menu items, and processes the order. Also, possibly
-    creates a copy and sends it to the customer. 
+    The front end sends a PlaceOrderRequest(Order) to the backend, where the order is generated. The Order is stored
+    on a table in DynamoDB with other order histories, and a copy of the Order is returned to the customer.
  
 
 *This may include class diagram(s) showing what components you are planning to
@@ -97,7 +100,6 @@ requirements.*
 This model represents a solution for every use case we proposed. Each function is constrained to a specific task, and
 no function's use overlaps another. 
 
-It's reasonable because we all talked about it and we're super duper reasonable people. 
 
 
 # 6. API
@@ -108,28 +110,16 @@ It's reasonable because we all talked about it and we're super duper reasonable 
 *`-Model`* package. These will be equivalent to the *`PlaylistModel`* and
 *`SongModel`* from the Unit 3 project.*
 
-Hamburger
+OrderModel
 
-ChickenWings
-
-FrenchFries
-
-PotatoChips
-
-Coke
-
-Water
-
-Order
-
-![](../project_documents/BackendFunctionality-Public_Models.png)
+MenuItemModel
 
 
 
 
 
 
-## 6.2.1. *GetMenu Endpoint*
+## 6.2.1. *Place Order Activity*
 
 *Describe the behavior of the first endpoint you will build into your service
 API. This should include what data it requires, what data it returns, and how it
@@ -139,19 +129,36 @@ and back. This first endpoint can serve as a template for subsequent endpoints.
 (If there is a significant difference on a subsequent endpoint, review that with
 your team before building it!)*
 
-![](../project_documents/GetMenuActivity-SD.png)
+The customer places an order. The Javascript creates an Order object with the MenuItems the customer selected and 
+
+sends it to the backend, where the lambda function checks for invalid order attributes. It returns if the order is 
+
+invalid, else it sends the Order to the database. The database sens back the Order data, which is displayed
+
+to the customer. 
+
+![](..\project_documents\Place Order Activity-Place_Order_Activity.png)
 
 *(You should have a separate section for each of the endpoints you are expecting
 to build...)*
 
-## 6.2.2 *Second Endpoint*
+## 6.2.2 *Get Order Activity*
 
 *(repeat, but you can use shorthand here, indicating what is different, likely
 primarily the data in/out and error conditions. If the sequence diagram is
 nearly identical, you can say in a few words how it is the same/different from
 the first endpoint)*
 
-## 6.4 *Third Endpoint*
+The same path is used that was used for Place Order Activity, and the same thing is returned. The database checks for 
+
+a valid orderId (which is returned to the customer as an attribute of the Order when the Order is placed) and returns 
+
+an invalid order notification if the orderId is invalid. Else it returns the Order information. 
+
+
+![](..\project_documents\Get Order Activity-Get_Order_Activity.png)
+
+
 
 # 7. Tables
 
@@ -160,9 +167,9 @@ may be helpful to first think of what objects your service will need, then
 translate that to a table structure, like with the *`Playlist` POJO* versus the
 `playlists` table in the Unit 3 project.*
 
-MenuTable - holds menu items
+(out of scope) MenuTable - holds menu items
 
-OrderTable - holds order items
+OrderHistoryTable - holds previously placed Orders
 
 
 
@@ -176,6 +183,25 @@ where customers enter and submit data. You may want to accompany the mockups
 with some description of behaviors of the page (e.g. “When customer submits the
 submit-dog-photo button, the customer is sent to the doggie detail page”)*
 
+
+When the customer presses the "Order" button, they are sent to the Menu page, where the 
+
+MenuItems are displayed for them. They then chose which items to include in their order
+
+by selecting the boxes next to the menu item names displayed on the page. When the customer
+
+presses the "Add to cart" button, an Order is built and stored in local memory on thier
+
+machine. When a customer presses the "Edit Order" button, they are sent back to the Menu, 
+
+where they can select a different assortment of items. On the Cart page, when a customer
+
+presses the "Place order" button, the Order is sent to the backend, where it is processed
+
+and stored to the Order History table in the DynamoDB.
+
+
 ![](../project_documents/front page.png)
 ![](../project_documents/menu.png)
 ![](../project_documents/cart.png)
+![](../project_documents/Juicy_Burger_Wireframe.png)
