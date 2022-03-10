@@ -73,17 +73,16 @@ your design.*
 described in Section 2.*
 
 1) View the Juicy Burger menu
-   The front end Javascript will either have a get request to the database for a menu (list of MenuItems) or it will have
-   a menu pre coded into it. It will display the menu to the customer.
+   The front end Javascript will make a get call to a Json file that will populate and display the menu to the customer.
 2) Add menu items to a shopping cart 
-    The front end will have a put request to the Cart database with a MenuItem
+    The front end will build an order with menu items, and quantity in the ShoppingCart.
 3) Update items in a shopping cart
-    The frontend will have an update request to the Cart database with a key for the MenuItem it's updating and an 
+    The frontend will have an update request to the ShoppingCart with a key for the MenuItem it's updating and an 
     updated MenuItem
 4) Delete items from a shopping cart
-    The frontend will have a delete request to the Cart database with a key for the MenuItem it's deleting
+    The frontend will have a delete request to the ShoppingCart with a key for the MenuItem it's deleting
 5) Place an order
-    The frontend sends a get request to the cart database for the Order and sends it to startOrder()? Also, possibly
+    The frontend sends a HandleRequest to the BackEnd database, checks the items validity, gets the price of menu items, and processes the order. Also, possibly
     creates a copy and sends it to the customer. 
  
 
