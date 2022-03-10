@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.iml" filepath="$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.test.iml" filepath="$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/lucas-and-the-willies.iml" filepath="$PROJECT_DIR$/.idea/lucas-and-the-willies.iml" />
     </modules>
   </component>
