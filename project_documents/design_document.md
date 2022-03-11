@@ -67,7 +67,7 @@ your design.*
 
 ### 4.2. Out of Scope
 
-- Substations on menu items
+- Substitutions on menu items
 - Creating a user account
 - Delivery service
 - End points for Business integration at physical location
