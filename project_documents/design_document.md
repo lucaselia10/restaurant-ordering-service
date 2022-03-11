@@ -133,7 +133,7 @@ invalid, else it sends the Order to the database. The database sens back the Ord
 
 to the customer.
 
-![](..\project_documents\PlaceOrderActivity-SD.png)
+![](../project_documents/PlaceOrderActivity-SD.png)
 
 *(You should have a separate section for each of the endpoints you are expecting
 to build...)*
@@ -152,7 +152,7 @@ a valid orderId (which is returned to the customer as an attribute of the Order 
 an invalid order notification if the orderId is invalid. Else it returns the Order information. 
 
 
-![](..\project_documents\GetOrderActivity-SD.png)
+![](../project_documents/GetOrderActivity-SD.png)
 
 # 7. Tables
 
