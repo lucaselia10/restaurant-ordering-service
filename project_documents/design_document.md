@@ -18,9 +18,12 @@ level of detail to aim for.*
 ## 1. Problem Statement
 
 [comment]: <> (*Explain clearly what problem you are trying to solve.*)
-Here at Juicy Burgers, we've served our community for years. But the landscape is changing, and we're going
-to change with it. We've decided to expand our business by adding an online presence that allows our customers 
-to order food. The services will include online ordering capabilites available for pickup at the restaurant.
+The client, Juicy Burgers, have been serving their community for years as a simple walk in service. With the
+shifting technological landscape, Juicy Burger desires to modernize their business with an online ordering
+service with the goal of streamlining the ordering experience while increasing their online presence.
+
+The goal is to reduce over crowding during peak operating hours that may hamper potential customers from accessing 
+Juicy Burgers products as well as increasing the number of potential customers in general.
 
 ## 2. Top Questions to Resolve in Review
 
@@ -29,7 +32,8 @@ you are still debating internally that you might like help working through.*
 
 1. Is the shopping cart handled by the Front End or the Back End?  
 2. Will the menu initially be hard coded on the Front End or a call to the database?
-3. How detailed should or menu items be, and how many database tables should they be stored on? 
+3. How detailed should the data models be? How many data models do we need?
+4. How many data tables do we need?
 
 ## 3. Use Cases
 
@@ -45,9 +49,6 @@ U3. *As a Juicy Burger customer, I want to be able to place an order*
 
 U4. *As a Juicy Burger customer, I want to be able to view a previously placed order*
 
-
-
-
 ## 4. Project Scope
 
 *Clarify which parts of the problem you intend to solve. It helps reviewers know
@@ -61,33 +62,35 @@ your design.*
 - Add menu items to a shopping cart
 - Update items in a shopping cart
 - Delete items from a shopping cart
-- Place an order
-- Order History
+- Place an Order
+- Retrieve an Order
 
 ### 4.2. Out of Scope
 
-- Substitions on menu items
+- Substations on menu items
 - Creating a user account
 - Delivery service
-
+- End points for Business integration at physical location
 
 # 5. Proposed Architecture Overview
 
 *Describe broadly how you are proposing to solve for the requirements you
 described in Section 2.*
 
-1) View the Juicy Burger menu
-   The front end Javascript will make a get call to a Json file that will populate and display the menu to the customer.
-2) Add menu items to a shopping cart 
-    The front end will build an order with menu items, and display the order to the customer as a shopping cart.
-3) Update items in a shopping cart
-    The frontend will have functionality to update the order.
-4) Delete items from a shopping cart
-    The frontend will have functionality to delete items in the order.
-5) Place an order
-    The front end sends a PlaceOrderRequest(Order) to the backend, where the order is generated. The Order is stored
-    on a table in DynamoDB with other order histories, and a copy of the Order is returned to the customer.
- 
+1) Viewing the menu items
+   - The front end Javascript will make a get call to a .json file that will populate and display the menu 
+   to the customer.
+2) Adding menu items to a shopping cart 
+   - The front end will build an order with menu items, and display the order to the customer as a shopping cart.
+3) Updating items within a shopping cart
+   - The frontend will have functionality to update the order, either by quantity or by menu item.
+4) Deleting items from a shopping cart
+   - The frontend will have functionality to delete items within a shopping cart.
+5) Placing an order with a shopping cart
+   - The front end generates a PlaceOrderRequest for the backend, where an Order is generated within a Lambda 
+   function. The Order is stored within a dedicated Order table in DynamoDB, and a copy of the Order is returned 
+   to the customer.
+   
 
 *This may include class diagram(s) showing what components you are planning to
 build.*
@@ -97,10 +100,8 @@ reasonable. That is, why it represents a good data flow and a good separation of
 concerns. Where applicable, argue why this architecture satisfies the stated
 requirements.*
 
-This model represents a solution for every use case we proposed. Each function is constrained to a specific task, and
-no function's use overlaps another. 
-
-
+This model represents a simple but complete solution for every use case we proposed. Each function is constrained 
+to a specific task, and there are no overlapping functions.
 
 # 6. API
 
@@ -113,11 +114,6 @@ no function's use overlaps another.
 OrderModel
 
 MenuItemModel
-
-
-
-
-
 
 ## 6.2.1. *Place Order Activity*
 
@@ -135,9 +131,9 @@ sends it to the backend, where the lambda function checks for invalid order attr
 
 invalid, else it sends the Order to the database. The database sens back the Order data, which is displayed
 
-to the customer. 
+to the customer.
 
-![](..\project_documents\Place Order Activity-Place_Order_Activity.png)
+![](..\project_documents\PlaceOrderActivity-SD.png)
 
 *(You should have a separate section for each of the endpoints you are expecting
 to build...)*
@@ -156,9 +152,7 @@ a valid orderId (which is returned to the customer as an attribute of the Order 
 an invalid order notification if the orderId is invalid. Else it returns the Order information. 
 
 
-![](..\project_documents\Get Order Activity-Get_Order_Activity.png)
-
-
+![](..\project_documents\GetOrderActivity-SD.png)
 
 # 7. Tables
 
@@ -170,8 +164,6 @@ translate that to a table structure, like with the *`Playlist` POJO* versus the
 (out of scope) MenuTable - holds menu items
 
 OrderHistoryTable - holds previously placed Orders
-
-
 
 # 8. Pages
 
@@ -185,19 +177,12 @@ submit-dog-photo button, the customer is sent to the doggie detail page”)*
 
 
 When the customer presses the "Order" button, they are sent to the Menu page, where the 
-
 MenuItems are displayed for them. They then chose which items to include in their order
-
 by selecting the boxes next to the menu item names displayed on the page. When the customer
-
 presses the "Add to cart" button, an Order is built and stored in local memory on thier
-
 machine. When a customer presses the "Edit Order" button, they are sent back to the Menu, 
-
 where they can select a different assortment of items. On the Cart page, when a customer
-
 presses the "Place order" button, the Order is sent to the backend, where it is processed
-
 and stored to the Order History table in the DynamoDB.
 
 
