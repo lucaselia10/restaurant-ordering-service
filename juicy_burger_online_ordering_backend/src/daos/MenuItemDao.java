@@ -1,10 +1,18 @@
 package daos;
 
+import data.types.MenuItem;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.inject.Inject;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * A readonly data access object for MenuItems.
+ */
 public class MenuItemDao {
     private JSONParser jsonParser;
     private FileReader fileReader;
@@ -13,5 +21,30 @@ public class MenuItemDao {
     public MenuItemDao(JSONParser jsonParser, FileReader fileReader) {
         this.jsonParser = jsonParser;
         this.fileReader = fileReader;
+    }
+
+    /**
+     * Generates and returns a List of MenuItems.
+     * @return List of MenuItems
+     */
+    public List<MenuItem> getMenuItems() {
+        List<MenuItem> menuItems = new ArrayList<>();
+        try {
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
+            for (Object object : jsonArray) {
+                JSONObject jsonObject = (JSONObject) object;
+                menuItems.add(
+                        MenuItem.builder()
+                                .withName((String) jsonObject.get("name"))
+                                .withPrice((Long) jsonObject.get("price"))
+                                .withDescription((String) jsonObject.get("description"))
+                                .build()
+                );
+            }
+        } catch (Exception e) {
+            // Throw Error Code 500
+            System.out.println("Unable to parse file: " + e.getMessage());
+        }
+        return menuItems;
     }
 }
