@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A readonly data access object for MenuItems.
+ * MenuItemDao defines the characteristics and behavior of a readonly
+ * data access object for MenuItems.
  */
 public class MenuItemDao {
     private JSONParser jsonParser;
@@ -42,7 +43,7 @@ public class MenuItemDao {
                 );
             }
         } catch (Exception e) {
-            // Throw Error Code 500
+            // TODO Need to initiate the Error Code 500 from here?
             System.out.println("Unable to parse file: " + e.getMessage());
         }
         return menuItems;

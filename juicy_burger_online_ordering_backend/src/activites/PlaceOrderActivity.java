@@ -23,8 +23,8 @@ import java.util.Map;
  * Defines the activity-process of generating an Order
  */
 public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, PlaceOrderResponse> {
-    private OrderDao orderDao;
-    private MenuItemDao menuItemDao;
+    private final OrderDao orderDao;
+    private final MenuItemDao menuItemDao;
 
     @Inject
     public PlaceOrderActivity(OrderDao orderDao, MenuItemDao menuItemDao) {
@@ -50,11 +50,13 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
 
         orderDao.saveOrder(
                 Order.builder()
-                .withOrderId(OrderUtilities.generateOrderId())
-                .withOrderItems(orderMenuItems).build()
+                        .withOrderId(OrderUtilities.generateOrderId())
+                        .withPlacedDateTime(OrderUtilities.generateDateTimeNow())
+                        .withProcessDateTime(null)
+                        .withCompletedDateTime(null)
+                        .withOrderMenuItems(orderMenuItems)
+                        .build()
         );
-
-
 
         return null;
     }

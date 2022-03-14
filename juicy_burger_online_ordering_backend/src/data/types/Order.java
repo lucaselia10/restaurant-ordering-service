@@ -1,7 +1,10 @@
 package data.types;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import utilities.OrderUtilities;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +17,11 @@ import java.util.Map;
  */
 @DynamoDBTable(tableName = "OrderHistory")
 public class Order {
-    private String orderId;
-    private Map<MenuItem, Long> orderItems;
+    private final String orderId;
+    private final String placedDateTime;
+    private final String processDateTime;
+    private final String completedDateTime;
+    private Map<MenuItem, Long> orderMenuItems;
     private Long totalPrice;
 
     /**
@@ -25,23 +31,41 @@ public class Order {
      */
     private Order(Builder builder) {
         this.orderId = builder.orderId;
-        this.orderItems = builder.orderItems;
-        this.totalPrice = calculatePrice(this.orderItems);
+        this.placedDateTime = builder.placedDateTime;
+        this.processDateTime = builder.processDateTime;
+        this.completedDateTime = builder.completedDateTime;
+        this.orderMenuItems = builder.orderMenuItems;
+        this.totalPrice = builder.totalPrice;
     }
 
-    @DynamoDBAttribute(attributeName = "order_id")
+    @DynamoDBHashKey(attributeName = "orderId")
     public String getOrderId() {
         return orderId;
     }
 
-    @DynamoDBAttribute(attributeName = "menu_item_quantity_map")
-    public Map<MenuItem, Long> getOrderItems() {
-        return orderItems;
+    @DynamoDBRangeKey(attributeName = "placed_dateTime")
+    public String getPlacedDateTime() {
+        return placedDateTime;
     }
 
-    public void setOrderItems(Map<MenuItem, Long> orderItems) {
-        this.orderItems = new HashMap<>(orderItems);
-        this.totalPrice = calculatePrice(this.orderItems);
+    @DynamoDBAttribute(attributeName = "process_dateTime")
+    public String getProcessDateTime() {
+        return processDateTime;
+    }
+
+    @DynamoDBAttribute(attributeName = "completed_dateTime")
+    public String getCompletedDateTime() {
+        return completedDateTime;
+    }
+
+    @DynamoDBAttribute(attributeName = "menuItem_quantity_map")
+    public Map<MenuItem, Long> getOrderMenuItems() {
+        return orderMenuItems;
+    }
+
+    public void setOrderMenuItems(Map<MenuItem, Long> orderMenuItems) {
+        this.orderMenuItems = new HashMap<>(orderMenuItems);
+        this.totalPrice = OrderUtilities.calculatePrice(orderMenuItems);
     }
 
     @DynamoDBAttribute(attributeName = "total_price_cents")
@@ -53,39 +77,45 @@ public class Order {
         return new Builder();
     }
 
-    /**
-     * Private helper method that calculates the price of an Order
-     * Object
-     * @param orderItems MenuItem
-     * @return
-     */
-    private static Long calculatePrice(Map<MenuItem, Long> orderItems) {
-        long calculatedPrice = 0L;
-        for (Map.Entry<MenuItem, Long> entry : orderItems.entrySet()) {
-            calculatedPrice += entry.getKey().getPrice() * entry.getValue();
-        }
-        return calculatedPrice;
-    }
-
     @Override
     public String toString() {
         return "PlaceOrderRequest{" +
                 "orderId='" + orderId + '\'' +
-                ", orderItems=" + orderItems +
+                ", orderItems=" + orderMenuItems +
                 '}';
     }
 
     public static class Builder {
         private String orderId;
-        private Map<MenuItem, Long> orderItems;
+        private String placedDateTime;
+        private String processDateTime;
+        private String completedDateTime;
+        private Map<MenuItem, Long> orderMenuItems;
+        private Long totalPrice;
 
         public Builder withOrderId(String withOrderId) {
             this.orderId = withOrderId;
             return this;
         }
 
-        public Builder withOrderItems(Map<MenuItem, Long> withOrderItems) {
-            this.orderItems = new HashMap<>(withOrderItems);
+        public Builder withPlacedDateTime(String withPlacedDateTime) {
+            this.placedDateTime = withPlacedDateTime;
+            return this;
+        }
+
+        public Builder withProcessDateTime(String withProcessDateTime) {
+            this.processDateTime = withProcessDateTime;
+            return this;
+        }
+
+        public Builder withCompletedDateTime(String withCompletedDateTime) {
+            this.completedDateTime = withCompletedDateTime;
+            return this;
+        }
+
+        public Builder withOrderMenuItems(Map<MenuItem, Long> withOrderItems) {
+            this.orderMenuItems = new HashMap<>(withOrderItems);
+            this.totalPrice = OrderUtilities.calculatePrice(withOrderItems);
             return this;
         }
 

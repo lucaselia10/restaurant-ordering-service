@@ -32,7 +32,7 @@ you are still debating internally that you might like help working through.*
 
 1. Is the shopping cart handled by the Front End or the Back End?  
 2. Will the menu initially be hard coded on the Front End or a call to the database?
-3. How detailed should the data data.types.models be? How many data data.types.models do we need?
+3. How detailed should the data models be? How many data models do we need?
 4. How many data tables do we need?
 
 ## 3. Use Cases
