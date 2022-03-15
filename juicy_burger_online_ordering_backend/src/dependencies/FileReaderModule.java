@@ -18,9 +18,9 @@ public class FileReaderModule {
     @Provides
     public FileReader fileReaderProvider() {
         try {
-            return new FileReader("./src/resources/menuItems.json");
+            return new FileReader("juicy_burger_online_ordering_backend/src/resources/menuItems.json");
         } catch (Exception e) {
-            throw new OrderException();
+            throw new OrderException("Unable to create FileReader", e);
         }
     }
 }

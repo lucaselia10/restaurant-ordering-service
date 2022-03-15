@@ -1,13 +1,12 @@
 package data.types;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import converters.dynamodbtypeconverters.MenuItemsConverter;
 import utilities.OrderUtilities;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Defines the characteristics of an Order object. An Order consists of a
@@ -17,19 +16,21 @@ import java.util.Map;
  */
 @DynamoDBTable(tableName = "OrderHistory")
 public class Order {
-    private final String orderId;
-    private final String placedDateTime;
-    private final String processDateTime;
-    private final String completedDateTime;
+    private String orderId;
+    private String placedDateTime;
+    private String processDateTime;
+    private String completedDateTime;
     private Map<MenuItem, Long> orderMenuItems;
     private Long totalPrice;
+
+    public Order() {}
 
     /**
      * A private Order constructor used in conjunction with the inner
      * Builder class.
      * @param builder The parsed Builder to build an Order Object
      */
-    private Order(Builder builder) {
+    public Order(Builder builder) {
         this.orderId = builder.orderId;
         this.placedDateTime = builder.placedDateTime;
         this.processDateTime = builder.processDateTime;
@@ -43,9 +44,17 @@ public class Order {
         return orderId;
     }
 
-    @DynamoDBRangeKey(attributeName = "placed_dateTime")
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    @DynamoDBAttribute(attributeName = "placed_dateTime")
     public String getPlacedDateTime() {
         return placedDateTime;
+    }
+
+    public void setPlacedDateTime(String placedDateTime) {
+        this.placedDateTime = placedDateTime;
     }
 
     @DynamoDBAttribute(attributeName = "process_dateTime")
@@ -53,11 +62,20 @@ public class Order {
         return processDateTime;
     }
 
+    public void setProcessDateTime(String processDateTime) {
+        this.processDateTime = processDateTime;
+    }
+
     @DynamoDBAttribute(attributeName = "completed_dateTime")
     public String getCompletedDateTime() {
         return completedDateTime;
     }
 
+    public void setCompletedDateTime(String completedDateTime) {
+        this.completedDateTime = completedDateTime;
+    }
+
+    @DynamoDBTypeConverted(converter = MenuItemsConverter.class)
     @DynamoDBAttribute(attributeName = "menuItem_quantity_map")
     public Map<MenuItem, Long> getOrderMenuItems() {
         return orderMenuItems;
@@ -73,16 +91,42 @@ public class Order {
         return totalPrice;
     }
 
+    public void setTotalPrice(Long totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
 
     @Override
     public String toString() {
-        return "PlaceOrderRequest{" +
+        return "Order{" +
                 "orderId='" + orderId + '\'' +
-                ", orderItems=" + orderMenuItems +
+                ", placedDateTime='" + placedDateTime + '\'' +
+                ", processDateTime='" + processDateTime + '\'' +
+                ", completedDateTime='" + completedDateTime + '\'' +
+                ", orderMenuItems=" + orderMenuItems +
+                ", totalPrice=" + totalPrice +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return orderId.equals(order.orderId) &&
+                placedDateTime.equals(order.placedDateTime) &&
+                Objects.equals(processDateTime, order.processDateTime) &&
+                Objects.equals(completedDateTime, order.completedDateTime) &&
+                orderMenuItems.equals(order.orderMenuItems) &&
+                totalPrice.equals(order.totalPrice);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, placedDateTime, processDateTime, completedDateTime, orderMenuItems, totalPrice);
     }
 
     public static class Builder {

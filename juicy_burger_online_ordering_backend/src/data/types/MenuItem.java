@@ -1,5 +1,7 @@
 package data.types;
 
+import java.util.Objects;
+
 /**
  * Defines the characteristics of a MenuItem object. A MenuItem consists
  * of String name, Long price in cents, and String description of the
@@ -40,6 +42,21 @@ public class MenuItem {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MenuItem menuItem = (MenuItem) o;
+        return name.equals(menuItem.name) &&
+                price.equals(menuItem.price) &&
+                description.equals(menuItem.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, description);
     }
 
     public static class Builder {

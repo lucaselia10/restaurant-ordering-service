@@ -53,7 +53,7 @@ public class OrderUtilities {
         for (Map.Entry<MenuItem, Long> entry : orderItems.entrySet()) {
             calculatedPrice += entry.getKey().getPrice() * entry.getValue();
         }
-        return calculatedPrice * 1;
+        return calculatedPrice * (1 + taxRate);
     }
 
 

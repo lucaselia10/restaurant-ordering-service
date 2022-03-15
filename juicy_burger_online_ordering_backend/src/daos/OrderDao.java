@@ -22,10 +22,20 @@ public class OrderDao {
     }
 
     public Order getOrder(String partitionKey) {
-        Order orderRetrieved = this.dynamoDBMapper.load(Order.class, partitionKey);
-        if (orderRetrieved == null) {
+        Order orderToReturn = this.dynamoDBMapper.load(Order.class, partitionKey);
+        if (orderToReturn == null) {
             throw new OrderDoesNotExistException();
         }
-        return orderRetrieved;
+        return orderToReturn;
+    }
+
+    public void deleteOrder(String partitionKey) {
+        Order toDelete = this.getOrder(partitionKey);
+        this.dynamoDBMapper.delete(toDelete);
+    }
+
+    public void updateOrder(Order order) {
+        Order orderToUpdate = this.getOrder(order.getOrderId());
+        this.saveOrder(order);
     }
 }
