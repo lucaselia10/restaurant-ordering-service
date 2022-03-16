@@ -9,12 +9,12 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MenuItemsConverterTest {
-    private MenuItemsConverter menuItemsConverter;
+public class MenuItemsMapConverterTest {
+    private MenuItemsMapConverter menuItemsMapConverter;
 
     @BeforeEach
     void setup() {
-        menuItemsConverter = new MenuItemsConverter();
+        menuItemsMapConverter = new MenuItemsMapConverter();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class MenuItemsConverterTest {
         orderMenuItemsMap.put(test2, 2L);
 
         // WHEN
-        String dynamoDbString = menuItemsConverter.convert(orderMenuItemsMap);
+        String dynamoDbString = menuItemsMapConverter.convert(orderMenuItemsMap);
 
         // THEN
         assertTrue(dynamoDbString.contains(test1.getName()));
@@ -49,7 +49,7 @@ public class MenuItemsConverterTest {
     }
 
     @Test
-    void unconvert_withAStringRepresentation_returnsAMapOfMenuItemsAndQuantity() {
+    void unconvert_withAValidStringRepresentation_returnsAMapOfMenuItemsAndQuantity() {
         // GIVEN
         MenuItem test1 = MenuItem.builder()
                 .withName("MenuItemTestName_1")
@@ -67,7 +67,7 @@ public class MenuItemsConverterTest {
                 " MenuItemTestName_2 : -200 : MenuItemTest1Description_2 : 2";
 
         // WHEN
-        Map<MenuItem, Long> result = menuItemsConverter.unconvert(dynamoDbString);
+        Map<MenuItem, Long> result = menuItemsMapConverter.unconvert(dynamoDbString);
 
         // THEN
         assertTrue(result.containsKey(test1));

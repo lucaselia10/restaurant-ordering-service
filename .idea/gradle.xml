@@ -12,6 +12,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/juicy_burger_online_ordering_backend" />
+            <option value="$PROJECT_DIR$/juicy_burger_online_ordering_backend/main" />
           </set>
         </option>
       </GradleProjectSettings>

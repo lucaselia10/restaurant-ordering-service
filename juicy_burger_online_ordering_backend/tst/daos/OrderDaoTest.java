@@ -1,6 +1,6 @@
 package daos;
 
-import converters.dynamodbtypeconverters.MenuItemsConverter;
+import converters.dynamodbtypeconverters.MenuItemsMapConverter;
 import data.types.MenuItem;
 import data.types.Order;
 import dependencies.DynamoDBModule;
@@ -38,14 +38,14 @@ public class OrderDaoTest {
                 .build();
 
 
-        MenuItemsConverter menuItemsConverter = new MenuItemsConverter();
+        MenuItemsMapConverter menuItemsMapConverter = new MenuItemsMapConverter();
 
-        String answer = menuItemsConverter.convert(order1.getOrderMenuItems());
+        String answer = menuItemsMapConverter.convert(order1.getOrderMenuItems());
         System.out.println("Converting MenuItem to String for DynamoDB");
         System.out.println(answer);
         System.out.println();
         System.out.println("Unconverting from DynamoDB String to MenuItem");
-        System.out.println(menuItemsConverter.unconvert(answer));
+        System.out.println(menuItemsMapConverter.unconvert(answer));
         System.out.println();
         System.out.println("Saving Order to Database");
         orderDao.saveOrder(order1);
