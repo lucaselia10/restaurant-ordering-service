@@ -9,12 +9,12 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MenuItemsMapConverterTest {
-    private MenuItemsMapConverter menuItemsMapConverter;
+public class MenuItemsMapQuantityConverterTest {
+    private MenuItemsQuantityMapConverter menuItemsQuantityMapConverter;
 
     @BeforeEach
     void setup() {
-        menuItemsMapConverter = new MenuItemsMapConverter();
+        menuItemsQuantityMapConverter = new MenuItemsQuantityMapConverter();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class MenuItemsMapConverterTest {
         orderMenuItemsMap.put(test2, 2L);
 
         // WHEN
-        String dynamoDbString = menuItemsMapConverter.convert(orderMenuItemsMap);
+        String dynamoDbString = menuItemsQuantityMapConverter.convert(orderMenuItemsMap);
 
         // THEN
         assertTrue(dynamoDbString.contains(test1.getName()));
@@ -67,7 +67,7 @@ public class MenuItemsMapConverterTest {
                 " MenuItemTestName_2 : -200 : MenuItemTest1Description_2 : 2";
 
         // WHEN
-        Map<MenuItem, Long> result = menuItemsMapConverter.unconvert(dynamoDbString);
+        Map<MenuItem, Long> result = menuItemsQuantityMapConverter.unconvert(dynamoDbString);
 
         // THEN
         assertTrue(result.containsKey(test1));

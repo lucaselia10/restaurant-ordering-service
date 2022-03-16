@@ -11,7 +11,7 @@ import java.util.Map;
  * Long quantity for DynamoDB parsing
  * @author willi
  */
-public class MenuItemsMapConverter implements DynamoDBTypeConverter<String, Map<MenuItem, Long>> {
+public class MenuItemsQuantityMapConverter implements DynamoDBTypeConverter<String, Map<MenuItem, Long>> {
 
     /**
      * Converts the Map of MenuItems and Long quantity Java datatype

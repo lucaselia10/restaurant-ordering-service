@@ -1,9 +1,12 @@
 package data.types;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import converters.dynamodbtypeconverters.MenuItemsMapConverter;
+import converters.dynamodbtypeconverters.LocalDateTimeConverter;
+import converters.dynamodbtypeconverters.MenuItemsQuantityMapConverter;
+
 import utilities.OrderUtilities;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -17,9 +20,9 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "OrderHistory")
 public class Order {
     private String orderId;
-    private String placedDateTime;
-    private String processDateTime;
-    private String completedDateTime;
+    private LocalDateTime placedDateTime;
+    private LocalDateTime processDateTime;
+    private LocalDateTime completedDateTime;
     private Map<MenuItem, Long> orderMenuItems;
     private Long totalPrice;
 
@@ -49,39 +52,42 @@ public class Order {
     }
 
     @DynamoDBAttribute(attributeName = "placed_dateTime")
-    public String getPlacedDateTime() {
+    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    public LocalDateTime getPlacedDateTime() {
         return placedDateTime;
     }
 
-    public void setPlacedDateTime(String placedDateTime) {
+    public void setPlacedDateTime(LocalDateTime placedDateTime) {
         this.placedDateTime = placedDateTime;
     }
 
     @DynamoDBAttribute(attributeName = "process_dateTime")
-    public String getProcessDateTime() {
+    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    public LocalDateTime getProcessDateTime() {
         return processDateTime;
     }
 
-    public void setProcessDateTime(String processDateTime) {
+    public void setProcessDateTime(LocalDateTime processDateTime) {
         this.processDateTime = processDateTime;
     }
 
     @DynamoDBAttribute(attributeName = "completed_dateTime")
-    public String getCompletedDateTime() {
+    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    public LocalDateTime getCompletedDateTime() {
         return completedDateTime;
     }
 
-    public void setCompletedDateTime(String completedDateTime) {
+    public void setCompletedDateTime(LocalDateTime completedDateTime) {
         this.completedDateTime = completedDateTime;
     }
 
-    @DynamoDBTypeConverted(converter = MenuItemsMapConverter.class)
     @DynamoDBAttribute(attributeName = "menuItem_quantity_map")
+    @DynamoDBTypeConverted(converter = MenuItemsQuantityMapConverter.class)
     public Map<MenuItem, Long> getOrderMenuItems() {
         return orderMenuItems;
     }
 
-    // TODO: May need to move the price calculation outside of POJO (to dedicated Activity)
+    // TODO: May need to move the price calculation outside of POJO (to a dedicated Activity class)
     public void setOrderMenuItems(Map<MenuItem, Long> orderMenuItems) {
         this.orderMenuItems = new HashMap<>(orderMenuItems);
         this.totalPrice = OrderUtilities.calculatePrice(orderMenuItems);
@@ -132,9 +138,9 @@ public class Order {
 
     public static class Builder {
         private String orderId;
-        private String placedDateTime;
-        private String processDateTime;
-        private String completedDateTime;
+        private LocalDateTime placedDateTime;
+        private LocalDateTime processDateTime;
+        private LocalDateTime completedDateTime;
         private Map<MenuItem, Long> orderMenuItems;
         private Long totalPrice;
 
@@ -143,17 +149,17 @@ public class Order {
             return this;
         }
 
-        public Builder withPlacedDateTime(String withPlacedDateTime) {
+        public Builder withPlacedDateTime(LocalDateTime withPlacedDateTime) {
             this.placedDateTime = withPlacedDateTime;
             return this;
         }
 
-        public Builder withProcessDateTime(String withProcessDateTime) {
+        public Builder withProcessDateTime(LocalDateTime withProcessDateTime) {
             this.processDateTime = withProcessDateTime;
             return this;
         }
 
-        public Builder withCompletedDateTime(String withCompletedDateTime) {
+        public Builder withCompletedDateTime(LocalDateTime withCompletedDateTime) {
             this.completedDateTime = withCompletedDateTime;
             return this;
         }

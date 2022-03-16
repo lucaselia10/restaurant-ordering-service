@@ -15,6 +15,7 @@ import exceptions.InvalidOrderException;
 import utilities.OrderUtilities;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
         this.menuItemDao = menuItemDao;
     }
 
+    // TODO: Activity is incomplete
     @Override
     public PlaceOrderResponse handleRequest(PlaceOrderRequest request, Context context) {
         LambdaLogger logger = context.getLogger();
@@ -51,7 +53,7 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
         orderDao.saveOrder(
                 Order.builder()
                         .withOrderId(OrderUtilities.generateOrderId())
-                        .withPlacedDateTime(OrderUtilities.generateDateTimeNow())
+                        .withPlacedDateTime(LocalDateTime.now())
                         .withProcessDateTime(null)
                         .withCompletedDateTime(null)
                         .withOrderMenuItems(orderMenuItems)
