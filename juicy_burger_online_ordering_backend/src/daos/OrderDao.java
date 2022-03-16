@@ -1,10 +1,8 @@
 package daos;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-<<<<<<< HEAD
-
-=======
 import data.types.Order;
+import exceptions.OrderDoesNotExistException;
 import javax.inject.Inject;
 
 /**
@@ -16,11 +14,10 @@ public class OrderDao {
     private DynamoDBMapper dynamoDBMapper;
 
     @Inject
->>>>>>> PlaceOrderActivityFeature
+    public OrderDao(DynamoDBMapper dynamoDBMapper) {
+        this.dynamoDBMapper = dynamoDBMapper;
+    }
 
-<<<<<<< HEAD
-
-=======
     /**
      * Adds an Order to the database
      * @param order the Order object to add to the persistent layer
@@ -63,6 +60,5 @@ public class OrderDao {
         Order orderToUpdate = this.getOrder(order.getOrderId());
 
         this.saveOrder(order);
->>>>>>> PlaceOrderActivityFeature
     }
 }
