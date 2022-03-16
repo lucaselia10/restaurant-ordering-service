@@ -22,10 +22,9 @@ public class GetOrderActivity implements RequestHandler<GetOrderRequest, GetOrde
     @Override
     public GetOrderResponse handleRequest(GetOrderRequest orderRequest, Context context) {
 
-        Order order = orderDao.getOrder(orderRequest.getId());
+        Order order = orderDao.getOrder(orderRequest.getOrderId());
         return GetOrderResponse.builder()
                 .withOrder(order)
                 .build();
-
     }
 }

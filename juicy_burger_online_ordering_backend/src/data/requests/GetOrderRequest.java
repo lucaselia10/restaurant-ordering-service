@@ -3,22 +3,22 @@ package data.requests;
 import java.util.Objects;
 
 public class GetOrderRequest {
-    private String id;
+    private String orderId;
 
     public GetOrderRequest() {
 
     }
 
     public GetOrderRequest(Builder builder) {
-        this.id = builder.id;
+        this.orderId = builder.orderId;
     }
 
-    public String getId() {
-        return id;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     @Override
@@ -26,18 +26,18 @@ public class GetOrderRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GetOrderRequest that = (GetOrderRequest) o;
-        return Objects.equals(getId(), that.getId());
+        return Objects.equals(getOrderId(), that.getOrderId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getOrderId());
     }
 
     @Override
     public String toString() {
         return "GetOrderRequest{" +
-                "id='" + id + '\'' +
+                "id='" + orderId + '\'' +
                 '}';
     }
 
@@ -45,14 +45,14 @@ public class GetOrderRequest {
         return new Builder();
     }
     public static final class Builder {
-        private String id;
+        private String orderId;
 
         private Builder() {
 
         }
 
-        public Builder withId(String id) {
-            this.id = id;
+        public Builder withOrderId(String withOrderId) {
+            this.orderId = withOrderId;
             return this;
         }
         public GetOrderRequest build() {
