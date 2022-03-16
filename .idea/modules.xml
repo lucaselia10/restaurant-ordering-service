@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.test.iml" filepath="$PROJECT_DIR$/.idea/modules/juicy_burger_online_ordering_backend.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/lucas-and-the-willies.iml" filepath="$PROJECT_DIR$/.idea/lucas-and-the-willies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/main/lucas-and-the-willies.juicy_burger_online_ordering_backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/main/lucas-and-the-willies.juicy_burger_online_ordering_backend.main.iml" />
     </modules>
   </component>
 </project>

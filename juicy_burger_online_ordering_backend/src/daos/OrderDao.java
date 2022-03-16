@@ -1,21 +1,68 @@
 package daos;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import dependencies.Order;
-import exceptions.OrderDoesNotExistException;
+<<<<<<< HEAD
 
+=======
+import data.types.Order;
+import javax.inject.Inject;
+
+/**
+ * OrderDao defines the characteristics and behavior of a read and write
+ * data access object for Order objects.
+ * @author willi
+ */
 public class OrderDao {
-    private final DynamoDBMapper dynamoDBMapper;
+    private DynamoDBMapper dynamoDBMapper;
 
-    public OrderDao(DynamoDBMapper dynamoDBMapper) {
-        this.dynamoDBMapper = dynamoDBMapper;
+    @Inject
+>>>>>>> PlaceOrderActivityFeature
+
+<<<<<<< HEAD
+
+=======
+    /**
+     * Adds an Order to the database
+     * @param order the Order object to add to the persistent layer
+     */
+    public void saveOrder(Order order) {
+        this.dynamoDBMapper.save(order);
     }
 
-    public Order getOrder(String id) {
-        Order order = this.dynamoDBMapper.load(Order.class, id);
-        if (order == null) {
-            throw new OrderDoesNotExistException("Could not find order with id " + id);
+    /**
+     * Retrieves an Order from the database
+     * @param partitionKey String the orderId
+     * @return Order the object retrieved
+     * @throws OrderDoesNotExistException when an Order does not exist
+     */
+    public Order getOrder(String partitionKey) {
+        Order orderToReturn = this.dynamoDBMapper.load(Order.class, partitionKey);
+        if (orderToReturn == null) {
+            throw new OrderDoesNotExistException();
         }
-        return order;
+        return orderToReturn;
+    }
+
+    /**
+     * Removes an Order from the database
+     * @param partitionKey String the orderId
+     * @throws OrderDoesNotExistException when an Order does not exist
+     */
+    public void deleteOrder(String partitionKey) {
+        Order toDelete = this.getOrder(partitionKey);
+        this.dynamoDBMapper.delete(toDelete);
+    }
+
+    // TODO: Need to flush out this function
+    /**
+     * Updates an Order from the database
+     * @param order The updated Order object
+     * @throws OrderDoesNotExistException when an Order does not exist
+     */
+    public void updateOrder(Order order) {
+        Order orderToUpdate = this.getOrder(order.getOrderId());
+
+        this.saveOrder(order);
+>>>>>>> PlaceOrderActivityFeature
     }
 }

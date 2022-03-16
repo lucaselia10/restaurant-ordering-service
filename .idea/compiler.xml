@@ -28,6 +28,8 @@
       <module name="juicy_burger_online_ordering_backend" target="11" />
       <module name="juicy_burger_online_ordering_backend.main" target="11" />
       <module name="juicy_burger_online_ordering_backend.test" target="11" />
+      <module name="lucas-and-the-willies.juicy_burger_online_ordering_backend.main.main" target="11" />
+      <module name="lucas-and-the-willies.juicy_burger_online_ordering_backend.main.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
