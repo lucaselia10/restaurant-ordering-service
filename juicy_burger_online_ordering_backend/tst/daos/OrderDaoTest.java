@@ -50,6 +50,11 @@ public class OrderDaoTest {
                 .withOrderId(OrderUtilities.generateOrderId())
                 .withOrderMenuItems(Map.of(menuItems.get(0), 2L, menuItems.get(1), 1L))
                 .withPlacedDateTime(LocalDateTime.now())
+                .withProcessDateTime(LocalDateTime.now().plusMinutes(10))
+                .withCompletedDateTime(LocalDateTime.now().plusMinutes(20))
+                .withTotalPrice(OrderUtilities.calculateTotalPrice(
+                        Map.of(menuItems.get(0), 2L, menuItems.get(1), 1L))
+                )
                 .build();
 
 

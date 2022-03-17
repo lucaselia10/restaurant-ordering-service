@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import converters.dynamodbtypeconverters.LocalDateTimeConverter;
 import converters.dynamodbtypeconverters.MenuItemsQuantityMapConverter;
 
+import exceptions.InvalidOrderException;
 import utilities.OrderUtilities;
 
 import java.time.LocalDateTime;
@@ -13,8 +14,11 @@ import java.util.Objects;
 
 /**
  * Defines the characteristics of an Order object. An Order consists of a
- * String orderId, MenuItems mapped to a Long quantity, and Long price in
- * cents.
+ * String orderId, LocalDateTimes of the order place datetime, the order
+ * process datetime, the order completed datetime, MenuItems mapped to a
+ * Long quantity, and Long price in cents.
+ *
+ * Class invariants: orderId must not be null, placeDateTime must not be
  * @author willi
  */
 @DynamoDBTable(tableName = "OrderHistory")
@@ -33,13 +37,14 @@ public class Order {
      * Builder class.
      * @param builder The parsed Builder to build an Order Object
      */
-    public Order(Builder builder) {
+    private Order(Builder builder) {
         this.orderId = builder.orderId;
         this.placedDateTime = builder.placedDateTime;
         this.processDateTime = builder.processDateTime;
         this.completedDateTime = builder.completedDateTime;
         this.orderMenuItems = builder.orderMenuItems;
         this.totalPrice = builder.totalPrice;
+        this.validateOrderState();
     }
 
     @DynamoDBHashKey(attributeName = "orderId")
@@ -87,10 +92,8 @@ public class Order {
         return orderMenuItems;
     }
 
-    // TODO: May need to move the price calculation outside of POJO (to a dedicated Activity class)
     public void setOrderMenuItems(Map<MenuItem, Long> orderMenuItems) {
         this.orderMenuItems = new HashMap<>(orderMenuItems);
-        this.totalPrice = OrderUtilities.calculatePrice(orderMenuItems);
     }
 
     @DynamoDBAttribute(attributeName = "total_price_cents")
@@ -100,6 +103,48 @@ public class Order {
 
     public void setTotalPrice(Long totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    /**
+     * Private helper method that enforces the Order class invariants
+     */
+    private void validateOrderState() {
+        if (this.orderId == null) {
+            throw new InvalidOrderException(
+                    "orderId must not be null",
+                    new IllegalArgumentException()
+            );
+        }
+        if (this.placedDateTime == null) {
+            throw new InvalidOrderException(
+                    "placedDateTime must not be null",
+                    new IllegalArgumentException()
+            );
+        }
+        if (this.orderMenuItems == null) {
+            throw new InvalidOrderException(
+                    "orderMenuItems must not be null",
+                    new IllegalArgumentException()
+            );
+        }
+        if (this.orderMenuItems.size() == 0) {
+            throw new InvalidOrderException(
+                    "orderMenuItems must not be empty",
+                    new IllegalArgumentException()
+            );
+        }
+        if (this.totalPrice == null) {
+            throw new InvalidOrderException(
+                    "totalPrice must not be null",
+                    new IllegalArgumentException()
+            );
+        }
+        if (this.totalPrice.compareTo(0L) <= 0) {
+            throw new InvalidOrderException(
+                    "totalPrice must not be 0 or negative",
+                    new IllegalArgumentException()
+            );
+        }
     }
 
     public static Builder builder() {
@@ -166,7 +211,11 @@ public class Order {
 
         public Builder withOrderMenuItems(Map<MenuItem, Long> withOrderItems) {
             this.orderMenuItems = new HashMap<>(withOrderItems);
-            this.totalPrice = OrderUtilities.calculatePrice(withOrderItems);
+            return this;
+        }
+
+        public Builder withTotalPrice(Long withTotalPrice) {
+            this.totalPrice = withTotalPrice;
             return this;
         }
 

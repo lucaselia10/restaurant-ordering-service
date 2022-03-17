@@ -7,7 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- *
+ * A utility class that provides helper methods for the Order object and any
+ * of its respective activities
  */
 public class OrderUtilities {
     // TODO: Static variable will be used with the price calculation.
@@ -60,11 +61,11 @@ public class OrderUtilities {
      * @param orderMenuItems Map of MenuItems and Long quantity
      * @return Long the total price of orderMenuItems
      */
-    public static Long calculatePrice(Map<MenuItem, Long> orderMenuItems) {
-        return calculatePrice(orderMenuItems, 0L);
+    public static Long calculateTotalPrice(Map<MenuItem, Long> orderMenuItems) {
+        return calculateTotalPrice(orderMenuItems, 0L);
     }
 
-    // TODO: The Tax calculation is incorrect. Tax calculation may need a dedicated function
+    // TODO: The Tax calculation is incorrect. Tax calculation is currently Out of Scope
     /**
      * An overloaded OrderUtilities method that calculates the total price of a
      * Map of MenuItems and Long quantity within an Order including tax.
@@ -72,7 +73,7 @@ public class OrderUtilities {
      * @param taxRate Long the effective tax rate in decimal
      * @return Long the total price of orderMenuItems
      */
-    public static Long calculatePrice(Map<MenuItem, Long> orderMenuItems, Long taxRate) {
+    public static Long calculateTotalPrice(Map<MenuItem, Long> orderMenuItems, Long taxRate) {
         long calculatedPrice = 0L;
         for (Map.Entry<MenuItem, Long> entry : orderMenuItems.entrySet()) {
             calculatedPrice += entry.getKey().getPrice() * entry.getValue();

@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Defines the activity-process of generating an Order
+ * Defines the behavior of placing an Order. Accepts a PlaceOrderRequest and returns
+ * a PlaceOrderResponse. Updates the persistent layer with a new Order.
  */
 public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, PlaceOrderResponse> {
     private final OrderDao orderDao;
@@ -57,6 +58,7 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
                         .withProcessDateTime(null)
                         .withCompletedDateTime(null)
                         .withOrderMenuItems(orderMenuItems)
+                        .withTotalPrice(OrderUtilities.calculateTotalPrice(orderMenuItems))
                         .build()
         );
 

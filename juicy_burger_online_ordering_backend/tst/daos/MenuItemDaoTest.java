@@ -32,8 +32,7 @@ public class MenuItemDaoTest {
 
         // WHEN - THEN
         assertNotNull(menuItems);
-        System.out.println(menuItems);
         assertTrue(menuItems.size() > 0);
+        assertEquals(menuItems.get(0).getClass(), MenuItem.class);
     }
-
 }
