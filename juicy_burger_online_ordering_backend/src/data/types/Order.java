@@ -5,7 +5,6 @@ import converters.dynamodbtypeconverters.LocalDateTimeConverter;
 import converters.dynamodbtypeconverters.MenuItemsQuantityMapConverter;
 
 import exceptions.InvalidOrderException;
-import utilities.OrderUtilities;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -18,7 +17,9 @@ import java.util.Objects;
  * process datetime, the order completed datetime, MenuItems mapped to a
  * Long quantity, and Long price in cents.
  *
- * Class invariants: orderId must not be null, placeDateTime must not be
+ * Invariants: orderId must not be null, placeDateTime must not be null,
+ * orderMenuItems must not be null nor empty, and totalPrice must not be
+ * null nor zero.
  * @author willi
  */
 @DynamoDBTable(tableName = "OrderHistory")
@@ -36,6 +37,7 @@ public class Order {
      * A private Order constructor used in conjunction with the inner
      * Builder class.
      * @param builder The parsed Builder to build an Order Object
+     * @throws InvalidOrderException when an Order invariant is broken
      */
     private Order(Builder builder) {
         this.orderId = builder.orderId;
@@ -106,7 +108,8 @@ public class Order {
     }
 
     /**
-     * Private helper method that enforces the Order class invariants
+     * Private helper method that enforces the Order invariants
+     * @throws InvalidOrderException when an Order invariant is broken
      */
     private void validateOrderState() {
         if (this.orderId == null) {

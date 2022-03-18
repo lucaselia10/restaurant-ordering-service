@@ -45,7 +45,7 @@ public class MenuItemDao {
                 );
             }
         } catch (Exception e) {
-            // TODO: Initiate the Error Code 500 from here?
+            // TODO: Initiate the Error Code 500 from here for the API Gateway?
             System.out.println("Unable to parse file: " + e.getMessage());
         }
         return menuItems;

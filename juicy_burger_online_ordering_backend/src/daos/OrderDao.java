@@ -20,7 +20,7 @@ public class OrderDao {
     }
 
     /**
-     * Adds an Order to the database
+     * Adds an Order to the persistent layer
      * @param order the Order object to add to the persistent layer
      */
     public void saveOrder(Order order) {
@@ -28,7 +28,7 @@ public class OrderDao {
     }
 
     /**
-     * Retrieves an Order from the database
+     * Retrieves an Order from the persistent layer
      * @param partitionKey String the orderId
      * @return Order the object retrieved
      * @throws OrderDoesNotExistException when an Order does not exist
@@ -42,7 +42,7 @@ public class OrderDao {
     }
 
     /**
-     * Removes an Order from the database
+     * Removes an Order from the persistent layer
      * @param partitionKey String the orderId
      * @throws OrderDoesNotExistException when an Order does not exist
      */
@@ -53,7 +53,7 @@ public class OrderDao {
 
     // TODO: Need to flush out this function
     /**
-     * Updates an Order from the database
+     * Updates an Order within the persistent layer
      * @param order The updated Order object
      * @throws OrderDoesNotExistException when an Order does not exist
      */
