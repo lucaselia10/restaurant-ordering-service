@@ -8,6 +8,7 @@ import dependencies.DynamoDBModule;
 import dependencies.FileReaderModule;
 import dependencies.JSONParserModule;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import utilities.OrderUtilities;
 
@@ -30,6 +31,10 @@ public class OrderDaoTest {
         orderDao = new OrderDao(dynamoDBMapper);
     }
 
+    @Test
+
+
+
     public static void main(String[] args) {
         OrderDao orderDao = new OrderDao(new DynamoDBModule().dynamoDBMapperProvider());
         MenuItemDao menuItemDao = null;
@@ -43,17 +48,17 @@ public class OrderDaoTest {
             System.err.println("Bad File Path: " + e.getMessage());
         }
 
-        List<MenuItem> menuItems = menuItemDao.getMenuItems();
+        List<MenuItem> menuItems = menuItemDao.getListOfMenuItems();
 
 
         Order order1 = Order.builder()
                 .withOrderId(OrderUtilities.generateOrderId())
-                .withOrderMenuItems(Map.of(menuItems.get(0), 2L, menuItems.get(1), 1L))
+                .withOrderMenuItems(Map.of(menuItems.get(0), 2, menuItems.get(1), 1))
                 .withPlacedDateTime(LocalDateTime.now())
                 .withProcessDateTime(LocalDateTime.now().plusMinutes(10))
                 .withCompletedDateTime(LocalDateTime.now().plusMinutes(20))
                 .withTotalPrice(OrderUtilities.calculateTotalPrice(
-                        Map.of(menuItems.get(0), 2L, menuItems.get(1), 1L))
+                        Map.of(menuItems.get(0), 2, menuItems.get(1), 1))
                 )
                 .build();
 

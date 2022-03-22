@@ -17,7 +17,6 @@ import utilities.OrderUtilities;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,15 +39,15 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
         LambdaLogger logger = context.getLogger();
         logger.log(request.toString());
 
-        List<MenuItem> menuItems = menuItemDao.getMenuItems();
-        Map<MenuItem, Long> orderMenuItems = new HashMap<>();
+        Map<String, MenuItem> menuItemsMap = menuItemDao.getMapOfMenuItems();
+        Map<MenuItem, Integer> orderMenuItems = new HashMap<>();
 
-        for (Map.Entry<MenuItem, Long> entry : request.getOrderItems().entrySet()) {
-            if (!menuItems.contains(entry.getKey())) {
-                logger.log("Unable to process request");
+        for (Map.Entry<String, Integer> entry : request.getOrderDescription().entrySet()) {
+            if (!menuItemsMap.containsKey(entry.getKey())) {
+                logger.log("Unable to process request: menuItem does not exist");
                 throw new InvalidOrderException();
             }
-            orderMenuItems.put(entry.getKey(), entry.getValue());
+            orderMenuItems.put(menuItemsMap.get(entry.getKey()), entry.getValue());
         }
 
         orderDao.saveOrder(

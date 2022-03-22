@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,13 +27,23 @@ public class MenuItemDaoTest {
     }
 
     @Test
-    public void getMenuItems_withAJSONFileOfMenuItems_returnsAListOfMenuItems() {
+    void getListOfMenuItems_withAJSONFileOfMenuItems_returnsAListOfMenuItems() {
         // GIVEN
-        List<MenuItem> menuItems = menuItemDao.getMenuItems();
+        List<MenuItem> menuItemList = menuItemDao.getListOfMenuItems();
 
         // WHEN - THEN
-        assertNotNull(menuItems);
-        assertTrue(menuItems.size() > 0);
-        assertEquals(menuItems.get(0).getClass(), MenuItem.class);
+        assertTrue(menuItemList.size() > 0);
+        assertEquals(menuItemList.get(0).getClass(), MenuItem.class);
+    }
+
+    @Test
+    void getMapOfMenuItems_withAJSONFileOfMenuItems_returnsMenuItemsMappedToNameOfMenuItems() {
+        // GIVEN
+        Map<String, MenuItem> menuItemMap = menuItemDao.getMapOfMenuItems();
+
+        // WHEN - THEN
+        assertTrue(menuItemMap.size() > 0);
+        assertEquals(menuItemMap.entrySet().iterator().next().getValue().getClass(), MenuItem.class);
+        assertEquals(menuItemMap.entrySet().iterator().next().getKey().getClass(), String.class);
     }
 }

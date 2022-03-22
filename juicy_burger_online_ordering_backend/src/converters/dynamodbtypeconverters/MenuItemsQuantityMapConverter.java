@@ -11,7 +11,7 @@ import java.util.Map;
  * Long quantity for DynamoDB parsing
  * @author willi
  */
-public class MenuItemsQuantityMapConverter implements DynamoDBTypeConverter<String, Map<MenuItem, Long>> {
+public class MenuItemsQuantityMapConverter implements DynamoDBTypeConverter<String, Map<MenuItem, Integer>> {
 
     /**
      * Converts the Map of MenuItems and Long quantity Java datatype
@@ -20,11 +20,11 @@ public class MenuItemsQuantityMapConverter implements DynamoDBTypeConverter<Stri
      * @return String representation of the map
      */
     @Override
-    public String convert(Map<MenuItem, Long> object) {
+    public String convert(Map<MenuItem, Integer> object) {
         StringBuilder orderMenuItemsString = new StringBuilder();
         try {
             int index = 0;
-            for (Map.Entry<MenuItem, Long> entry : object.entrySet()) {
+            for (Map.Entry<MenuItem, Integer> entry : object.entrySet()) {
                 orderMenuItemsString.append(String.format(
                         "%s : %s : %s : %s",
                         entry.getKey().getName(),
@@ -47,17 +47,17 @@ public class MenuItemsQuantityMapConverter implements DynamoDBTypeConverter<Stri
      * @return Map of MenuItems mapped to a Long quantity
      */
     @Override
-    public Map<MenuItem, Long> unconvert(String object) {
-        Map<MenuItem, Long> menuItemsQuantityMap = new HashMap<>();
+    public Map<MenuItem, Integer> unconvert(String object) {
+        Map<MenuItem, Integer> menuItemsQuantityMap = new HashMap<>();
         try {
             for (String menuItemAttributes : object.split("&")) {
                 menuItemsQuantityMap.put(
                         MenuItem.builder()
                                 .withName(menuItemAttributes.split(":")[0].trim())
-                                .withPrice(Long.valueOf(menuItemAttributes.split(":")[1].trim()))
+                                .withPrice(Integer.valueOf(menuItemAttributes.split(":")[1].trim()))
                                 .withDescription(menuItemAttributes.split(":")[2].trim())
                                 .build(),
-                        Long.valueOf(menuItemAttributes.split(":")[3].trim()));
+                        Integer.valueOf(menuItemAttributes.split(":")[3].trim()));
             }
         } catch (Exception e) {
             e.printStackTrace();

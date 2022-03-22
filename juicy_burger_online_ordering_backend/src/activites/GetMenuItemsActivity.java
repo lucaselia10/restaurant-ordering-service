@@ -22,7 +22,7 @@ public class GetMenuItemsActivity implements RequestHandler<GetMenuItemsRequest,
 
     // TODO: This method needs to be implemented (Possibly out of Scope)
     @Override
-    public GetMenuItemsResponse handleRequest(GetMenuItemsRequest input, Context context) {
+    public GetMenuItemsResponse handleRequest(GetMenuItemsRequest request, Context context) {
         return null;
     }
 }

@@ -4,23 +4,27 @@ import data.types.MenuItem;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
+/**
+ *
+ */
 // TODO: This class needs to be implemented and coordinated with Front End
 public class PlaceOrderRequest {
-    private Map<MenuItem, Long> orderItems;
+    private Map<String, Integer> orderDescription;
 
     public PlaceOrderRequest() {}
 
     public PlaceOrderRequest(Builder builder) {
-        this.orderItems = builder.orderItems;
+        this.orderDescription = builder.orderItems;
     }
 
-    public Map<MenuItem, Long> getOrderItems() {
-        return orderItems;
+    public Map<String, Integer> getOrderDescription() {
+        return orderDescription;
     }
 
-    public void setOrderItems(Map<MenuItem, Long> orderItems) {
-        this.orderItems = orderItems;
+    public void setOrderDescription(Map<String, Integer> orderDescription) {
+        this.orderDescription = orderDescription;
     }
 
     public Builder builder() {
@@ -30,14 +34,14 @@ public class PlaceOrderRequest {
     @Override
     public String toString() {
         return "PlaceOrderRequest{" +
-                "orderItems=" + orderItems +
+                "orderItems=" + orderDescription +
                 '}';
     }
 
     public static class Builder {
-        private Map<MenuItem, Long> orderItems;
+        private Map<String, Integer> orderItems;
 
-        public Builder withOrderItems(Map<MenuItem, Long> withOrderItems) {
+        public Builder withOrderItems(Map<String, Integer> withOrderItems) {
             this.orderItems = new HashMap<>(withOrderItems);
             return this;
         }

@@ -22,19 +22,19 @@ public class MenuItemsMapQuantityConverterTest {
         // GIVEN
         MenuItem test1 = MenuItem.builder()
                 .withName("MenuItemTestName_1")
-                .withPrice(-100L)
+                .withPrice(-100)
                 .withDescription("MenuItemTest1Description_1")
                 .build();
 
         MenuItem test2 = MenuItem.builder()
                 .withName("MenuItemTestName_2")
-                .withPrice(-200L)
+                .withPrice(-200)
                 .withDescription("MenuItemTest1Description_2")
                 .build();
 
-        Map<MenuItem, Long> orderMenuItemsMap = new HashMap<>();
-        orderMenuItemsMap.put(test1, 1L);
-        orderMenuItemsMap.put(test2, 2L);
+        Map<MenuItem, Integer> orderMenuItemsMap = new HashMap<>();
+        orderMenuItemsMap.put(test1, 1);
+        orderMenuItemsMap.put(test2, 2);
 
         // WHEN
         String dynamoDbString = menuItemsQuantityMapConverter.convert(orderMenuItemsMap);
@@ -53,13 +53,13 @@ public class MenuItemsMapQuantityConverterTest {
         // GIVEN
         MenuItem test1 = MenuItem.builder()
                 .withName("MenuItemTestName_1")
-                .withPrice(-100L)
+                .withPrice(-100)
                 .withDescription("MenuItemTest1Description_1")
                 .build();
 
         MenuItem test2 = MenuItem.builder()
                 .withName("MenuItemTestName_2")
-                .withPrice(-200L)
+                .withPrice(-200)
                 .withDescription("MenuItemTest1Description_2")
                 .build();
 
@@ -67,12 +67,12 @@ public class MenuItemsMapQuantityConverterTest {
                 " MenuItemTestName_2 : -200 : MenuItemTest1Description_2 : 2";
 
         // WHEN
-        Map<MenuItem, Long> result = menuItemsQuantityMapConverter.unconvert(dynamoDbString);
+        Map<MenuItem, Integer> result = menuItemsQuantityMapConverter.unconvert(dynamoDbString);
 
         // THEN
         assertTrue(result.containsKey(test1));
-        assertTrue(result.containsValue(1L));
+        assertTrue(result.containsValue(1));
         assertTrue(result.containsKey(test2));
-        assertTrue(result.containsValue(2L));
+        assertTrue(result.containsValue(2));
     }
 }

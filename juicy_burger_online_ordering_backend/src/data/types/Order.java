@@ -28,8 +28,8 @@ public class Order {
     private LocalDateTime placedDateTime;
     private LocalDateTime processDateTime;
     private LocalDateTime completedDateTime;
-    private Map<MenuItem, Long> orderMenuItems;
-    private Long totalPrice;
+    private Map<MenuItem, Integer> orderMenuItems;
+    private Integer totalPrice;
 
     public Order() {}
 
@@ -90,20 +90,20 @@ public class Order {
 
     @DynamoDBAttribute(attributeName = "menuItem_quantity_map")
     @DynamoDBTypeConverted(converter = MenuItemsQuantityMapConverter.class)
-    public Map<MenuItem, Long> getOrderMenuItems() {
+    public Map<MenuItem, Integer> getOrderMenuItems() {
         return orderMenuItems;
     }
 
-    public void setOrderMenuItems(Map<MenuItem, Long> orderMenuItems) {
+    public void setOrderMenuItems(Map<MenuItem, Integer> orderMenuItems) {
         this.orderMenuItems = new HashMap<>(orderMenuItems);
     }
 
     @DynamoDBAttribute(attributeName = "total_price_cents")
-    public Long getTotalPrice() {
+    public Integer getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Long totalPrice) {
+    public void setTotalPrice(Integer totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -142,7 +142,7 @@ public class Order {
                     new IllegalArgumentException()
             );
         }
-        if (this.totalPrice.compareTo(0L) <= 0) {
+        if (this.totalPrice.compareTo(0) <= 0) {
             throw new InvalidOrderException(
                     "totalPrice must not be 0 or negative",
                     new IllegalArgumentException()
@@ -189,8 +189,8 @@ public class Order {
         private LocalDateTime placedDateTime;
         private LocalDateTime processDateTime;
         private LocalDateTime completedDateTime;
-        private Map<MenuItem, Long> orderMenuItems;
-        private Long totalPrice;
+        private Map<MenuItem, Integer> orderMenuItems;
+        private Integer totalPrice;
 
         public Builder withOrderId(String withOrderId) {
             this.orderId = withOrderId;
@@ -212,12 +212,12 @@ public class Order {
             return this;
         }
 
-        public Builder withOrderMenuItems(Map<MenuItem, Long> withOrderItems) {
+        public Builder withOrderMenuItems(Map<MenuItem, Integer> withOrderItems) {
             this.orderMenuItems = new HashMap<>(withOrderItems);
             return this;
         }
 
-        public Builder withTotalPrice(Long withTotalPrice) {
+        public Builder withTotalPrice(Integer withTotalPrice) {
             this.totalPrice = withTotalPrice;
             return this;
         }

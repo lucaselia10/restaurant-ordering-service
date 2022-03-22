@@ -3,6 +3,7 @@ package utilities;
 import data.types.MenuItem;
 import org.joda.time.LocalDateTime;
 
+import javax.inject.Inject;
 import java.util.Map;
 import java.util.UUID;
 
@@ -61,8 +62,8 @@ public class OrderUtilities {
      * @param orderMenuItems Map of MenuItems and Long quantity
      * @return Long the total price of orderMenuItems
      */
-    public static Long calculateTotalPrice(Map<MenuItem, Long> orderMenuItems) {
-        return calculateTotalPrice(orderMenuItems, 0L);
+    public static Integer calculateTotalPrice(Map<MenuItem, Integer> orderMenuItems) {
+        return calculateTotalPrice(orderMenuItems, 0);
     }
 
     // TODO: The Tax calculation is incorrect. Tax calculation is currently Out of Scope
@@ -73,9 +74,9 @@ public class OrderUtilities {
      * @param taxRate Long the effective tax rate in decimal
      * @return Long the total price of orderMenuItems
      */
-    public static Long calculateTotalPrice(Map<MenuItem, Long> orderMenuItems, Long taxRate) {
-        long calculatedPrice = 0L;
-        for (Map.Entry<MenuItem, Long> entry : orderMenuItems.entrySet()) {
+    public static Integer calculateTotalPrice(Map<MenuItem, Integer> orderMenuItems, Integer taxRate) {
+        int calculatedPrice = 0;
+        for (Map.Entry<MenuItem, Integer> entry : orderMenuItems.entrySet()) {
             calculatedPrice += entry.getKey().getPrice() * entry.getValue();
         }
         return calculatedPrice * (1 + taxRate);
