@@ -1,11 +1,17 @@
 package daos;
 
+<<<<<<< HEAD
 import converters.dynamodbtypeconverters.MenuItemsMapConverter;
+=======
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import converters.dynamodbtypeconverters.MenuItemsQuantityMapConverter;
+>>>>>>> origin/PlaceOrderActivityFeature
 import data.types.MenuItem;
 import data.types.Order;
 import dependencies.DynamoDBModule;
 import dependencies.FileReaderModule;
 import dependencies.JSONParserModule;
+<<<<<<< HEAD
 import utilities.OrderUtilities;
 
 import java.util.List;
@@ -13,6 +19,34 @@ import java.util.Map;
 
 // TODO: Not an actual Unit Test. Needs to be reimplemented.
 public class OrderDaoTest {
+=======
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import utilities.OrderUtilities;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
+import static org.mockito.MockitoAnnotations.initMocks;
+
+// TODO: Not an actual Unit Test. Needs to be reimplemented.
+public class OrderDaoTest {
+    private OrderDao orderDao;
+
+    @Mock
+    private DynamoDBMapper dynamoDBMapper;
+
+    @BeforeEach
+    void setup() {
+        initMocks(this);
+        orderDao = new OrderDao(dynamoDBMapper);
+    }
+
+    @Test
+
+>>>>>>> origin/PlaceOrderActivityFeature
 
 
     public static void main(String[] args) {
@@ -28,11 +62,16 @@ public class OrderDaoTest {
             System.err.println("Bad File Path: " + e.getMessage());
         }
 
+<<<<<<< HEAD
         List<MenuItem> menuItems = menuItemDao.getMenuItems();
+=======
+        List<MenuItem> menuItems = menuItemDao.getListOfMenuItems();
+>>>>>>> origin/PlaceOrderActivityFeature
 
 
         Order order1 = Order.builder()
                 .withOrderId(OrderUtilities.generateOrderId())
+<<<<<<< HEAD
                 .withOrderMenuItems(Map.of(menuItems.get(0), 2L, menuItems.get(1), 1L))
                 .withPlacedDateTime(OrderUtilities.generateDateTimeNow())
                 .build();
@@ -41,11 +80,30 @@ public class OrderDaoTest {
         MenuItemsMapConverter menuItemsMapConverter = new MenuItemsMapConverter();
 
         String answer = menuItemsMapConverter.convert(order1.getOrderMenuItems());
+=======
+                .withOrderMenuItems(Map.of(menuItems.get(0), 2, menuItems.get(1), 1))
+                .withPlacedDateTime(LocalDateTime.now())
+                .withProcessDateTime(LocalDateTime.now().plusMinutes(10))
+                .withCompletedDateTime(LocalDateTime.now().plusMinutes(20))
+                .withTotalPrice(OrderUtilities.calculateTotalPrice(
+                        Map.of(menuItems.get(0), 2, menuItems.get(1), 1))
+                )
+                .build();
+
+
+        MenuItemsQuantityMapConverter menuItemsQuantityMapConverter = new MenuItemsQuantityMapConverter();
+
+        String answer = menuItemsQuantityMapConverter.convert(order1.getOrderMenuItems());
+>>>>>>> origin/PlaceOrderActivityFeature
         System.out.println("Converting MenuItem to String for DynamoDB");
         System.out.println(answer);
         System.out.println();
         System.out.println("Unconverting from DynamoDB String to MenuItem");
+<<<<<<< HEAD
         System.out.println(menuItemsMapConverter.unconvert(answer));
+=======
+        System.out.println(menuItemsQuantityMapConverter.unconvert(answer));
+>>>>>>> origin/PlaceOrderActivityFeature
         System.out.println();
         System.out.println("Saving Order to Database");
         orderDao.saveOrder(order1);

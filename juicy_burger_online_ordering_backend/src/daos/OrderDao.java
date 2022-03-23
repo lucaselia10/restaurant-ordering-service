@@ -3,6 +3,10 @@ package daos;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import data.types.Order;
 import exceptions.OrderDoesNotExistException;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/PlaceOrderActivityFeature
 import javax.inject.Inject;
 
 /**
@@ -19,7 +23,11 @@ public class OrderDao {
     }
 
     /**
+<<<<<<< HEAD
      * Adds an Order to the database
+=======
+     * Adds an Order to the persistent layer
+>>>>>>> origin/PlaceOrderActivityFeature
      * @param order the Order object to add to the persistent layer
      */
     public void saveOrder(Order order) {
@@ -27,7 +35,11 @@ public class OrderDao {
     }
 
     /**
+<<<<<<< HEAD
      * Retrieves an Order from the database
+=======
+     * Retrieves an Order from the persistent layer
+>>>>>>> origin/PlaceOrderActivityFeature
      * @param partitionKey String the orderId
      * @return Order the object retrieved
      * @throws OrderDoesNotExistException when an Order does not exist
@@ -41,7 +53,11 @@ public class OrderDao {
     }
 
     /**
+<<<<<<< HEAD
      * Removes an Order from the database
+=======
+     * Removes an Order from the persistent layer
+>>>>>>> origin/PlaceOrderActivityFeature
      * @param partitionKey String the orderId
      * @throws OrderDoesNotExistException when an Order does not exist
      */
@@ -52,7 +68,11 @@ public class OrderDao {
 
     // TODO: Need to flush out this function
     /**
+<<<<<<< HEAD
      * Updates an Order from the database
+=======
+     * Updates an Order within the persistent layer
+>>>>>>> origin/PlaceOrderActivityFeature
      * @param order The updated Order object
      * @throws OrderDoesNotExistException when an Order does not exist
      */

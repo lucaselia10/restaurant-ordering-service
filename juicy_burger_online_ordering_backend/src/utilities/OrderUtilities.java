@@ -3,11 +3,20 @@ package utilities;
 import data.types.MenuItem;
 import org.joda.time.LocalDateTime;
 
+<<<<<<< HEAD
+=======
+import javax.inject.Inject;
+>>>>>>> origin/PlaceOrderActivityFeature
 import java.util.Map;
 import java.util.UUID;
 
 /**
+<<<<<<< HEAD
  *
+=======
+ * A utility class that provides helper methods for the Order object and any
+ * of its respective activities
+>>>>>>> origin/PlaceOrderActivityFeature
  */
 public class OrderUtilities {
     // TODO: Static variable will be used with the price calculation.
@@ -60,11 +69,19 @@ public class OrderUtilities {
      * @param orderMenuItems Map of MenuItems and Long quantity
      * @return Long the total price of orderMenuItems
      */
+<<<<<<< HEAD
     public static Long calculatePrice(Map<MenuItem, Long> orderMenuItems) {
         return calculatePrice(orderMenuItems, 0L);
     }
 
     // TODO: The Tax calculation is incorrect. Tax calculation may need a dedicated function
+=======
+    public static Integer calculateTotalPrice(Map<MenuItem, Integer> orderMenuItems) {
+        return calculateTotalPrice(orderMenuItems, 0);
+    }
+
+    // TODO: The Tax calculation is incorrect. Tax calculation is currently Out of Scope
+>>>>>>> origin/PlaceOrderActivityFeature
     /**
      * An overloaded OrderUtilities method that calculates the total price of a
      * Map of MenuItems and Long quantity within an Order including tax.
@@ -72,9 +89,15 @@ public class OrderUtilities {
      * @param taxRate Long the effective tax rate in decimal
      * @return Long the total price of orderMenuItems
      */
+<<<<<<< HEAD
     public static Long calculatePrice(Map<MenuItem, Long> orderMenuItems, Long taxRate) {
         long calculatedPrice = 0L;
         for (Map.Entry<MenuItem, Long> entry : orderMenuItems.entrySet()) {
+=======
+    public static Integer calculateTotalPrice(Map<MenuItem, Integer> orderMenuItems, Integer taxRate) {
+        int calculatedPrice = 0;
+        for (Map.Entry<MenuItem, Integer> entry : orderMenuItems.entrySet()) {
+>>>>>>> origin/PlaceOrderActivityFeature
             calculatedPrice += entry.getKey().getPrice() * entry.getValue();
         }
         return calculatedPrice * (1 + taxRate);

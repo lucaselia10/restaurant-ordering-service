@@ -16,7 +16,11 @@
   },
   {
     "name": "Sprite",
+<<<<<<< HEAD
     "price:": 150,
+=======
+    "price": 150,
+>>>>>>> origin/PlaceOrderActivityFeature
     "description": "150cent sprite"
   },
   {

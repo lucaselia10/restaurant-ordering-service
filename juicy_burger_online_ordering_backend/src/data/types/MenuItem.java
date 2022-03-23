@@ -4,13 +4,21 @@ import java.util.Objects;
 
 /**
  * Defines the characteristics of a MenuItem object. A MenuItem consists
+<<<<<<< HEAD
  * of String name, Long price in cents, and String description of the
+=======
+ * of String name, Integer price in cents, and String description of the
+>>>>>>> origin/PlaceOrderActivityFeature
  * MenuItem (such as ingredients)
  * @author willi
  */
 public class MenuItem {
     private String name;
+<<<<<<< HEAD
     private Long price;
+=======
+    private Integer price;
+>>>>>>> origin/PlaceOrderActivityFeature
     private String description;
 
     private MenuItem(Builder builder) {
@@ -23,7 +31,11 @@ public class MenuItem {
         return name;
     }
 
+<<<<<<< HEAD
     public Long getPrice() {
+=======
+    public Integer getPrice() {
+>>>>>>> origin/PlaceOrderActivityFeature
         return price;
     }
 
@@ -61,7 +73,11 @@ public class MenuItem {
 
     public static class Builder {
         private String name;
+<<<<<<< HEAD
         private Long price;
+=======
+        private Integer price;
+>>>>>>> origin/PlaceOrderActivityFeature
         private String description;
 
         public Builder withName(String builderName) {
@@ -69,7 +85,11 @@ public class MenuItem {
             return this;
         }
 
+<<<<<<< HEAD
         public Builder withPrice(Long builderPrice) {
+=======
+        public Builder withPrice(Integer builderPrice) {
+>>>>>>> origin/PlaceOrderActivityFeature
             this.price = builderPrice;
             return this;
         }
