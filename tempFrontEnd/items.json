@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Cheeseburger",
+    "price": 300,
+    "description": "300 cents of cheeseburger"
+  },
+  {
+    "name": "Pepsi",
+    "price": 150,
+    "description": "150cent pepsi"
+  },
+  {
+    "name": "Chicken Nuggets",
+    "price": 150,
+    "description": "150cent nuggets"
+  }
+]

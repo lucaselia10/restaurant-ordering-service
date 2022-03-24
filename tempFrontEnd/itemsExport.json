@@ -1,0 +1,40 @@
+{
+    "Items": [
+        {
+            "name": {
+                "S": "Cheeseburger"
+            },
+            "price": {
+                "N": "300"
+            },
+            "description": {
+                "S": "300 cents of cheeseburger"
+            }
+        },
+        {
+            "name": {
+                "S": "Pepsi"
+            },
+            "price": {
+                "N": "150"
+            },
+            "description": {
+                "S": "150cent pepsi"
+            }
+        },
+        {
+            "name": {
+                "S": "Chicken Nuggets"
+            },
+            "price": {
+                "N": "150"
+            },
+            "description": {
+                "S": "150cent nuggets"
+            }
+        }
+    ],
+    "Count": 3,
+    "ScannedCount": 3,
+    "ConsumedCapacity": null
+}
