@@ -1,12 +1,15 @@
 package daos;
 
 import data.types.MenuItem;
+
 import exceptions.OrderException;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.inject.Inject;
+
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +31,6 @@ public class MenuItemDao {
         this.fileReader = fileReader;
     }
 
-    // TODO: Need to determine the behavior when MenuItems cannot to retrieved
     /**
      * Generates and returns a List of MenuItems.
      * @return List of MenuItems
@@ -50,13 +52,13 @@ public class MenuItemDao {
             }
         } catch (Exception e) {
             // TODO: Initiate the Error Code 500 from here for the API Gateway?
-            throw new OrderException("Unable to parse file", e);
+            throw new OrderException("Unable to parse internal file", e);
         }
         return menuItems;
     }
 
     /**
-     * Generates and returns a MenuItems mapped to the name of the MenuItem
+     * Generates and returns a MenuItems mapped to the String name of the MenuItem
      * @return Map of String to MenuItems
      */
     public Map<String, MenuItem> getMapOfMenuItems() {
@@ -77,7 +79,7 @@ public class MenuItemDao {
             }
         } catch (Exception e) {
             // TODO: Initiate the Error Code 500 from here for the API Gateway?
-            throw new OrderException("Unable to parse file", e);
+            throw new OrderException("Unable to parse internal file", e);
         }
         return menuItems;
     }

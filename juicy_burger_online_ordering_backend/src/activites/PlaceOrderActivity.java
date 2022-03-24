@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import converters.ModelConverter;
 import daos.MenuItemDao;
 import daos.OrderDao;
 
@@ -17,6 +18,7 @@ import utilities.OrderUtilities;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -33,24 +35,23 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
         this.menuItemDao = menuItemDao;
     }
 
-    // TODO: Activity is incomplete
     @Override
     public PlaceOrderResponse handleRequest(PlaceOrderRequest request, Context context) {
         LambdaLogger logger = context.getLogger();
         logger.log(request.toString());
 
         Map<String, MenuItem> menuItemsMap = menuItemDao.getMapOfMenuItems();
-        Map<MenuItem, Integer> orderMenuItems = new HashMap<>();
 
+        Map<MenuItem, Integer> orderMenuItems = new HashMap<>();
         for (Map.Entry<String, Integer> entry : request.getOrderDescription().entrySet()) {
-            if (!menuItemsMap.containsKey(entry.getKey())) {
+            if (!menuItemsMap.containsKey(entry.getKey().trim().toLowerCase(Locale.ROOT))) {
                 logger.log("Unable to process request: menuItem does not exist");
                 throw new InvalidOrderException();
             }
             orderMenuItems.put(menuItemsMap.get(entry.getKey()), entry.getValue());
         }
 
-        orderDao.saveOrder(
+        Order order = orderDao.saveOrder(
                 Order.builder()
                         .withOrderId(OrderUtilities.generateOrderId())
                         .withPlacedDateTime(LocalDateTime.now())
@@ -61,6 +62,8 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
                         .build()
         );
 
-        return null;
+        return PlaceOrderResponse.builder()
+                .withOrderModel(ModelConverter.orderModelConverter(order))
+                .build();
     }
 }

@@ -1,6 +1,7 @@
 package converters.dynamodbtypeconverters;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
+import exceptions.OrderException;
 
 import java.time.LocalDateTime;
 
@@ -26,13 +27,14 @@ public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, Loc
      * LocalDateTime Object
      * @param object String to convert
      * @return LocalDateTime based on a valid String
+     * @throws OrderException for invalid String
      */
     @Override
     public LocalDateTime unconvert(String object) {
         try {
             return LocalDateTime.parse(object);
         } catch (Exception e) {
-            return null;
+            throw new OrderException("Unable to parse string into LocalDateTime", e);
         }
     }
 }

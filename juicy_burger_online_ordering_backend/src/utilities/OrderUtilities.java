@@ -9,10 +9,9 @@ import java.util.UUID;
 
 /**
  * A utility class that provides helper methods for the Order object and any
- * of its respective activities
+ * of its respective activities. Do not instantiate.
  */
 public class OrderUtilities {
-    // TODO: Static variable will be used with the price calculation.
     public static double SALES_TAX_RATE = 0.095;
 
     private OrderUtilities() {}
@@ -34,7 +33,6 @@ public class OrderUtilities {
     public static String generateDateTimeNow() {
         return LocalDateTime.now().toString();
     }
-
 
     /**
      * An OrderUtilities method that generates a String representation of a
@@ -66,7 +64,7 @@ public class OrderUtilities {
         return calculateTotalPrice(orderMenuItems, 0);
     }
 
-    // TODO: The Tax calculation is incorrect. Tax calculation is currently Out of Scope
+    //Do not use. The Tax calculation is incorrect. Tax calculation is currently Out of Scope
     /**
      * An overloaded OrderUtilities method that calculates the total price of a
      * Map of MenuItems and Long quantity within an Order including tax.

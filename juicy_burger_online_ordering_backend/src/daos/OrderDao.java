@@ -1,8 +1,11 @@
 package daos;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+
 import data.types.Order;
+
 import exceptions.OrderDoesNotExistException;
+import exceptions.OrderException;
 
 import javax.inject.Inject;
 
@@ -22,9 +25,16 @@ public class OrderDao {
     /**
      * Adds an Order to the persistent layer
      * @param order the Order object to add to the persistent layer
+     * @return Order the order within the persistent layer
+     * @throws OrderException when Order cannot be saved to DynamoDB
      */
-    public void saveOrder(Order order) {
-        this.dynamoDBMapper.save(order);
+    public Order saveOrder(Order order) {
+        try {
+            this.dynamoDBMapper.save(order);
+        } catch (Exception e) {
+            throw new OrderException("Could not save to DynamoDB", e);
+        }
+        return order;
     }
 
     /**

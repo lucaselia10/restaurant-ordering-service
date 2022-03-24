@@ -1,21 +1,17 @@
 package data.requests;
 
-import data.types.MenuItem;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 /**
  *
  */
-// TODO: This class needs to be implemented and coordinated with Front End
 public class PlaceOrderRequest {
     private Map<String, Integer> orderDescription;
 
     public PlaceOrderRequest() {}
 
-    public PlaceOrderRequest(Builder builder) {
+    private PlaceOrderRequest(Builder builder) {
         this.orderDescription = builder.orderItems;
     }
 
@@ -24,10 +20,10 @@ public class PlaceOrderRequest {
     }
 
     public void setOrderDescription(Map<String, Integer> orderDescription) {
-        this.orderDescription = orderDescription;
+        this.orderDescription = new HashMap<>(orderDescription);
     }
 
-    public Builder builder() {
+    public static Builder builder() {
         return new Builder();
     }
 

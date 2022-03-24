@@ -65,7 +65,7 @@ public class OrderDaoTest {
 
         MenuItemsQuantityMapConverter menuItemsQuantityMapConverter = new MenuItemsQuantityMapConverter();
 
-        String answer = menuItemsQuantityMapConverter.convert(order1.getOrderMenuItems());
+        String answer = menuItemsQuantityMapConverter.convert(order1.getOrderMenuItemsMap());
         System.out.println("Converting MenuItem to String for DynamoDB");
         System.out.println(answer);
         System.out.println();

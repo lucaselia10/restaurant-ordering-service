@@ -19,7 +19,7 @@ import java.util.Objects;
  *
  * Invariants: orderId must not be null, placeDateTime must not be null,
  * orderMenuItems must not be null nor empty, and totalPrice must not be
- * null nor zero.
+ * null or negative.
  * @author willi
  */
 @DynamoDBTable(tableName = "OrderHistory")
@@ -28,7 +28,7 @@ public class Order {
     private LocalDateTime placedDateTime;
     private LocalDateTime processDateTime;
     private LocalDateTime completedDateTime;
-    private Map<MenuItem, Integer> orderMenuItems;
+    private Map<MenuItem, Integer> orderMenuItemsMap;
     private Integer totalPrice;
 
     public Order() {}
@@ -44,7 +44,7 @@ public class Order {
         this.placedDateTime = builder.placedDateTime;
         this.processDateTime = builder.processDateTime;
         this.completedDateTime = builder.completedDateTime;
-        this.orderMenuItems = builder.orderMenuItems;
+        this.orderMenuItemsMap = builder.orderMenuItemsMap;
         this.totalPrice = builder.totalPrice;
         this.validateOrderState();
     }
@@ -90,12 +90,12 @@ public class Order {
 
     @DynamoDBAttribute(attributeName = "menuItem_quantity_map")
     @DynamoDBTypeConverted(converter = MenuItemsQuantityMapConverter.class)
-    public Map<MenuItem, Integer> getOrderMenuItems() {
-        return orderMenuItems;
+    public Map<MenuItem, Integer> getOrderMenuItemsMap() {
+        return orderMenuItemsMap;
     }
 
-    public void setOrderMenuItems(Map<MenuItem, Integer> orderMenuItems) {
-        this.orderMenuItems = new HashMap<>(orderMenuItems);
+    public void setOrderMenuItemsMap(Map<MenuItem, Integer> orderMenuItemsMap) {
+        this.orderMenuItemsMap = new HashMap<>(orderMenuItemsMap);
     }
 
     @DynamoDBAttribute(attributeName = "total_price_cents")
@@ -124,13 +124,13 @@ public class Order {
                     new IllegalArgumentException()
             );
         }
-        if (this.orderMenuItems == null) {
+        if (this.orderMenuItemsMap == null) {
             throw new InvalidOrderException(
                     "orderMenuItems must not be null",
                     new IllegalArgumentException()
             );
         }
-        if (this.orderMenuItems.size() == 0) {
+        if (this.orderMenuItemsMap.size() == 0) {
             throw new InvalidOrderException(
                     "orderMenuItems must not be empty",
                     new IllegalArgumentException()
@@ -142,9 +142,9 @@ public class Order {
                     new IllegalArgumentException()
             );
         }
-        if (this.totalPrice.compareTo(0) <= 0) {
+        if (this.totalPrice.compareTo(0) < 0) {
             throw new InvalidOrderException(
-                    "totalPrice must not be 0 or negative",
+                    "totalPrice must not be negative",
                     new IllegalArgumentException()
             );
         }
@@ -161,7 +161,7 @@ public class Order {
                 ", placedDateTime='" + placedDateTime + '\'' +
                 ", processDateTime='" + processDateTime + '\'' +
                 ", completedDateTime='" + completedDateTime + '\'' +
-                ", orderMenuItems=" + orderMenuItems +
+                ", orderMenuItems=" + orderMenuItemsMap +
                 ", totalPrice=" + totalPrice +
                 '}';
     }
@@ -175,13 +175,13 @@ public class Order {
                 placedDateTime.equals(order.placedDateTime) &&
                 Objects.equals(processDateTime, order.processDateTime) &&
                 Objects.equals(completedDateTime, order.completedDateTime) &&
-                orderMenuItems.equals(order.orderMenuItems) &&
+                orderMenuItemsMap.equals(order.orderMenuItemsMap) &&
                 totalPrice.equals(order.totalPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, placedDateTime, processDateTime, completedDateTime, orderMenuItems, totalPrice);
+        return Objects.hash(orderId, placedDateTime, processDateTime, completedDateTime, orderMenuItemsMap, totalPrice);
     }
 
     public static class Builder {
@@ -189,7 +189,7 @@ public class Order {
         private LocalDateTime placedDateTime;
         private LocalDateTime processDateTime;
         private LocalDateTime completedDateTime;
-        private Map<MenuItem, Integer> orderMenuItems;
+        private Map<MenuItem, Integer> orderMenuItemsMap;
         private Integer totalPrice;
 
         public Builder withOrderId(String withOrderId) {
@@ -212,8 +212,8 @@ public class Order {
             return this;
         }
 
-        public Builder withOrderMenuItems(Map<MenuItem, Integer> withOrderItems) {
-            this.orderMenuItems = new HashMap<>(withOrderItems);
+        public Builder withOrderMenuItems(Map<MenuItem, Integer> withOrderItemsMap) {
+            this.orderMenuItemsMap = new HashMap<>(withOrderItemsMap);
             return this;
         }
 
