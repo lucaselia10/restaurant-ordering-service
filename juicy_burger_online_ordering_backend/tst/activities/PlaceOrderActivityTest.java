@@ -1,8 +1,10 @@
 package activities;
 
 import activites.PlaceOrderActivity;
+
 import daos.MenuItemDao;
 import daos.OrderDao;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 
@@ -14,7 +16,6 @@ public class PlaceOrderActivityTest {
     @Mock
     private OrderDao orderDao;
 
-    @Mock
     private MenuItemDao menuItemDao;
 
     @BeforeEach

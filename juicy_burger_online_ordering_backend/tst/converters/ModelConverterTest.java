@@ -1,14 +1,12 @@
 package converters;
 
-import comprators.MenuItemModelNameComparator;
+import comprators.models.MenuItemModelNameComparator;
 import daos.MenuItemDao;
 import data.types.MenuItem;
 import data.types.Order;
 
 import data.types.models.MenuItemModel;
 import data.types.models.OrderModel;
-import dependencies.FileReaderModule;
-import dependencies.JSONParserModule;
 
 import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +17,6 @@ import utilities.OrderUtilities;
 import java.io.FileReader;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 

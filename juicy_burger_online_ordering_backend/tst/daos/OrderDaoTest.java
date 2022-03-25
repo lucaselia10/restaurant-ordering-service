@@ -18,7 +18,8 @@ import java.util.Map;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 
-// TODO: Not an actual Unit Test. Needs to be reimplemented.
+import static org.junit.jupiter.api.Assertions.*;
+
 public class OrderDaoTest {
     private OrderDao orderDao;
 
@@ -32,8 +33,6 @@ public class OrderDaoTest {
     }
 
     @Test
-
-
 
     public static void main(String[] args) {
         OrderDao orderDao = new OrderDao(new DynamoDBModule().dynamoDBMapperProvider());

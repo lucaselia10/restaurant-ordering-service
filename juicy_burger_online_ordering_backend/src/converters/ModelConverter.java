@@ -1,13 +1,12 @@
 package converters;
 
-import comprators.MenuItemModelNameComparator;
+import comprators.models.MenuItemModelNameComparator;
 import data.types.MenuItem;
 import data.types.Order;
 import data.types.models.MenuItemModel;
 import data.types.models.OrderModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
