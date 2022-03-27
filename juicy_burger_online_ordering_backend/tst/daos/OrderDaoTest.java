@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderDaoTest {
@@ -48,7 +47,6 @@ public class OrderDaoTest {
         }
 
         List<MenuItem> menuItems = menuItemDao.getListOfMenuItems();
-
 
         Order order1 = Order.builder()
                 .withOrderId(OrderUtilities.generateOrderId())

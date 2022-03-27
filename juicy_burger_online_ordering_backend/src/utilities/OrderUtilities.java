@@ -9,7 +9,7 @@ import java.util.UUID;
 
 /**
  * A utility class that provides helper methods for the Order object and any
- * of its respective activities. Do not instantiate.
+ * of its respective activities.
  */
 public class OrderUtilities {
     public static double SALES_TAX_RATE = 0.095;

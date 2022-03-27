@@ -18,7 +18,8 @@ import java.util.Map;
 
 /**
  * MenuItemDao defines the characteristics and behavior of a readonly
- * data access object for MenuItem objects.
+ * data access object for MenuItem objects. MenuItem attributes must
+ * NOT contain the characters ':' nor '&'.
  * @author willi
  */
 public class MenuItemDao {

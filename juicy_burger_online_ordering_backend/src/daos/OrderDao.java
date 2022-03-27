@@ -2,6 +2,7 @@ package daos;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import data.types.Order;
 
 import exceptions.OrderDoesNotExistException;
@@ -56,12 +57,16 @@ public class OrderDao {
      * @param partitionKey String the orderId
      * @throws OrderDoesNotExistException when an Order does not exist
      */
-    public void deleteOrder(String partitionKey) {
-        Order toDelete = this.getOrder(partitionKey);
-        this.dynamoDBMapper.delete(toDelete);
+    public boolean deleteOrder(String partitionKey) {
+        Order orderToDelete = Order.builder()
+                .withOrderId(partitionKey)
+                .build();
+
+        DynamoDBQueryExpression deleteExpression = new DynamoDBQueryExpression();
+        return false;
+
     }
 
-    // TODO: Need to flush out this function
     /**
      * Updates an Order within the persistent layer
      * @param order The updated Order object

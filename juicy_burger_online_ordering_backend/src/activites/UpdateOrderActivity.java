@@ -25,7 +25,7 @@ public class UpdateOrderActivity implements RequestHandler<UpdateOrderRequest, U
 
     // TODO: This method needs to be implemented
     @Override
-    public UpdateOrderResponse handleRequest(UpdateOrderRequest input, Context context) {
+    public UpdateOrderResponse handleRequest(UpdateOrderRequest request, Context context) {
         return null;
     }
 }

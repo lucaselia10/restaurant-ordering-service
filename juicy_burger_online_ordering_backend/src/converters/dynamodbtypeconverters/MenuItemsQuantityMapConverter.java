@@ -57,7 +57,8 @@ public class MenuItemsQuantityMapConverter implements DynamoDBTypeConverter<Stri
                                 .withPrice(Integer.valueOf(menuItemAttributes.split(":")[1].trim()))
                                 .withDescription(menuItemAttributes.split(":")[2].trim())
                                 .build(),
-                        Integer.valueOf(menuItemAttributes.split(":")[3].trim()));
+                        Integer.valueOf(menuItemAttributes.split(":")[3].trim())
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();

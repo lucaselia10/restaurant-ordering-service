@@ -1,6 +1,7 @@
 package activites;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import daos.OrderDao;
 import data.requests.DeleteOrderRequest;
@@ -22,7 +23,13 @@ public class DeleteOrderActivity implements RequestHandler<DeleteOrderRequest, D
 
     // TODO: This method needs to be implemented
     @Override
-    public DeleteOrderResponse handleRequest(DeleteOrderRequest input, Context context) {
+    public DeleteOrderResponse handleRequest(DeleteOrderRequest request, Context context) {
+        LambdaLogger logger = context.getLogger();
+        logger.log(request.toString());
+
+        orderDao.deleteOrder(request.getOrderId());
+
+
         return null;
     }
 }
