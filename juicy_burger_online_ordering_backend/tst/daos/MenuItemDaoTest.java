@@ -31,6 +31,7 @@ public class MenuItemDaoTest {
     void getListOfMenuItems_withAJSONFileOfMenuItems_returnsAListOfMenuItems() {
         // GIVEN
         List<MenuItem> menuItemList = menuItemDao.getListOfMenuItems();
+
         MenuItem menuItem1Expected = MenuItem.builder()
                 .withName("MenuItem1Name")
                 .withPrice(100)

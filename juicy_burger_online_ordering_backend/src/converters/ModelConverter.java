@@ -26,13 +26,8 @@ public class ModelConverter {
     public static OrderModel orderModelConverter(Order order) {
         return OrderModel.builder()
                 .withOrderId(order.getOrderId())
-                .withPlacedDateTime(order.getPlacedDateTime().toString())
-                .withProcessDateTime(
-                        order.getProcessDateTime() == null ? "" : order.getProcessDateTime().toString()
-                )
-                .withCompletedDateTime(
-                        order.getCompletedDateTime() == null ? "" : order.getCompletedDateTime().toString()
-                )
+                .withPlacedDate(order.getPlacedDate().toString())
+                .withPlacedTime(order.getPlacedTime().toString())
                 .withOrderMenuItemsList(orderMenuItemMapConverter(order.getOrderMenuItemsMap()))
                 .withTotalPrice(order.getTotalPrice())
                 .build();

@@ -55,12 +55,13 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
             orderMenuItems.put(menuItemsMap.get(entry.getKey()), entry.getValue());
         }
 
+        LocalDateTime placedDateTime = LocalDateTime.now();
+
         Order order = orderDao.saveOrder(
                 Order.builder()
                         .withOrderId(OrderUtilities.generateOrderId())
-                        .withPlacedDateTime(LocalDateTime.now())
-                        .withProcessDateTime(null)
-                        .withCompletedDateTime(null)
+                        .withPlacedDate(placedDateTime.toLocalDate())
+                        .withPlacedTime(placedDateTime.toLocalTime())
                         .withOrderMenuItems(orderMenuItems)
                         .withTotalPrice(OrderUtilities.calculateTotalPrice(orderMenuItems))
                         .build()

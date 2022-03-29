@@ -29,7 +29,6 @@ public class DeleteOrderActivity implements RequestHandler<DeleteOrderRequest, D
 
         orderDao.deleteOrder(request.getOrderId());
 
-
         return null;
     }
 }

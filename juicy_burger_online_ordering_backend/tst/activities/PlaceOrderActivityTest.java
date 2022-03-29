@@ -87,9 +87,8 @@ public class PlaceOrderActivityTest {
 
         Order order = Order.builder()
                 .withOrderId(OrderUtilities.generateOrderId())
-                .withPlacedDateTime(placedDateTime)
-                .withProcessDateTime(null)
-                .withCompletedDateTime(null)
+                .withPlacedDate(placedDateTime.toLocalDate())
+                .withPlacedTime(placedDateTime.toLocalTime())
                 .withOrderMenuItems(mapOfOrderMenuItems)
                 .withTotalPrice(OrderUtilities.calculateTotalPrice(mapOfOrderMenuItems))
                 .build();
@@ -109,9 +108,8 @@ public class PlaceOrderActivityTest {
 
         // THEN
         assertEquals(placeOrderResponse.getOrderModel().getOrderId(), order.getOrderId());
-        assertEquals(placeOrderResponse.getOrderModel().getPlacedDateTime(), placedDateTime.toString());
-        assertEquals(placeOrderResponse.getOrderModel().getProcessDateTime(), "");
-        assertEquals(placeOrderResponse.getOrderModel().getCompletedDateTime(), "");
+        assertEquals(placeOrderResponse.getOrderModel().getPlacedDate(), placedDateTime.toLocalDate().toString());
+        assertEquals(placeOrderResponse.getOrderModel().getPlacedTime(), placedDateTime.toLocalTime().toString());
         assertEquals(placeOrderResponse.getOrderModel().getOrderMenuItemsList(), listOfMenuItemModels);
         assertEquals(placeOrderResponse.getOrderModel().getTotalPrice(), order.getTotalPrice());
     }
@@ -151,14 +149,12 @@ public class PlaceOrderActivityTest {
                         .withQuantity(2)
                         .build()
         );
-
         LocalDateTime placedDateTime = LocalDateTime.now();
 
         Order order = Order.builder()
                 .withOrderId(OrderUtilities.generateOrderId())
-                .withPlacedDateTime(placedDateTime)
-                .withProcessDateTime(null)
-                .withCompletedDateTime(null)
+                .withPlacedDate(placedDateTime.toLocalDate())
+                .withPlacedTime(placedDateTime.toLocalTime())
                 .withOrderMenuItems(mapOfOrderMenuItems)
                 .withTotalPrice(OrderUtilities.calculateTotalPrice(mapOfOrderMenuItems))
                 .build();
@@ -178,9 +174,8 @@ public class PlaceOrderActivityTest {
 
         // THEN
         assertEquals(placeOrderResponse.getOrderModel().getOrderId(), order.getOrderId());
-        assertEquals(placeOrderResponse.getOrderModel().getPlacedDateTime(), placedDateTime.toString());
-        assertEquals(placeOrderResponse.getOrderModel().getProcessDateTime(), "");
-        assertEquals(placeOrderResponse.getOrderModel().getCompletedDateTime(), "");
+        assertEquals(placeOrderResponse.getOrderModel().getPlacedDate(), placedDateTime.toLocalDate().toString());
+        assertEquals(placeOrderResponse.getOrderModel().getPlacedTime(), placedDateTime.toLocalTime().toString());
         assertEquals(placeOrderResponse.getOrderModel().getOrderMenuItemsList(), listOfMenuItemModels);
         assertEquals(placeOrderResponse.getOrderModel().getTotalPrice(), order.getTotalPrice());
     }

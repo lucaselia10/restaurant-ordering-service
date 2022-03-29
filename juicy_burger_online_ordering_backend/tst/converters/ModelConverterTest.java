@@ -42,13 +42,12 @@ public class ModelConverterTest {
         // GIVEN
         List<MenuItem> menuItemList = menuItemDao.getListOfMenuItems();
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime placeDateTime = LocalDateTime.now();
 
         Order actualOrder = Order.builder()
                 .withOrderId("OrderTest1")
-                .withPlacedDateTime(now)
-                .withProcessDateTime(null)
-                .withCompletedDateTime(null)
+                .withPlacedDate(placeDateTime.toLocalDate())
+                .withPlacedTime(placeDateTime.toLocalTime())
                 .withOrderMenuItems(Map.of(menuItemList.get(0), 1, menuItemList.get(1), 2))
                 .withTotalPrice(OrderUtilities.calculateTotalPrice(
                         Map.of(menuItemList.get(0), 1, menuItemList.get(1), 2))
@@ -57,9 +56,8 @@ public class ModelConverterTest {
 
         OrderModel expected = OrderModel.builder()
                 .withOrderId(actualOrder.getOrderId())
-                .withPlacedDateTime(actualOrder.getPlacedDateTime().toString())
-                .withProcessDateTime("")
-                .withCompletedDateTime("")
+                .withPlacedDate(actualOrder.getPlacedDate().toString())
+                .withPlacedTime(actualOrder.getPlacedTime().toString())
                 .withOrderMenuItemsList(List.of(
                         MenuItemModel.builder()
                                 .withName(menuItemList.get(1).getName())
