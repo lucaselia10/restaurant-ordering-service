@@ -1,4 +1,4 @@
-# [Your Name] - Lucas and the Willies Accomplishment Tracking
+# William Kim - Lucas and the Willies Accomplishment Tracking
 
 Each team member should have their own version of this document.
 
