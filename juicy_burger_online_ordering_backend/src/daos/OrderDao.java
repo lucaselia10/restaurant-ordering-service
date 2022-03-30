@@ -58,6 +58,9 @@ public class OrderDao {
      */
     public void deleteOrder(String partitionKey) {
         Order toDelete = this.getOrder(partitionKey);
+        if (toDelete == null) {
+            throw new OrderDoesNotExistException();
+        }
         this.dynamoDBMapper.delete(toDelete);
     }
 

@@ -5,6 +5,8 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import daos.OrderDao;
 import data.requests.DeleteOrderRequest;
 import data.responses.DeleteOrderResponse;
+import data.types.Order;
+import exceptions.OrderDoesNotExistException;
 
 import javax.inject.Inject;
 
@@ -23,6 +25,12 @@ public class DeleteOrderActivity implements RequestHandler<DeleteOrderRequest, D
     // TODO: This method needs to be implemented
     @Override
     public DeleteOrderResponse handleRequest(DeleteOrderRequest input, Context context) {
-        return null;
+        Order order = orderDao.getOrder(input.getOrderId());
+        try {
+            orderDao.deleteOrder(order.getOrderId());
+        } catch (OrderDoesNotExistException e) {
+            return DeleteOrderResponse.builder().willItWork(false).build();
+        }
+        return DeleteOrderResponse.builder().willItWork(true).build();
     }
 }
