@@ -22,7 +22,6 @@ public class DeleteOrderActivity implements RequestHandler<DeleteOrderRequest, D
         this.orderDao = orderDao;
     }
 
-    // TODO: This method needs to be implemented
     @Override
     public DeleteOrderResponse handleRequest(DeleteOrderRequest input, Context context) {
         Order order = orderDao.getOrder(input.getOrderId());
