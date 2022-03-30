@@ -37,10 +37,19 @@ instructors by the end of the unit._
 ## Week 1
 
 **Goals:**
+- Pick a project
+- Assign team roles
+- Fill in the problem statement of our desing document
+- Present our project to the cohort
 
 **Activity:**
+- Assigned the role of creating the AWS Environment, databases, and maintaining project documents
+- Decided on creating an online ordering system for a restaurant
+- Participated in design and planning the architecture of the project
+- Presented our project and design documents to the cohort
 
 **Important Docs, Commits, or Code Reviews**:
+- 
 
 **Things learned:**
 
