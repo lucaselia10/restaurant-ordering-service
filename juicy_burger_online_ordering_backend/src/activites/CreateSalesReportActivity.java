@@ -28,6 +28,8 @@ public class CreateSalesReportActivity implements RequestHandler<CreateSalesRepo
 
         List<Order> salesReport = orderDao.getOrderByPlacedDate(request.getSalesReport());
         return CreateSalesReportResponse.builder()
+                .withSales(salesReport)
+                .build();
 
 
 
