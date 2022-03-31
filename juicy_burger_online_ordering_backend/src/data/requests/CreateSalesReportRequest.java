@@ -2,6 +2,7 @@ package data.requests;
 
 import data.types.Order;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ public class CreateSalesReportRequest {
     }
 
     public CreateSalesReportRequest(Builder builder) {
-        this.salesReport = builder.
+        this.salesReport = builder.sales;
 
     }
 
@@ -55,7 +56,7 @@ public class CreateSalesReportRequest {
 
 
         public Builder withSales(List<Order> withSales) {
-            this.sales = withSales;
+            this.sales = new ArrayList<>(withSales);
             return this;
         }
 

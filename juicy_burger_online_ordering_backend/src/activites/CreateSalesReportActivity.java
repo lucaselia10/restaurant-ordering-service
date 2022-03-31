@@ -6,8 +6,10 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import daos.OrderDao;
 import data.requests.CreateSalesReportRequest;
 import data.responses.CreateSalesReportResponse;
+import data.types.Order;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class CreateSalesReportActivity implements RequestHandler<CreateSalesReportRequest, CreateSalesReportResponse> {
 
@@ -22,5 +24,7 @@ public class CreateSalesReportActivity implements RequestHandler<CreateSalesRepo
     public CreateSalesReportResponse handleRequest(CreateSalesReportRequest request, Context context) {
         LambdaLogger logger = context.getLogger();
         logger.log(request.toString());
+
+        List<Order> salesReport = orderDao.
     }
 }
