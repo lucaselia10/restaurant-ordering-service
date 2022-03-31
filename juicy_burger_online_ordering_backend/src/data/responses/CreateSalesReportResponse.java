@@ -14,15 +14,15 @@ public class CreateSalesReportResponse {
     }
 
     private CreateSalesReportResponse(Builder builder) {
-        this.orderModel = builder.orderModel;
+        this.salesReport = builder.sales;
     }
 
-    public  getOrderModel() {
-        return orderModel;
+    public List<Order> getSalesReport() {
+        return salesReport;
     }
 
-    public void setOrderModel(OrderModel orderModel) {
-        this.orderModel = orderModel;
+    public void setSalesReport(List<Order> salesReport) {
+        this.salesReport = salesReport;
     }
 
     public static Builder builder() {
@@ -30,10 +30,10 @@ public class CreateSalesReportResponse {
     }
 
     public static class Builder {
-        private OrderModel orderModel;
+        private List<Order> sales;
 
-        public Builder withOrderModel(OrderModel withOrderModel) {
-            this.orderModel = withOrderModel;
+        public Builder withSales(List<Order> withSales) {
+            this.sales = withSales;
             return this;
         }
 
