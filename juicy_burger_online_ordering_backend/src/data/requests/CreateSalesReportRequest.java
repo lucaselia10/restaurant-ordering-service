@@ -8,23 +8,23 @@ import java.util.Objects;
 
 public class CreateSalesReportRequest {
 
-    private List<Order> salesReport;
+    private String salesForDate;
 
     public CreateSalesReportRequest() {
 
     }
 
     public CreateSalesReportRequest(Builder builder) {
-        this.salesReport = builder.sales;
+        this.salesForDate = builder.salesForDate;
 
     }
 
-    public List<Order> getSalesReport() {
-        return salesReport;
+    public String getSalesForDate() {
+        return salesForDate;
     }
 
-    public void setSalesReport(List<Order> salesReport) {
-        this.salesReport = salesReport;
+    public void setSalesForDate(String salesForDate) {
+        this.salesForDate = salesForDate;
     }
 
     @Override
@@ -32,18 +32,18 @@ public class CreateSalesReportRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreateSalesReportRequest that = (CreateSalesReportRequest) o;
-        return getSalesReport().equals(that.getSalesReport());
+        return getSalesForDate().equals(that.getSalesForDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSalesReport());
+        return Objects.hash(getSalesForDate());
     }
 
     @Override
     public String toString() {
         return "CreateSalesReportRequest{" +
-                "salesReport=" + salesReport +
+                "salesForDate='" + salesForDate + '\'' +
                 '}';
     }
 
@@ -52,11 +52,11 @@ public class CreateSalesReportRequest {
     }
 
     public static class Builder {
-        private List<Order> sales;
+        private String salesForDate;
 
 
-        public Builder withSales(List<Order> withSales) {
-            this.sales = new ArrayList<>(withSales);
+        public Builder withSalesForDate(String withSalesForDate) {
+            this.salesForDate = withSalesForDate;
             return this;
         }
 

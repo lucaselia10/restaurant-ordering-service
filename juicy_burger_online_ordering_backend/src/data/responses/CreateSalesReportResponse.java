@@ -7,22 +7,22 @@ import java.util.List;
 
 public class CreateSalesReportResponse {
 
-    private List<Order> salesReport;
+    private List<OrderModel> dateSales;
 
     public CreateSalesReportResponse() {
 
     }
 
     private CreateSalesReportResponse(Builder builder) {
-        this.salesReport = builder.sales;
+        this.dateSales = builder.sales;
     }
 
-    public List<Order> getSalesReport() {
-        return salesReport;
+    public List<OrderModel> getDateSales() {
+        return dateSales;
     }
 
-    public void setSalesReport(List<Order> salesReport) {
-        this.salesReport = salesReport;
+    public void setDateSales(List<OrderModel> dateSales) {
+        this.dateSales = dateSales;
     }
 
     public static Builder builder() {
@@ -30,10 +30,10 @@ public class CreateSalesReportResponse {
     }
 
     public static class Builder {
-        private List<Order> sales;
+        private List<OrderModel> sales;
 
-        public Builder withSales(List<Order> withSales) {
-            this.sales = withSales;
+        public Builder withSales(List<OrderModel> withDateSales) {
+            this.sales = withDateSales;
             return this;
         }
 

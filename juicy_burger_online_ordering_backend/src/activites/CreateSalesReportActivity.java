@@ -8,8 +8,10 @@ import daos.OrderDao;
 import data.requests.CreateSalesReportRequest;
 import data.responses.CreateSalesReportResponse;
 import data.types.Order;
+import data.types.models.OrderModel;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateSalesReportActivity implements RequestHandler<CreateSalesReportRequest, CreateSalesReportResponse> {
@@ -26,12 +28,14 @@ public class CreateSalesReportActivity implements RequestHandler<CreateSalesRepo
         LambdaLogger logger = context.getLogger();
         logger.log(request.toString());
 
-        List<Order> salesReport = orderDao.getOrderByPlacedDate(request.getSalesReport());
+        List<OrderModel> sales = new ArrayList<>();
+
+        for (Order sale : orderDao.getOrderByPlacedDate(request.getSalesForDate())) {
+            sales.add(ModelConverter.orderModelConverter(sale));
+        }
+
         return CreateSalesReportResponse.builder()
-                .withSales(salesReport)
+                .withSales(sales)
                 .build();
-
-
-
     }
 }
