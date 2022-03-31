@@ -23,6 +23,13 @@ public class PlaceOrderResponse {
         return new Builder();
     }
 
+    @Override
+    public String toString() {
+        return "PlaceOrderResponse{" +
+                "orderModel=" + orderModel +
+                '}';
+    }
+
     public static class Builder {
         private OrderModel orderModel;
 

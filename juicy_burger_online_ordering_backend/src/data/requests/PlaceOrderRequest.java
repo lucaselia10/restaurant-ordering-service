@@ -12,7 +12,7 @@ public class PlaceOrderRequest {
     public PlaceOrderRequest() {}
 
     private PlaceOrderRequest(Builder builder) {
-        this.orderDescription = builder.orderItems;
+        this.orderDescription = builder.orderDescription;
     }
 
     public Map<String, Integer> getOrderDescription() {
@@ -35,10 +35,10 @@ public class PlaceOrderRequest {
     }
 
     public static class Builder {
-        private Map<String, Integer> orderItems;
+        private Map<String, Integer> orderDescription;
 
-        public Builder withOrderItems(Map<String, Integer> withOrderItems) {
-            this.orderItems = new HashMap<>(withOrderItems);
+        public Builder withOrderItems(Map<String, Integer> withOrderDescription) {
+            this.orderDescription = new HashMap<>(withOrderDescription);
             return this;
         }
 

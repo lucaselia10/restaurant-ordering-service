@@ -12,9 +12,8 @@ import java.util.Objects;
  */
 public class OrderModel {
     private String orderId;
-    private String placedDateTime;
-    private String processDateTime;
-    private String completedDateTime;
+    private String placedDate;
+    private String placedTime;
     private List<MenuItemModel> orderMenuItemsList;
     private int totalPrice;
 
@@ -22,9 +21,8 @@ public class OrderModel {
 
     private OrderModel(Builder builder) {
         this.orderId = builder.orderId;
-        this.placedDateTime = builder.placedDateTime;
-        this.processDateTime = builder.processDateTime;
-        this.completedDateTime = builder.completedDateTime;
+        this.placedDate = builder.placedDate;
+        this.placedTime = builder.placedTime;
         this.orderMenuItemsList = builder.orderMenuItemsList;
         this.totalPrice = builder.totalPrice;
     }
@@ -37,28 +35,20 @@ public class OrderModel {
         this.orderId = orderId;
     }
 
-    public String getPlacedDateTime() {
-        return placedDateTime;
+    public String getPlacedDate() {
+        return placedDate;
     }
 
-    public void setPlacedDateTime(String placedDateTime) {
-        this.placedDateTime = placedDateTime;
+    public void setPlacedDate(String placedDateTime) {
+        this.placedDate = placedDate;
     }
 
-    public String getProcessDateTime() {
-        return processDateTime;
+    public String getPlacedTime() {
+        return placedTime;
     }
 
-    public void setProcessDateTime(String processDateTime) {
-        this.processDateTime = processDateTime;
-    }
-
-    public String getCompletedDateTime() {
-        return completedDateTime;
-    }
-
-    public void setCompletedDateTime(String completedDateTime) {
-        this.completedDateTime = completedDateTime;
+    public void setPlacedTime(String placedTime) {
+        this.placedTime = placedTime;
     }
 
     public List<MenuItemModel> getOrderMenuItemsList() {
@@ -88,34 +78,37 @@ public class OrderModel {
         OrderModel that = (OrderModel) o;
         return totalPrice == that.totalPrice &&
                 orderId.equals(that.orderId) &&
-                placedDateTime.equals(that.placedDateTime) &&
-                processDateTime.equals(that.processDateTime) &&
-                completedDateTime.equals(that.completedDateTime) &&
+                placedDate.equals(that.placedDate) &&
+                placedTime.equals(that.placedTime) &&
                 orderMenuItemsList.equals(that.orderMenuItemsList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, placedDateTime, processDateTime, completedDateTime, orderMenuItemsList, totalPrice);
+        return Objects.hash(
+                orderId,
+                placedDate,
+                placedTime,
+                orderMenuItemsList,
+                totalPrice
+        );
     }
 
     @Override
     public String toString() {
         return "OrderModel{" +
                 "orderId='" + orderId + '\'' +
-                ", placedDateTime='" + placedDateTime + '\'' +
-                ", processDateTime='" + processDateTime + '\'' +
-                ", completedDateTime='" + completedDateTime + '\'' +
-                ", orderMenuItems=" + orderMenuItemsList +
+                ", placedDate='" + placedDate + '\'' +
+                ", placedTime='" + placedTime + '\'' +
+                ", orderMenuItemsList=" + orderMenuItemsList +
                 ", totalPrice=" + totalPrice +
                 '}';
     }
 
     public static class Builder {
         private String orderId;
-        private String placedDateTime;
-        private String processDateTime;
-        private String completedDateTime;
+        private String placedDate;
+        private String placedTime;
         private List<MenuItemModel> orderMenuItemsList;
         private int totalPrice;
 
@@ -124,18 +117,13 @@ public class OrderModel {
             return this;
         }
 
-        public Builder withPlacedDateTime(String withPlaceDateTime) {
-            this.placedDateTime = withPlaceDateTime;
+        public Builder withPlacedDate(String withPlaceDate) {
+            this.placedDate = withPlaceDate;
             return this;
         }
 
-        public Builder withProcessDateTime(String withProcessDateTime) {
-            this.processDateTime = withProcessDateTime;
-            return this;
-        }
-
-        public Builder withCompletedDateTime(String withCompletedDateTime) {
-            this.completedDateTime = withCompletedDateTime;
+        public Builder withPlacedTime(String withPlacedTime) {
+            this.placedTime = withPlacedTime;
             return this;
         }
 

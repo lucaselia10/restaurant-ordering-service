@@ -16,9 +16,9 @@ import exceptions.InvalidOrderException;
 import utilities.OrderUtilities;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -44,23 +44,29 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
 
         Map<MenuItem, Integer> orderMenuItems = new HashMap<>();
         for (Map.Entry<String, Integer> entry : request.getOrderDescription().entrySet()) {
-            if (!menuItemsMap.containsKey(entry.getKey().trim().toLowerCase(Locale.ROOT))) {
+            if (!menuItemsMap.containsKey(entry.getKey())) {
                 logger.log("Unable to process request: menuItem does not exist");
+                throw new InvalidOrderException();
+            }
+            if (entry.getValue() <= 0) {
+                logger.log("Unable to process request: 0 or negative quantity value");
                 throw new InvalidOrderException();
             }
             orderMenuItems.put(menuItemsMap.get(entry.getKey()), entry.getValue());
         }
 
+        ZonedDateTime placedDateTime = ZonedDateTime.now(ZoneId.of("America/Los_Angeles"));
+
         Order order = orderDao.saveOrder(
                 Order.builder()
                         .withOrderId(OrderUtilities.generateOrderId())
-                        .withPlacedDateTime(LocalDateTime.now())
-                        .withProcessDateTime(null)
-                        .withCompletedDateTime(null)
+                        .withPlacedDate(placedDateTime.toLocalDate())
+                        .withPlacedTime(placedDateTime.toLocalTime())
                         .withOrderMenuItems(orderMenuItems)
                         .withTotalPrice(OrderUtilities.calculateTotalPrice(orderMenuItems))
                         .build()
         );
+        logger.log(order.toString());
 
         return PlaceOrderResponse.builder()
                 .withOrderModel(ModelConverter.orderModelConverter(order))

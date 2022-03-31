@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +18,7 @@ public class MenuItemDaoTest {
     @BeforeEach
     void setup() {
         try {
-            menuItemDao = new MenuItemDao(
-                    new JSONParser(),
-                    new FileReader("./src/resources/menuItems.json")
-            );
+            menuItemDao = new MenuItemDao(new JSONParser(), "menuItemsTest.json");
         } catch (Exception e) {
             fail(e);
         }
@@ -31,9 +29,25 @@ public class MenuItemDaoTest {
         // GIVEN
         List<MenuItem> menuItemList = menuItemDao.getListOfMenuItems();
 
-        // WHEN - THEN
-        assertTrue(menuItemList.size() > 0);
-        assertEquals(menuItemList.get(0).getClass(), MenuItem.class);
+        MenuItem menuItem1Expected = MenuItem.builder()
+                .withName("MenuItem1Name")
+                .withPrice(100)
+                .withDescription("MenuItem1Description")
+                .build();
+
+        MenuItem menuItem4Expected = MenuItem.builder()
+                .withName("MenuItem4Name")
+                .withPrice(400)
+                .withDescription("MenuItem4Description")
+                .build();
+
+        // WHEN
+        MenuItem menuItem1Actual = menuItemList.get(0);
+        MenuItem menuItem4Actual = menuItemList.get(3);
+
+        // THEN
+        assertEquals(menuItem1Expected, menuItem1Actual);
+        assertEquals(menuItem4Expected, menuItem4Actual);
     }
 
     @Test
@@ -41,9 +55,18 @@ public class MenuItemDaoTest {
         // GIVEN
         Map<String, MenuItem> menuItemMap = menuItemDao.getMapOfMenuItems();
 
-        // WHEN - THEN
-        assertTrue(menuItemMap.size() > 0);
-        assertEquals(menuItemMap.entrySet().iterator().next().getValue().getClass(), MenuItem.class);
-        assertEquals(menuItemMap.entrySet().iterator().next().getKey().getClass(), String.class);
+        // WHEN
+        List<MenuItem> menuItemsList = new ArrayList<>();
+        List<String> menuItemNamesList = new ArrayList<>();
+
+        for (Map.Entry<String, MenuItem> entry : menuItemMap.entrySet()) {
+            menuItemsList.add(entry.getValue());
+            menuItemNamesList.add(entry.getKey());
+        }
+
+        // THEN
+        for (int i = 0; i < menuItemMap.size(); i++) {
+            assertEquals(menuItemsList.get(i).getName(), menuItemNamesList.get(i));
+        }
     }
 }

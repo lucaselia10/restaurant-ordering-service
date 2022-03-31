@@ -1,14 +1,12 @@
 package converters;
 
-import comprators.MenuItemModelNameComparator;
+import comprators.models.MenuItemModelNameComparator;
 import daos.MenuItemDao;
 import data.types.MenuItem;
 import data.types.Order;
 
 import data.types.models.MenuItemModel;
 import data.types.models.OrderModel;
-import dependencies.FileReaderModule;
-import dependencies.JSONParserModule;
 
 import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +17,6 @@ import utilities.OrderUtilities;
 import java.io.FileReader;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -31,10 +28,7 @@ public class ModelConverterTest {
     @BeforeEach
     void setup() {
         try {
-            menuItemDao = new MenuItemDao(
-                    new JSONParser(),
-                    new FileReader("./src/resources/menuItems.json")
-            );
+            menuItemDao = new MenuItemDao(new JSONParser());
         } catch (Exception e) {
             fail(e);
         }
@@ -45,13 +39,12 @@ public class ModelConverterTest {
         // GIVEN
         List<MenuItem> menuItemList = menuItemDao.getListOfMenuItems();
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime placeDateTime = LocalDateTime.now();
 
         Order actualOrder = Order.builder()
                 .withOrderId("OrderTest1")
-                .withPlacedDateTime(now)
-                .withProcessDateTime(null)
-                .withCompletedDateTime(null)
+                .withPlacedDate(placeDateTime.toLocalDate())
+                .withPlacedTime(placeDateTime.toLocalTime())
                 .withOrderMenuItems(Map.of(menuItemList.get(0), 1, menuItemList.get(1), 2))
                 .withTotalPrice(OrderUtilities.calculateTotalPrice(
                         Map.of(menuItemList.get(0), 1, menuItemList.get(1), 2))
@@ -60,9 +53,8 @@ public class ModelConverterTest {
 
         OrderModel expected = OrderModel.builder()
                 .withOrderId(actualOrder.getOrderId())
-                .withPlacedDateTime(actualOrder.getPlacedDateTime().toString())
-                .withProcessDateTime("")
-                .withCompletedDateTime("")
+                .withPlacedDate(actualOrder.getPlacedDate().toString())
+                .withPlacedTime(actualOrder.getPlacedTime().toString())
                 .withOrderMenuItemsList(List.of(
                         MenuItemModel.builder()
                                 .withName(menuItemList.get(1).getName())

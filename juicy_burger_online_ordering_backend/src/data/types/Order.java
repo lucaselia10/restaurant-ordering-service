@@ -1,12 +1,14 @@
 package data.types;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import converters.dynamodbtypeconverters.LocalDateTimeConverter;
+import converters.dynamodbtypeconverters.LocalDateConverter;
+import converters.dynamodbtypeconverters.LocalTimeConverter;
 import converters.dynamodbtypeconverters.MenuItemsQuantityMapConverter;
 
 import exceptions.InvalidOrderException;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,10 +26,10 @@ import java.util.Objects;
  */
 @DynamoDBTable(tableName = "OrderHistory")
 public class Order {
+    public static final String PLACED_DATE_TIME_INDEX = "PlacedDateTimeIndex";
     private String orderId;
-    private LocalDateTime placedDateTime;
-    private LocalDateTime processDateTime;
-    private LocalDateTime completedDateTime;
+    private LocalDate placedDate;
+    private LocalTime placedTime;
     private Map<MenuItem, Integer> orderMenuItemsMap;
     private Integer totalPrice;
 
@@ -41,12 +43,10 @@ public class Order {
      */
     private Order(Builder builder) {
         this.orderId = builder.orderId;
-        this.placedDateTime = builder.placedDateTime;
-        this.processDateTime = builder.processDateTime;
-        this.completedDateTime = builder.completedDateTime;
+        this.placedDate = builder.placedDate;
+        this.placedTime = builder.placedTime;
         this.orderMenuItemsMap = builder.orderMenuItemsMap;
         this.totalPrice = builder.totalPrice;
-        this.validateOrderState();
     }
 
     @DynamoDBHashKey(attributeName = "orderId")
@@ -58,34 +58,24 @@ public class Order {
         this.orderId = orderId;
     }
 
-    @DynamoDBAttribute(attributeName = "placed_dateTime")
-    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
-    public LocalDateTime getPlacedDateTime() {
-        return placedDateTime;
+    @DynamoDBIndexHashKey(attributeName = "placed_date", globalSecondaryIndexName = PLACED_DATE_TIME_INDEX)
+    @DynamoDBTypeConverted(converter = LocalDateConverter.class)
+    public LocalDate getPlacedDate() {
+        return placedDate;
     }
 
-    public void setPlacedDateTime(LocalDateTime placedDateTime) {
-        this.placedDateTime = placedDateTime;
+    public void setPlacedDate(LocalDate placedDate) {
+        this.placedDate = placedDate;
     }
 
-    @DynamoDBAttribute(attributeName = "process_dateTime")
-    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
-    public LocalDateTime getProcessDateTime() {
-        return processDateTime;
+    @DynamoDBIndexRangeKey(attributeName = "placed_time", globalSecondaryIndexName = PLACED_DATE_TIME_INDEX)
+    @DynamoDBTypeConverted(converter = LocalTimeConverter.class)
+    public LocalTime getPlacedTime() {
+        return placedTime;
     }
 
-    public void setProcessDateTime(LocalDateTime processDateTime) {
-        this.processDateTime = processDateTime;
-    }
-
-    @DynamoDBAttribute(attributeName = "completed_dateTime")
-    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
-    public LocalDateTime getCompletedDateTime() {
-        return completedDateTime;
-    }
-
-    public void setCompletedDateTime(LocalDateTime completedDateTime) {
-        this.completedDateTime = completedDateTime;
+    public void setPlacedTime(LocalTime placedTime) {
+        this.placedTime = placedTime;
     }
 
     @DynamoDBAttribute(attributeName = "menuItem_quantity_map")
@@ -107,63 +97,8 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    /**
-     * Private helper method that enforces the Order invariants
-     * @throws InvalidOrderException when an Order invariant is broken
-     */
-    private void validateOrderState() {
-        if (this.orderId == null) {
-            throw new InvalidOrderException(
-                    "orderId must not be null",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.placedDateTime == null) {
-            throw new InvalidOrderException(
-                    "placedDateTime must not be null",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.orderMenuItemsMap == null) {
-            throw new InvalidOrderException(
-                    "orderMenuItems must not be null",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.orderMenuItemsMap.size() == 0) {
-            throw new InvalidOrderException(
-                    "orderMenuItems must not be empty",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.totalPrice == null) {
-            throw new InvalidOrderException(
-                    "totalPrice must not be null",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.totalPrice.compareTo(0) < 0) {
-            throw new InvalidOrderException(
-                    "totalPrice must not be negative",
-                    new IllegalArgumentException()
-            );
-        }
-    }
-
     public static Builder builder() {
         return new Builder();
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderId='" + orderId + '\'' +
-                ", placedDateTime='" + placedDateTime + '\'' +
-                ", processDateTime='" + processDateTime + '\'' +
-                ", completedDateTime='" + completedDateTime + '\'' +
-                ", orderMenuItems=" + orderMenuItemsMap +
-                ", totalPrice=" + totalPrice +
-                '}';
     }
 
     @Override
@@ -172,43 +107,55 @@ public class Order {
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
         return orderId.equals(order.orderId) &&
-                placedDateTime.equals(order.placedDateTime) &&
-                Objects.equals(processDateTime, order.processDateTime) &&
-                Objects.equals(completedDateTime, order.completedDateTime) &&
+                placedDate.equals(order.placedDate) &&
+                placedTime.equals(order.placedTime) &&
                 orderMenuItemsMap.equals(order.orderMenuItemsMap) &&
                 totalPrice.equals(order.totalPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, placedDateTime, processDateTime, completedDateTime, orderMenuItemsMap, totalPrice);
+        return Objects.hash(
+                orderId,
+                placedDate,
+                placedTime,
+                orderMenuItemsMap,
+                totalPrice
+        );
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId='" + orderId + '\'' +
+                ", placedDate=" + placedDate +
+                ", placedTime=" + placedTime +
+                ", orderMenuItemsMap=" + orderMenuItemsMap +
+                ", totalPrice=" + totalPrice +
+                '}';
     }
 
     public static class Builder {
         private String orderId;
-        private LocalDateTime placedDateTime;
-        private LocalDateTime processDateTime;
-        private LocalDateTime completedDateTime;
+        private LocalDate placedDate;
+        private LocalTime placedTime;
         private Map<MenuItem, Integer> orderMenuItemsMap;
         private Integer totalPrice;
+
+        private Builder() {}
 
         public Builder withOrderId(String withOrderId) {
             this.orderId = withOrderId;
             return this;
         }
 
-        public Builder withPlacedDateTime(LocalDateTime withPlacedDateTime) {
-            this.placedDateTime = withPlacedDateTime;
+        public Builder withPlacedDate(LocalDate withPlacedDate) {
+            this.placedDate = withPlacedDate;
             return this;
         }
 
-        public Builder withProcessDateTime(LocalDateTime withProcessDateTime) {
-            this.processDateTime = withProcessDateTime;
-            return this;
-        }
-
-        public Builder withCompletedDateTime(LocalDateTime withCompletedDateTime) {
-            this.completedDateTime = withCompletedDateTime;
+        public Builder withPlacedTime(LocalTime withPlacedTime) {
+            this.placedTime = withPlacedTime;
             return this;
         }
 

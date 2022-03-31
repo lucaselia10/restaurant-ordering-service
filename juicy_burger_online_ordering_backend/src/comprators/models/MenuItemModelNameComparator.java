@@ -1,4 +1,4 @@
-package comprators;
+package comprators.models;
 
 import data.types.models.MenuItemModel;
 

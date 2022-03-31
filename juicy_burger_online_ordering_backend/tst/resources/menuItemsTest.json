@@ -1,0 +1,22 @@
+[
+  {
+    "name": "MenuItem1Name",
+    "price": 100,
+    "description": "MenuItem1Description"
+  },
+  {
+    "name": "MenuItem2Name",
+    "price": 200,
+    "description": "MenuItem2Description"
+  },
+  {
+    "name": "MenuItem3Name",
+    "price": 300,
+    "description": "MenuItem3Description"
+  },
+  {
+    "name": "MenuItem4Name",
+    "price": 400,
+    "description": "MenuItem4Description"
+  }
+]

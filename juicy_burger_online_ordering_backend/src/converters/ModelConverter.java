@@ -1,13 +1,12 @@
 package converters;
 
-import comprators.MenuItemModelNameComparator;
+import comprators.models.MenuItemModelNameComparator;
 import data.types.MenuItem;
 import data.types.Order;
 import data.types.models.MenuItemModel;
 import data.types.models.OrderModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -21,19 +20,14 @@ public class ModelConverter {
 
     /**
      * Converts an Order to a OrderModel
-     * @param order Order to convert
+     * @param order The Order to parse
      * @return OrderModel
      */
     public static OrderModel orderModelConverter(Order order) {
         return OrderModel.builder()
                 .withOrderId(order.getOrderId())
-                .withPlacedDateTime(order.getPlacedDateTime().toString())
-                .withProcessDateTime(
-                        order.getProcessDateTime() == null ? "" : order.getProcessDateTime().toString()
-                )
-                .withCompletedDateTime(
-                        order.getCompletedDateTime() == null ? "" : order.getCompletedDateTime().toString()
-                )
+                .withPlacedDate(order.getPlacedDate().toString())
+                .withPlacedTime(order.getPlacedTime().toString())
                 .withOrderMenuItemsList(orderMenuItemMapConverter(order.getOrderMenuItemsMap()))
                 .withTotalPrice(order.getTotalPrice())
                 .build();
@@ -42,8 +36,8 @@ public class ModelConverter {
     /**
      * Converts a MenuItem Integer Map to a MenuItemModel list sorted
      * lexicographically by name
-     * @param orderMenuItemsMap
-     * @return
+     * @param orderMenuItemsMap The Map to parse
+     * @return List of MenuItemModels
      */
     public static List<MenuItemModel> orderMenuItemMapConverter(Map<MenuItem, Integer> orderMenuItemsMap) {
         List<MenuItemModel> menuItemModelList = new ArrayList<>();

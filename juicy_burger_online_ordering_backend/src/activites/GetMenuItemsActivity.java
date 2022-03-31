@@ -13,7 +13,7 @@ import javax.inject.Inject;
  * returns a GetMenuItemsResponse.
  */
 public class GetMenuItemsActivity implements RequestHandler<GetMenuItemsRequest, GetMenuItemsResponse> {
-    private MenuItemDao menuItemDao;
+    private final MenuItemDao menuItemDao;
 
     @Inject
     public GetMenuItemsActivity(MenuItemDao menuItemDao) {
@@ -23,6 +23,6 @@ public class GetMenuItemsActivity implements RequestHandler<GetMenuItemsRequest,
     // TODO: This method needs to be implemented (Possibly out of Scope)
     @Override
     public GetMenuItemsResponse handleRequest(GetMenuItemsRequest request, Context context) {
-        return null;
+        return new GetMenuItemsResponse();
     }
 }

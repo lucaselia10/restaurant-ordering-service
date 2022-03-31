@@ -2,12 +2,16 @@ package daos;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import data.types.Order;
 
 import exceptions.OrderDoesNotExistException;
 import exceptions.OrderException;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * OrderDao defines the characteristics and behavior of a read and write
@@ -49,6 +53,28 @@ public class OrderDao {
             throw new OrderDoesNotExistException();
         }
         return orderToReturn;
+    }
+
+    /**
+     * Retrieves a List of Orders by specified placed Date
+     * @param placedDate String of Date in (YYYY-MM-DD) format
+     * @return List of Orders
+     */
+    public List<Order> getOrdersByPlacedDate(String placedDate) {
+        Order order = Order.builder()
+                .withPlacedDate(LocalDate.parse(placedDate))
+                .build();
+
+        DynamoDBQueryExpression<Order> queryExpression = new DynamoDBQueryExpression<Order>()
+                .withHashKeyValues(order)
+                .withConsistentRead(false)
+                .withIndexName(Order.PLACED_DATE_TIME_INDEX);
+
+        return new ArrayList<>(dynamoDBMapper.query(Order.class, queryExpression));
+    }
+
+    public List<Order> getUnprocessedOrdersByPlacedDate() {
+        return null;
     }
 
     /**

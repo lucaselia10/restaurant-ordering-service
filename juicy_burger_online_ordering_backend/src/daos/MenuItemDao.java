@@ -11,24 +11,34 @@ import org.json.simple.parser.JSONParser;
 import javax.inject.Inject;
 
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * MenuItemDao defines the characteristics and behavior of a readonly
- * data access object for MenuItem objects.
+ * data access object for MenuItem objects. MenuItem attributes must
+ * NOT contain the characters ':' nor '&'.
  * @author willi
  */
 public class MenuItemDao {
-    private JSONParser jsonParser;
-    private FileReader fileReader;
+    private final String fileURL;
+    private final JSONParser jsonParser;
 
     @Inject
-    public MenuItemDao(JSONParser jsonParser, FileReader fileReader) {
+    public MenuItemDao(JSONParser jsonParser) {
+        this(jsonParser, "menuItems.json");
+    }
+
+    /**
+     * An argument constructor for testing
+     * @param fileName Name of the file with extension type
+     * @throws NullPointerException if the file does not exist in resources
+     */
+    public MenuItemDao(JSONParser jsonParser, String fileName) {
         this.jsonParser = jsonParser;
-        this.fileReader = fileReader;
+        this.fileURL = Objects.requireNonNull(getClass()
+                .getClassLoader()
+                .getResource(fileName))
+                .getFile();
     }
 
     /**
@@ -37,7 +47,8 @@ public class MenuItemDao {
      */
     public List<MenuItem> getListOfMenuItems() {
         List<MenuItem> menuItems = new ArrayList<>();
-        try {
+
+        try (FileReader fileReader = new FileReader(fileURL)) {
             JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
             for (Object object : jsonArray) {
                 JSONObject jsonObject = (JSONObject) object;
@@ -51,7 +62,6 @@ public class MenuItemDao {
                 );
             }
         } catch (Exception e) {
-            // TODO: Initiate the Error Code 500 from here for the API Gateway?
             throw new OrderException("Unable to parse internal file", e);
         }
         return menuItems;
@@ -63,7 +73,8 @@ public class MenuItemDao {
      */
     public Map<String, MenuItem> getMapOfMenuItems() {
         Map<String, MenuItem> menuItems = new HashMap<>();
-        try {
+
+        try (FileReader fileReader = new FileReader(fileURL)) {
             JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
             for (Object object : jsonArray) {
                 JSONObject jsonObject = (JSONObject) object;
@@ -78,7 +89,6 @@ public class MenuItemDao {
                 );
             }
         } catch (Exception e) {
-            // TODO: Initiate the Error Code 500 from here for the API Gateway?
             throw new OrderException("Unable to parse internal file", e);
         }
         return menuItems;

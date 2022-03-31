@@ -4,15 +4,18 @@ import data.types.MenuItem;
 import org.joda.time.LocalDateTime;
 
 import javax.inject.Inject;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.UUID;
 
 /**
  * A utility class that provides helper methods for the Order object and any
- * of its respective activities. Do not instantiate.
+ * of its respective activities.
  */
 public class OrderUtilities {
     public static double SALES_TAX_RATE = 0.095;
+    public static String TIME_ZONE = "America/Los_Angeles";
 
     private OrderUtilities() {}
 
@@ -23,6 +26,25 @@ public class OrderUtilities {
      */
     public static String generateOrderId() {
         return UUID.randomUUID().toString();
+    }
+
+    /**
+     * An OrderUtilities method that generates a ZonedDateTime with
+     * American/Los Angeles time zone as default
+     * @return ZonedDateTime
+     */
+    public static ZonedDateTime generateZonedDateTime() {
+        return generateZonedDateTime(TIME_ZONE);
+    }
+
+    /**
+     * An OrderUtilities method that generates a ZonedDateTime with
+     * a specific time zone
+     * @param timeZone String specified time zone
+     * @return ZonedDateTime
+     */
+    public static ZonedDateTime generateZonedDateTime(String timeZone) {
+        return ZonedDateTime.now(ZoneId.of(timeZone));
     }
 
     /**
