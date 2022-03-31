@@ -11,10 +11,7 @@ import org.json.simple.parser.JSONParser;
 import javax.inject.Inject;
 
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * MenuItemDao defines the characteristics and behavior of a readonly
@@ -23,13 +20,25 @@ import java.util.Map;
  * @author willi
  */
 public class MenuItemDao {
+    private final String fileURL;
     private JSONParser jsonParser;
-    private FileReader fileReader;
 
     @Inject
-    public MenuItemDao(JSONParser jsonParser, FileReader fileReader) {
+    public MenuItemDao(JSONParser jsonParser) {
+        this(jsonParser, "menuItems.json");
+    }
+
+    /**
+     * Single argument constructor for testing
+     * @param fileName Name of the file with extension type
+     * @throws NullPointerException if the file does not exist in resources
+     */
+    public MenuItemDao(JSONParser jsonParser, String fileName) {
         this.jsonParser = jsonParser;
-        this.fileReader = fileReader;
+        this.fileURL = Objects.requireNonNull(getClass()
+                .getClassLoader()
+                .getResource(fileName))
+                .getFile();
     }
 
     /**
@@ -39,7 +48,7 @@ public class MenuItemDao {
     public List<MenuItem> getListOfMenuItems() {
         List<MenuItem> menuItems = new ArrayList<>();
         try {
-            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader(fileURL));
             for (Object object : jsonArray) {
                 JSONObject jsonObject = (JSONObject) object;
                 Long price = (Long) jsonObject.get("price");
@@ -65,7 +74,7 @@ public class MenuItemDao {
     public Map<String, MenuItem> getMapOfMenuItems() {
         Map<String, MenuItem> menuItems = new HashMap<>();
         try {
-            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader(fileURL));
             for (Object object : jsonArray) {
                 JSONObject jsonObject = (JSONObject) object;
                 Long price = (Long) jsonObject.get("price");

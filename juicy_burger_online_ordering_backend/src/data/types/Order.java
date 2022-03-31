@@ -47,7 +47,6 @@ public class Order {
         this.placedTime = builder.placedTime;
         this.orderMenuItemsMap = builder.orderMenuItemsMap;
         this.totalPrice = builder.totalPrice;
-       // this.validateOrderState();
     }
 
     @DynamoDBHashKey(attributeName = "orderId")
@@ -98,55 +97,6 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    /**
-     * Private helper method that enforces the Order invariants
-     * @throws InvalidOrderException when an Order invariant is broken
-     */
-    private void validateOrderState() {
-        if (this.orderId == null) {
-            throw new InvalidOrderException(
-                    "orderId must not be null",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.placedDate == null) {
-            throw new InvalidOrderException(
-                    "placedDate must not be null",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.placedTime == null) {
-            throw new InvalidOrderException(
-                    "placedTime must not be null",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.orderMenuItemsMap == null) {
-            throw new InvalidOrderException(
-                    "orderMenuItems must not be null",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.orderMenuItemsMap.size() == 0) {
-            throw new InvalidOrderException(
-                    "orderMenuItems must not be empty",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.totalPrice == null) {
-            throw new InvalidOrderException(
-                    "totalPrice must not be null",
-                    new IllegalArgumentException()
-            );
-        }
-        if (this.totalPrice.compareTo(0) < 0) {
-            throw new InvalidOrderException(
-                    "totalPrice must not be negative",
-                    new IllegalArgumentException()
-            );
-        }
-    }
-
     public static Builder builder() {
         return new Builder();
     }
@@ -191,6 +141,8 @@ public class Order {
         private LocalTime placedTime;
         private Map<MenuItem, Integer> orderMenuItemsMap;
         private Integer totalPrice;
+
+        private Builder() {}
 
         public Builder withOrderId(String withOrderId) {
             this.orderId = withOrderId;

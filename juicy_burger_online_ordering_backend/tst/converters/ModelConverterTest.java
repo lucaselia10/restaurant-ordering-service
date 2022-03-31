@@ -28,10 +28,7 @@ public class ModelConverterTest {
     @BeforeEach
     void setup() {
         try {
-            menuItemDao = new MenuItemDao(
-                    new JSONParser(),
-                    new FileReader("./src/resources/menuItems.json")
-            );
+            menuItemDao = new MenuItemDao(new JSONParser());
         } catch (Exception e) {
             fail(e);
         }

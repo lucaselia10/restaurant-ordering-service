@@ -18,10 +18,7 @@ public class MenuItemDaoTest {
     @BeforeEach
     void setup() {
         try {
-            menuItemDao = new MenuItemDao(
-                    new JSONParser(),
-                    new FileReader("./tst/resources/menuItemsTest.json")
-            );
+            menuItemDao = new MenuItemDao(new JSONParser(), "menuItemsTest.json");
         } catch (Exception e) {
             fail(e);
         }

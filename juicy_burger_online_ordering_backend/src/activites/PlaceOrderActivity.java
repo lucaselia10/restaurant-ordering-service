@@ -16,9 +16,9 @@ import exceptions.InvalidOrderException;
 import utilities.OrderUtilities;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -55,7 +55,7 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
             orderMenuItems.put(menuItemsMap.get(entry.getKey()), entry.getValue());
         }
 
-        LocalDateTime placedDateTime = LocalDateTime.now();
+        ZonedDateTime placedDateTime = ZonedDateTime.now(ZoneId.of("America/Los_Angeles"));
 
         Order order = orderDao.saveOrder(
                 Order.builder()
@@ -66,6 +66,7 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
                         .withTotalPrice(OrderUtilities.calculateTotalPrice(orderMenuItems))
                         .build()
         );
+        logger.log(order.toString());
 
         return PlaceOrderResponse.builder()
                 .withOrderModel(ModelConverter.orderModelConverter(order))

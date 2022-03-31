@@ -20,7 +20,7 @@ public class ModelConverter {
 
     /**
      * Converts an Order to a OrderModel
-     * @param order Order to convert
+     * @param order The Order to parse
      * @return OrderModel
      */
     public static OrderModel orderModelConverter(Order order) {
@@ -36,8 +36,8 @@ public class ModelConverter {
     /**
      * Converts a MenuItem Integer Map to a MenuItemModel list sorted
      * lexicographically by name
-     * @param orderMenuItemsMap
-     * @return
+     * @param orderMenuItemsMap The Map to parse
+     * @return List of MenuItemModels
      */
     public static List<MenuItemModel> orderMenuItemMapConverter(Map<MenuItem, Integer> orderMenuItemsMap) {
         List<MenuItemModel> menuItemModelList = new ArrayList<>();

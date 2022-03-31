@@ -5,8 +5,8 @@ import converters.dynamodbtypeconverters.MenuItemsQuantityMapConverter;
 import data.types.MenuItem;
 import data.types.Order;
 import dependencies.DynamoDBModule;
-import dependencies.FileReaderModule;
 import dependencies.JSONParserModule;
+import dependencies.Services;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -15,10 +15,8 @@ import utilities.OrderUtilities;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 
 import static org.mockito.MockitoAnnotations.initMocks;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderDaoTest {
     private OrderDao orderDao;
@@ -39,12 +37,9 @@ public class OrderDaoTest {
         MenuItemDao menuItemDao = null;
 
         try {
-            menuItemDao = new MenuItemDao(
-                    new JSONParserModule().JSONParseProvider(),
-                    new FileReaderModule().fileReaderProvider()
-            );
+            menuItemDao = new MenuItemDao(new JSONParserModule().JSONParseProvider());
         } catch (Exception e) {
-            System.err.println("Bad File Path: " + e.getMessage());
+            System.exit(-1);
         }
 
         List<MenuItem> menuItems = menuItemDao.getListOfMenuItems();
@@ -63,23 +58,23 @@ public class OrderDaoTest {
 
         MenuItemsQuantityMapConverter menuItemsQuantityMapConverter = new MenuItemsQuantityMapConverter();
 
-//        String answer = menuItemsQuantityMapConverter.convert(order1.getOrderMenuItemsMap());
-//        System.out.println("Converting MenuItem to String for DynamoDB");
-//        System.out.println(answer);
-//        System.out.println();
-//        System.out.println("Unconverting from DynamoDB String to MenuItem");
-//        System.out.println(menuItemsQuantityMapConverter.unconvert(answer));
-//        System.out.println();
-//        System.out.println("Saving Order to Database");
-//        orderDao.saveOrder(order1);
-//        System.out.println();
-//        System.out.println("Retrieving Order from Database:");
-//        System.out.println(orderDao.getOrder(order1.getOrderId()));
-//        System.out.println();
-//
-        System.out.println("Getting Orders by Date");
-        List<Order> orders = orderDao.getOrdersByPlacedDate("2022-03-30");
-        System.out.println(orders.size());
-        System.out.println(orders);
+        String answer = menuItemsQuantityMapConverter.convert(order1.getOrderMenuItemsMap());
+        System.out.println("Converting MenuItem to String for DynamoDB");
+        System.out.println(answer);
+        System.out.println();
+        System.out.println("Unconverting from DynamoDB String to MenuItem");
+        System.out.println(menuItemsQuantityMapConverter.unconvert(answer));
+        System.out.println();
+        System.out.println("Saving Order to Database");
+        orderDao.saveOrder(order1);
+        System.out.println();
+        System.out.println("Retrieving Order from Database:");
+        System.out.println(orderDao.getOrder(order1.getOrderId()));
+        System.out.println();
+
+//        System.out.println("Getting Orders by Date");
+//        List<Order> orders = orderDao.getOrdersByPlacedDate("2022-03-30");
+//        System.out.println(orders.size());
+//        System.out.println(orders);
     }
 }
