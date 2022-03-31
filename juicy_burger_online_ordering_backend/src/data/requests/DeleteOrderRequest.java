@@ -5,7 +5,7 @@ import java.util.Objects;
 public class DeleteOrderRequest {
     private String orderId;
 
-    private DeleteOrderRequest() {
+    public DeleteOrderRequest() {
 
     }
 
@@ -14,6 +14,9 @@ public class DeleteOrderRequest {
         return orderId;
     }
 
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     @Override
     public boolean equals(Object o) {
