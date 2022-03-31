@@ -14,7 +14,7 @@ import javax.inject.Inject;
  * a DeleteOrderResponse. Updates the persistent layer by removing an existing Order.
  */
 public class DeleteOrderActivity implements RequestHandler<DeleteOrderRequest, DeleteOrderResponse> {
-    private OrderDao orderDao;
+    private final OrderDao orderDao;
 
     @Inject
     public DeleteOrderActivity(OrderDao orderDao) {

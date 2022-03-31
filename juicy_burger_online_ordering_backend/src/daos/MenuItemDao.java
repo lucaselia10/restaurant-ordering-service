@@ -21,7 +21,7 @@ import java.util.*;
  */
 public class MenuItemDao {
     private final String fileURL;
-    private JSONParser jsonParser;
+    private final JSONParser jsonParser;
 
     @Inject
     public MenuItemDao(JSONParser jsonParser) {
@@ -29,7 +29,7 @@ public class MenuItemDao {
     }
 
     /**
-     * Single argument constructor for testing
+     * An argument constructor for testing
      * @param fileName Name of the file with extension type
      * @throws NullPointerException if the file does not exist in resources
      */
@@ -47,8 +47,9 @@ public class MenuItemDao {
      */
     public List<MenuItem> getListOfMenuItems() {
         List<MenuItem> menuItems = new ArrayList<>();
-        try {
-            JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader(fileURL));
+
+        try (FileReader fileReader = new FileReader(fileURL)) {
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
             for (Object object : jsonArray) {
                 JSONObject jsonObject = (JSONObject) object;
                 Long price = (Long) jsonObject.get("price");
@@ -61,7 +62,6 @@ public class MenuItemDao {
                 );
             }
         } catch (Exception e) {
-            // TODO: Initiate the Error Code 500 from here for the API Gateway?
             throw new OrderException("Unable to parse internal file", e);
         }
         return menuItems;
@@ -73,8 +73,9 @@ public class MenuItemDao {
      */
     public Map<String, MenuItem> getMapOfMenuItems() {
         Map<String, MenuItem> menuItems = new HashMap<>();
-        try {
-            JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader(fileURL));
+
+        try (FileReader fileReader = new FileReader(fileURL)) {
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
             for (Object object : jsonArray) {
                 JSONObject jsonObject = (JSONObject) object;
                 Long price = (Long) jsonObject.get("price");
@@ -88,7 +89,6 @@ public class MenuItemDao {
                 );
             }
         } catch (Exception e) {
-            // TODO: Initiate the Error Code 500 from here for the API Gateway?
             throw new OrderException("Unable to parse internal file", e);
         }
         return menuItems;
