@@ -25,6 +25,8 @@ public class CreateSalesReportActivity implements RequestHandler<CreateSalesRepo
         LambdaLogger logger = context.getLogger();
         logger.log(request.toString());
 
-        List<Order> salesReport = orderDao.
+        List<Order> salesReport = orderDao.getOrderByPlacedDate();
+
+
     }
 }
