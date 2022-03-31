@@ -3,6 +3,7 @@ package activites;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import converters.ModelConverter;
 import daos.OrderDao;
 import data.requests.CreateSalesReportRequest;
 import data.responses.CreateSalesReportResponse;
@@ -25,7 +26,9 @@ public class CreateSalesReportActivity implements RequestHandler<CreateSalesRepo
         LambdaLogger logger = context.getLogger();
         logger.log(request.toString());
 
-        List<Order> salesReport = orderDao.getOrderByPlacedDate();
+        List<Order> salesReport = orderDao.getOrderByPlacedDate(request.getSalesReport());
+        return CreateSalesReportResponse.builder()
+
 
 
     }

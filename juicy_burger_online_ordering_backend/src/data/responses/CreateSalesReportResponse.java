@@ -1,10 +1,13 @@
 package data.responses;
 
+import data.types.Order;
 import data.types.models.OrderModel;
+
+import java.util.List;
 
 public class CreateSalesReportResponse {
 
-    private OrderModel orderModel;
+    private List<Order> salesReport;
 
     public CreateSalesReportResponse() {
 
@@ -14,7 +17,7 @@ public class CreateSalesReportResponse {
         this.orderModel = builder.orderModel;
     }
 
-    public OrderModel getOrderModel() {
+    public  getOrderModel() {
         return orderModel;
     }
 
