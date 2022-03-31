@@ -30,7 +30,7 @@ public class CreateSalesReportActivity implements RequestHandler<CreateSalesRepo
 
         List<OrderModel> sales = new ArrayList<>();
 
-        for (Order sale : orderDao.getOrderByPlacedDate(request.getSalesForDate())) {
+        for (Order sale : orderDao.getOrdersByPlacedDate(request.getSalesForDate())) {
             sales.add(ModelConverter.orderModelConverter(sale));
         }
 
