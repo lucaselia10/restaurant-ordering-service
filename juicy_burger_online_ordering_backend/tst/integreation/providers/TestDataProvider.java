@@ -1,5 +1,6 @@
 package integreation.providers;
 
+import activites.CreateSalesReportActivity;
 import activites.DeleteOrderActivity;
 import activites.PlaceOrderActivity;
 import activites.UpdateOrderActivity;
@@ -33,8 +34,6 @@ public class TestDataProvider {
     public UpdateOrderResponse updateOrder(UpdateOrderRequest updateOrderRequest) {
         return updateOrderActivity.handleRequest(updateOrderRequest, testContext);
     }
-
-
 
 
     public UpdateOrderRequest createUpdateOrderRequest(String orderId, Map<String, Integer> orderDescription) {
