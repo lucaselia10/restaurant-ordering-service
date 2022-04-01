@@ -1,14 +1,14 @@
 package integreation.providers;
 
-import activites.CreateSalesReportActivity;
-import activites.DeleteOrderActivity;
-import activites.PlaceOrderActivity;
-import activites.UpdateOrderActivity;
+import activites.*;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import data.requests.DeleteOrderRequest;
+import data.requests.GetOrderRequest;
 import data.requests.PlaceOrderRequest;
 import data.requests.UpdateOrderRequest;
+import data.responses.DeleteOrderResponse;
+import data.responses.GetOrderResponse;
 import data.responses.PlaceOrderResponse;
 import data.responses.UpdateOrderResponse;
 import integreation.contexts.TestContext;
@@ -19,9 +19,10 @@ public class TestDataProvider {
     private final PlaceOrderActivity placeOrderActivity = TestServiceProvider.providePlaceOrderActivity();
     private final DeleteOrderActivity deleteOrderActivity = TestServiceProvider.provideDeleteOrderActivity();
     private final UpdateOrderActivity updateOrderActivity = TestServiceProvider.provideUpdateOrderActivity();
+    private final GetOrderActivity getOrderActivity = TestServiceProvider.provideGetOrderActivity();
     private final Context testContext = new TestContext();
 
-    public PlaceOrderResponse createOrder(PlaceOrderRequest placeOrderRequest) {
+    public PlaceOrderResponse placeOrder(PlaceOrderRequest placeOrderRequest) {
         return placeOrderActivity.handleRequest(placeOrderRequest, testContext);
     }
 
@@ -43,7 +44,23 @@ public class TestDataProvider {
                 .build();
     }
 
+    public GetOrderResponse getOrder(GetOrderRequest getOrderRequest) {
+        return getOrderActivity.handleRequest(getOrderRequest, testContext);
+    }
+
+    public GetOrderRequest createGetOrderRequest(String orderId) {
+        return new GetOrderRequest().builder()
+                .withOrderId(orderId)
+                .build();
+    }
+
+    public DeleteOrderResponse deleteOrder(DeleteOrderRequest deleteOrderRequest) {
+        return deleteOrderActivity.handleRequest(deleteOrderRequest, testContext);
+    }
+
     public DeleteOrderRequest createDeleteOrderRequest(String orderId) {
-        return null;
+        return new DeleteOrderRequest().builder()
+                .withOrderId(orderId)
+                .build();
     }
 }

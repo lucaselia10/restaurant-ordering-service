@@ -1,7 +1,11 @@
 package integreation;
 
+import data.requests.DeleteOrderRequest;
+import data.requests.GetOrderRequest;
 import data.requests.PlaceOrderRequest;
 import data.requests.UpdateOrderRequest;
+import data.responses.DeleteOrderResponse;
+import data.responses.GetOrderResponse;
 import data.responses.PlaceOrderResponse;
 import data.responses.UpdateOrderResponse;
 import integreation.providers.TestDataProvider;
@@ -36,7 +40,7 @@ public class PhaseBeta {
         PlaceOrderRequest request = testDataProvider.createPlaceOrderRequest(orderDescription);
 
         // WHEN
-        PlaceOrderResponse response = testDataProvider.createOrder(request);
+        PlaceOrderResponse response = testDataProvider.placeOrder(request);
         generatedOrderId = response.getOrderModel().getOrderId();
 
         // THEN
@@ -76,5 +80,39 @@ public class PhaseBeta {
         assertEquals(1, updateOrderResponse.getOrderModel().getOrderMenuItemsList().get(2).getQuantity());
         assertEquals("Sprite", updateOrderResponse.getOrderModel().getOrderMenuItemsList().get(3).getName());
         assertEquals(7, updateOrderResponse.getOrderModel().getOrderMenuItemsList().get(3).getQuantity());
+    }
+
+    @Test
+    @Order(3)
+    void getOrderActivity_withGetOrderRequest_returnsGetOrderResponse() {
+        // GIVEN
+        GetOrderRequest getOrderRequest = testDataProvider.createGetOrderRequest(generatedOrderId);
+
+        // WHEN
+        GetOrderResponse getOrderResponse = testDataProvider.getOrder(getOrderRequest);
+
+        // THEN
+//        assertEquals("Chicken Nuggets", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getName());
+//        assertEquals(5, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getQuantity());
+//        assertEquals("Juicy Bacon Cheeseburger", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getName());
+//        assertEquals(3, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getQuantity());
+//        assertEquals("Juicy Cheeseburger", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(2).getName());
+//        assertEquals(1,getOrderResponse.getOrderModel().getOrderMenuItemsList().get(2).getQuantity());
+//        assertEquals("Sprite", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(3).getName());
+//        assertEquals(7, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(3).getQuantity());
+        fail();
+    }
+
+    @Test
+    @Order(4)
+    void deleteOrderActivity_withDeleteOrderRequest_returnsDeleteOrderResponse() {
+        // GIVEN
+        DeleteOrderRequest deleteOrderRequest = testDataProvider.createDeleteOrderRequest(generatedOrderId);
+
+        // WHEN
+        DeleteOrderResponse deleteOrderResponse = testDataProvider.deleteOrder(deleteOrderRequest);
+
+        // THEN
+
     }
 }

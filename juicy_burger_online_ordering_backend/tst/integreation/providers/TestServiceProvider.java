@@ -1,6 +1,7 @@
 package integreation.providers;
 
 import activites.DeleteOrderActivity;
+import activites.GetOrderActivity;
 import activites.PlaceOrderActivity;
 import activites.UpdateOrderActivity;
 import dependencies.DaggerServices;
@@ -22,4 +23,6 @@ public class TestServiceProvider {
     public static UpdateOrderActivity provideUpdateOrderActivity() {
         return DAGGER.providesUpdateOrderActivity();
     }
+
+    public static GetOrderActivity provideGetOrderActivity() { return DAGGER.providesGetOrderActivity(); }
 }
