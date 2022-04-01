@@ -1,21 +1,19 @@
 package daos;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import converters.dynamodbtypeconverters.MenuItemsQuantityMapConverter;
 import data.types.MenuItem;
 import data.types.Order;
-import dependencies.DynamoDBModule;
-import dependencies.JSONParserModule;
-import dependencies.Services;
+import exceptions.OrderDoesNotExistException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import utilities.OrderUtilities;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class OrderDaoTest {
@@ -30,51 +28,116 @@ public class OrderDaoTest {
         orderDao = new OrderDao(dynamoDBMapper);
     }
 
-//    @Test
+    @Test
+    void saveOrder_withOrder_dynamoDBSaveMethodIsCalled() {
+        // GIVEN
+        Order expected = Order.builder()
+                .withOrderId("Test1")
+                .withPlacedDate(LocalDate.now())
+                .withPlacedTime(LocalTime.now())
+                .withOrderMenuItems(
+                        Map.of(
+                                MenuItem.builder()
+                                        .withName("TestMenuItem")
+                                        .withDescription("TestMenuItemDescription")
+                                        .withPrice(-99)
+                                        .build(),
+                                -2
+                        )
+                )
+                .withTotalPrice(-99)
+                .build();
 
-//    public static void main(String[] args) {
-//        OrderDao orderDao = new OrderDao(new DynamoDBModule().dynamoDBMapperProvider());
-//        MenuItemDao menuItemDao = null;
-//
-//        try {
-//            menuItemDao = new MenuItemDao(new JSONParserModule().JSONParseProvider());
-//        } catch (Exception e) {
-//            System.exit(-1);
-//        }
-//
-//        List<MenuItem> menuItems = menuItemDao.getListOfMenuItems();
-//
-//        LocalDateTime placedDateTime = LocalDateTime.now();
-//
-//        Order order1 = Order.builder()
-//                .withOrderId(OrderUtilities.generateOrderId())
-//                .withOrderMenuItems(Map.of(menuItems.get(0), 2, menuItems.get(1), 1))
-//                .withPlacedDate(placedDateTime.toLocalDate().plusDays(5))
-//                .withPlacedTime(placedDateTime.toLocalTime())
-//                .withTotalPrice(OrderUtilities.calculateTotalPrice(
-//                        Map.of(menuItems.get(0), 2, menuItems.get(1), 1))
-//                )
-//                .build();
-//
-//        MenuItemsQuantityMapConverter menuItemsQuantityMapConverter = new MenuItemsQuantityMapConverter();
-//
-//        String answer = menuItemsQuantityMapConverter.convert(order1.getOrderMenuItemsMap());
-//        System.out.println("Converting MenuItem to String for DynamoDB");
-//        System.out.println(answer);
-//        System.out.println();
-//        System.out.println("Unconverting from DynamoDB String to MenuItem");
-//        System.out.println(menuItemsQuantityMapConverter.unconvert(answer));
-//        System.out.println();
-//        System.out.println("Saving Order to Database");
-//        orderDao.saveOrder(order1);
-//        System.out.println();
-//        System.out.println("Retrieving Order from Database:");
-//        System.out.println(orderDao.getOrder(order1.getOrderId()));
-//        System.out.println();
-//
-//        System.out.println("Getting Orders by Date");
-//        List<Order> orders = orderDao.getOrdersByPlacedDate("2022-03-30");
-//        System.out.println(orders.size());
-//        System.out.println(orders);
-//    }
+        // WHEN
+        Order actual = orderDao.saveOrder(expected);
+
+        // THEN
+        assertEquals(expected, actual);
+        verify(dynamoDBMapper, times(1)).save(expected);
+    }
+
+    @Test
+    void getOrder_withExistingOrder_anOrderIsReturned() {
+        // GIVEN
+        Order expected = Order.builder()
+                .withOrderId("Test1")
+                .withPlacedDate(LocalDate.now())
+                .withPlacedTime(LocalTime.now())
+                .withOrderMenuItems(
+                        Map.of(
+                                MenuItem.builder()
+                                        .withName("TestMenuItem")
+                                        .withDescription("TestMenuItemDescription")
+                                        .withPrice(-99)
+                                        .build(),
+                                -2
+                        )
+                )
+                .withTotalPrice(-99)
+                .build();
+
+        when(dynamoDBMapper.load(Order.class, expected.getOrderId())).thenReturn(expected);
+
+        // WHEN
+        Order actual = orderDao.getOrder(expected.getOrderId());
+
+        // THEN
+        assertEquals(expected, actual);
+        verify(dynamoDBMapper, times(1)).load(Order.class, expected.getOrderId());
+    }
+
+    @Test
+    void getOrder_withNonExistingOrder_OrderDoesNotExistExceptionIsThrown() {
+        // GIVEN
+        String nonExistingOrderId = "DNE";
+
+        when(dynamoDBMapper.load(Order.class, nonExistingOrderId)).thenReturn(null);
+
+        // WHEN - THEN
+        assertThrows(OrderDoesNotExistException.class,
+                () -> orderDao.getOrder(nonExistingOrderId)
+        );
+    }
+
+    @Test
+    void deleteOrder_withExistingOrder_dynamoDBDeleteMethodIsCalled() {
+        // GIVEN
+        Order expected = Order.builder()
+                .withOrderId("Test1")
+                .withPlacedDate(LocalDate.now())
+                .withPlacedTime(LocalTime.now())
+                .withOrderMenuItems(
+                        Map.of(
+                                MenuItem.builder()
+                                        .withName("TestMenuItem")
+                                        .withDescription("TestMenuItemDescription")
+                                        .withPrice(-99)
+                                        .build(),
+                                -2
+                        )
+                )
+                .withTotalPrice(-99)
+                .build();
+
+        when(dynamoDBMapper.load(Order.class, expected.getOrderId())).thenReturn(expected);
+
+        // WHEN
+        orderDao.deleteOrder(expected.getOrderId());
+
+        // THEN
+        verify(dynamoDBMapper, times(1)).delete(expected);
+    }
+
+    @Test
+    void deleteOrder_withNonExistingOrder_OrderDoesNotExistExceptionIsThrown() {
+        // GIVEN
+        String nonExistingOrderId = "DNE";
+
+        when(dynamoDBMapper.load(Order.class, nonExistingOrderId)).thenReturn(null);
+
+        // WHEN - THEN
+        assertThrows(OrderDoesNotExistException.class,
+                () -> orderDao.deleteOrder(nonExistingOrderId)
+        );
+    }
 }
