@@ -12,6 +12,7 @@ import data.responses.PlaceOrderResponse;
 import data.types.MenuItem;
 import data.types.Order;
 import data.types.models.MenuItemModel;
+import exceptions.InvalidOrderException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -133,50 +134,15 @@ public class PlaceOrderActivityTest {
                 Map.of(menuItem1.getName(), menuItem1, menuItem2.getName(), menuItem2)
         );
 
-        Map<MenuItem, Integer> mapOfOrderMenuItems = Map.of(menuItem1, 1, menuItem2, 2);
-
-        List<MenuItemModel> listOfMenuItemModels = List.of(
-                MenuItemModel.builder()
-                        .withName(menuItem1.getName())
-                        .withPrice(menuItem1.getPrice())
-                        .withDescription(menuItem1.getDescription())
-                        .withQuantity(1)
-                        .build(),
-                MenuItemModel.builder()
-                        .withName(menuItem2.getName())
-                        .withPrice(menuItem2.getPrice())
-                        .withDescription(menuItem2.getDescription())
-                        .withQuantity(2)
-                        .build()
-        );
-        LocalDateTime placedDateTime = LocalDateTime.now();
-
-        Order order = Order.builder()
-                .withOrderId(OrderUtilities.generateOrderId())
-                .withPlacedDate(placedDateTime.toLocalDate())
-                .withPlacedTime(placedDateTime.toLocalTime())
-                .withOrderMenuItems(mapOfOrderMenuItems)
-                .withTotalPrice(OrderUtilities.calculateTotalPrice(mapOfOrderMenuItems))
-                .build();
-
-
         PlaceOrderRequest placeOrderRequest = PlaceOrderRequest.builder()
                 .withOrderItems(
-                        Map.of(menuItem1.getName(), 1, menuItem2.getName(), 2)
+                        Map.of(menuItem1.getName(), 1, menuItem2.getName(), 0)
                 ).build();
 
         when(menuItemDao.getMapOfMenuItems()).thenReturn(menuItemMap);
-        when(orderDao.saveOrder(any(Order.class))).thenReturn(order);
         when(context.getLogger()).thenReturn(lambdaLogger);
 
-        // WHEN
-        PlaceOrderResponse placeOrderResponse = placeOrderActivity.handleRequest(placeOrderRequest, context);
-
-        // THEN
-        assertEquals(placeOrderResponse.getOrderModel().getOrderId(), order.getOrderId());
-        assertEquals(placeOrderResponse.getOrderModel().getPlacedDate(), placedDateTime.toLocalDate().toString());
-        assertEquals(placeOrderResponse.getOrderModel().getPlacedTime(), placedDateTime.toLocalTime().toString());
-        assertEquals(placeOrderResponse.getOrderModel().getOrderMenuItemsList(), listOfMenuItemModels);
-        assertEquals(placeOrderResponse.getOrderModel().getTotalPrice(), order.getTotalPrice());
+        // WHEN - THEN
+        assertThrows(InvalidOrderException.class, () -> placeOrderActivity.handleRequest(placeOrderRequest, context));
     }
 }
