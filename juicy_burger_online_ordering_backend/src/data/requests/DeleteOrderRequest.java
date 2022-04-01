@@ -38,7 +38,7 @@ public class DeleteOrderRequest {
                 '}';
     }
 
-    public DeleteOrderRequest(Builder builder) {
+    private DeleteOrderRequest(Builder builder) {
         this.orderId = builder.orderId;
     }
 
@@ -57,10 +57,10 @@ public class DeleteOrderRequest {
             this.orderId = withOrderId;
             return this;
         }
+
         public DeleteOrderRequest build() {
-            DeleteOrderRequest deleteOrderRequest = new DeleteOrderRequest();
-            deleteOrderRequest.orderId = this.orderId;
-            return deleteOrderRequest;
+            return new DeleteOrderRequest(this);
         }
+
     }
 }
