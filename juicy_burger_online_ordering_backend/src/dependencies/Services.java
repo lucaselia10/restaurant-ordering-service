@@ -19,6 +19,8 @@ public interface Services {
 
     DeleteOrderActivity providesDeleteOrderActivity();
 
+    GetOrderActivity providesGetOrderActivity();
+
     GetMenuItemsActivity providesGetMenuItemsActivity();
 
     CreateSalesReportActivity providesCreateSalesReportActivity();

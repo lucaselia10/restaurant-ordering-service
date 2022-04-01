@@ -3,12 +3,15 @@ package activites;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import converters.ModelConverter;
 import daos.MenuItemDao;
 import daos.OrderDao;
 import data.requests.UpdateOrderRequest;
 import data.responses.UpdateOrderResponse;
 import data.types.MenuItem;
+import data.types.Order;
 import exceptions.InvalidOrderException;
+import utilities.OrderUtilities;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -48,6 +51,15 @@ public class UpdateOrderActivity implements RequestHandler<UpdateOrderRequest, U
             orderMenuItems.put(menuItemsMap.get(entry.getKey()), entry.getValue());
         }
 
-        return null;
+        Order orderToUpdate = orderDao.getOrder(request.getOrderId());
+
+        orderToUpdate.setOrderMenuItemsMap(orderMenuItems);
+        orderToUpdate.setTotalPrice(OrderUtilities.calculateTotalPrice(orderMenuItems));
+
+        Order order = orderDao.saveOrder(orderToUpdate);
+
+        return UpdateOrderResponse.builder()
+                .withOrderModel(ModelConverter.orderModelConverter(order))
+                .build();
     }
 }
