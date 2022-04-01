@@ -14,7 +14,7 @@ public class GetOrderActivityProvider implements RequestHandler<GetOrderRequest,
 
     @Override
     public GetOrderResponse handleRequest(GetOrderRequest request, Context context) {
-        return services.providesGetOrderActivity().handleRequest(request, context);
+        return getServices().providesGetOrderActivity().handleRequest(request, context);
     }
 
     private Services getServices() {
