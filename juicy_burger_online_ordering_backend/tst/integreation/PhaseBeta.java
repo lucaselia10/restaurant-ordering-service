@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(OrderAnnotation.class)
 public class PhaseBeta {
     private TestDataProvider testDataProvider;
-    private static String generatedOrderId = null;
+    private String generatedOrderId = null;
 
     @BeforeEach
     void setup() {
@@ -44,6 +44,12 @@ public class PhaseBeta {
     @Test
     @Order(2)
     void updateOrderActivity_withUpdateOrderRequest_returnsUpdateOrderResponse() {
-
+        // GIVEN
+        Map<String, Integer> orderDescription = Map.of(
+                "Juicy Burger", 12,
+                "Juicy Cheeseburger", 34,
+                "Chicken Nuggets", 56,
+                "Sprite", 78
+        );
     }
 }
