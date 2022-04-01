@@ -8,7 +8,7 @@ import integreation.providers.TestServiceProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class Phase1 {
+public class PhaseBeta {
     private PlaceOrderActivity placeOrderActivity;
     private TestDataProvider testDataProvider;
 
@@ -27,7 +27,5 @@ public class Phase1 {
         PlaceOrderResponse actual = testDataProvider.createOrder();
 
         // THEN
-        System.out.println(expected);
-        System.out.println(actual);
     }
 }

@@ -7,7 +7,7 @@ import integreation.providers.TestServiceProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class Phase2 {
+public class PhaseDelta {
     private PlaceOrderActivity placeOrderActivity;
     private TestDataProvider testDataProvider;
 
