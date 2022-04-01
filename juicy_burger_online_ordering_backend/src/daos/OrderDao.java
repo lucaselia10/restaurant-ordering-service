@@ -73,10 +73,6 @@ public class OrderDao {
         return new ArrayList<>(dynamoDBMapper.query(Order.class, queryExpression));
     }
 
-    public List<Order> getUnprocessedOrdersByPlacedDate() {
-        return null;
-    }
-
     /**
      * Removes an Order from the persistent layer
      * @param partitionKey String the orderId
@@ -88,17 +84,5 @@ public class OrderDao {
             throw new OrderDoesNotExistException();
         }
         this.dynamoDBMapper.delete(toDelete);
-    }
-
-    // TODO: Need to flush out this function
-    /**
-     * Updates an Order within the persistent layer
-     * @param order The updated Order object
-     * @throws OrderDoesNotExistException when an Order does not exist
-     */
-    public void updateOrder(Order order) {
-        Order orderToUpdate = this.getOrder(order.getOrderId());
-
-        this.saveOrder(order);
     }
 }
