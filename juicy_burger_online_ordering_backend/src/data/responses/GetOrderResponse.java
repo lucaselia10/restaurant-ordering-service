@@ -6,8 +6,12 @@ import data.types.models.OrderModel;
 public class GetOrderResponse {
     private OrderModel orderModel;
 
-    public GetOrderResponse(Builder builder) {
-        this.orderModel = builder.build().orderModel;
+    private GetOrderResponse(Builder builder) {
+        this.orderModel = builder.orderModel;
+    }
+
+    public OrderModel getOrderModel() {
+        return orderModel;
     }
 
     public static Builder builder() {
@@ -16,7 +20,8 @@ public class GetOrderResponse {
 
     public static final class Builder {
         private OrderModel orderModel;
-        public Builder withOrder(OrderModel orderModel) {
+
+        public Builder withOrderModel(OrderModel orderModel) {
             this.orderModel = orderModel;
             return this;
         }

@@ -8,6 +8,7 @@ import data.responses.DeleteOrderResponse;
 import data.responses.GetOrderResponse;
 import data.responses.PlaceOrderResponse;
 import data.responses.UpdateOrderResponse;
+import exceptions.OrderDoesNotExistException;
 import integreation.providers.TestDataProvider;
 
 import java.util.Map;
@@ -92,15 +93,14 @@ public class PhaseBeta {
         GetOrderResponse getOrderResponse = testDataProvider.getOrder(getOrderRequest);
 
         // THEN
-//        assertEquals("Chicken Nuggets", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getName());
-//        assertEquals(5, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getQuantity());
-//        assertEquals("Juicy Bacon Cheeseburger", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getName());
-//        assertEquals(3, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getQuantity());
-//        assertEquals("Juicy Cheeseburger", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(2).getName());
-//        assertEquals(1,getOrderResponse.getOrderModel().getOrderMenuItemsList().get(2).getQuantity());
-//        assertEquals("Sprite", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(3).getName());
-//        assertEquals(7, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(3).getQuantity());
-        fail();
+        assertEquals("Chicken Nuggets", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getName());
+        assertEquals(5, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getQuantity());
+        assertEquals("Juicy Bacon Cheeseburger", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getName());
+        assertEquals(3, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getQuantity());
+        assertEquals("Juicy Cheeseburger", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(2).getName());
+        assertEquals(1,getOrderResponse.getOrderModel().getOrderMenuItemsList().get(2).getQuantity());
+        assertEquals("Sprite", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(3).getName());
+        assertEquals(7, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(3).getQuantity());
     }
 
     @Test
@@ -113,7 +113,16 @@ public class PhaseBeta {
         DeleteOrderResponse deleteOrderResponse = testDataProvider.deleteOrder(deleteOrderRequest);
 
         // THEN
+        assertTrue(deleteOrderResponse.isDidItWork());
+    }
 
+    @Test
+    @Order(5)
+    void getOrderActivity_withGetOrderRequest_throwsException() {
+        // GIVEN
+        GetOrderRequest getOrderRequest = testDataProvider.createGetOrderRequest(generatedOrderId);
 
+        // WHEN - THEN
+        assertThrows(OrderDoesNotExistException.class, () -> testDataProvider.getOrder(getOrderRequest));
     }
 }

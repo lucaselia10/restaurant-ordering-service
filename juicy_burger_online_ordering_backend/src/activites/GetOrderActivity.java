@@ -27,7 +27,7 @@ public class GetOrderActivity implements RequestHandler<GetOrderRequest, GetOrde
         Order order = orderDao.getOrder(orderRequest.getOrderId());
         OrderModel orderModel = ModelConverter.orderModelConverter(order);
         return GetOrderResponse.builder()
-                .withOrder(orderModel)
+                .withOrderModel(orderModel)
                 .build();
     }
 }
