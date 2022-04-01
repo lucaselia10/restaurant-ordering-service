@@ -1,12 +1,13 @@
 package data.responses;
 
 import data.types.Order;
+import data.types.models.OrderModel;
 
 public class GetOrderResponse {
-    private Order order;
+    private OrderModel orderModel;
 
     public GetOrderResponse(Builder builder) {
-        this.order = builder.order;
+        this.orderModel = builder.build().orderModel;
     }
 
     public static Builder builder() {
@@ -14,9 +15,9 @@ public class GetOrderResponse {
     }
 
     public static final class Builder {
-        private Order order;
-        public Builder withOrder(Order order) {
-            this.order = order;
+        private OrderModel orderModel;
+        public Builder withOrder(OrderModel orderModel) {
+            this.orderModel = orderModel;
             return this;
         }
         public GetOrderResponse build() {return new GetOrderResponse(this);}
