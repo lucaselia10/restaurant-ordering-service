@@ -1,9 +1,6 @@
 package dependencies;
 
-import activites.DeleteOrderActivity;
-import activites.GetMenuItemsActivity;
-import activites.PlaceOrderActivity;
-import activites.UpdateOrderActivity;
+import activites.*;
 
 import dagger.Component;
 
@@ -23,4 +20,6 @@ public interface Services {
     DeleteOrderActivity providesDeleteOrderActivity();
 
     GetMenuItemsActivity providesGetMenuItemsActivity();
+
+    CreateSalesReportActivity providesCreateSalesReportActivity();
 }
