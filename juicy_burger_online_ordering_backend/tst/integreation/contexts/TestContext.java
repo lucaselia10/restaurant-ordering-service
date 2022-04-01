@@ -6,8 +6,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 /**
- * Defines a Dummy Context class for Integration Testing.
- *
+ * Defines a dummy Context object for Integration Testing.
  */
 public class TestContext implements Context {
 
@@ -67,7 +66,7 @@ public class TestContext implements Context {
     }
 
     /**
-     * A dummy implementation of a LambdaLogger
+     * Defines a dummy LambdaLogger for Integration Testing
      */
     private static class TestLogger implements LambdaLogger {
         @Override

@@ -1,31 +1,49 @@
 package integreation;
 
-import activites.PlaceOrderActivity;
 import data.requests.PlaceOrderRequest;
 import data.responses.PlaceOrderResponse;
 import integreation.providers.TestDataProvider;
-import integreation.providers.TestServiceProvider;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.MethodOrderer.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@TestMethodOrder(OrderAnnotation.class)
 public class PhaseBeta {
-    private PlaceOrderActivity placeOrderActivity;
     private TestDataProvider testDataProvider;
+    private static String generatedOrderId = null;
 
     @BeforeEach
     void setup() {
-        placeOrderActivity = TestServiceProvider.providePlaceOrderActivity();
         testDataProvider = new TestDataProvider();
     }
 
     @Test
+    @Order(1)
     void placeOrderActivity_withPlaceOrderRequest_returnsPlaceOrderResponse() {
         // GIVEN
-        PlaceOrderRequest expected = testDataProvider.createPlaceOrderRequest();
+        Map<String, Integer> orderDescription = Map.of(
+                "Juicy Burger", 12,
+                "Juicy Cheeseburger", 34,
+                "Chicken Nuggets", 56,
+                "Sprite", 78
+        );
+
+        PlaceOrderRequest request = testDataProvider.createPlaceOrderRequest(orderDescription);
 
         // WHEN
-        PlaceOrderResponse actual = testDataProvider.createOrder();
+        PlaceOrderResponse response = testDataProvider.createOrder(request);
+        generatedOrderId = response.getOrderModel().getOrderId();
 
         // THEN
+
+    }
+
+    @Test
+    @Order(2)
+    void updateOrderActivity_withUpdateOrderRequest_returnsUpdateOrderResponse() {
+
     }
 }
