@@ -62,7 +62,7 @@ public class MenuItemDao {
                 );
             }
         } catch (Exception e) {
-            throw new OrderException("Unable to parse internal file", e);
+            throw new OrderException("Unable to parse internal file!", e);
         }
         return menuItems;
     }
@@ -89,7 +89,7 @@ public class MenuItemDao {
                 );
             }
         } catch (Exception e) {
-            throw new OrderException("Unable to parse internal file", e);
+            throw new OrderException("Unable to parse internal file!", e);
         }
         return menuItems;
     }

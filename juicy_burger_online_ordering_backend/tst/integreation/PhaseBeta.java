@@ -17,6 +17,10 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.MethodOrderer.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * PhaseBeta tests runs through all the base case scenarios
+ * for all the endpoints
+ */
 @TestMethodOrder(OrderAnnotation.class)
 public class PhaseBeta {
     private TestDataProvider testDataProvider;

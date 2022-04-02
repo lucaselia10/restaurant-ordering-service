@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * PhaseAlpha Integration testing covers the
+ * PhaseAlpha test ensures that the DynamoDB tables are set
+ * correctly
  */
 public class PhaseAlpha {
     private static final String TABLE_NAME = "OrderHistory";

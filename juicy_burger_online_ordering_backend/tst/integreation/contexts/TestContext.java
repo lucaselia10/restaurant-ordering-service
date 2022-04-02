@@ -66,7 +66,7 @@ public class TestContext implements Context {
     }
 
     /**
-     * Defines a dummy LambdaLogger for Integration Testing
+     * Defines a dummy LambdaLogger for Integration Testing.
      */
     private static class TestLogger implements LambdaLogger {
         @Override
