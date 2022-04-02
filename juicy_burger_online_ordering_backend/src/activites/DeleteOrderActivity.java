@@ -24,9 +24,8 @@ public class DeleteOrderActivity implements RequestHandler<DeleteOrderRequest, D
 
     @Override
     public DeleteOrderResponse handleRequest(DeleteOrderRequest input, Context context) {
-        Order order = orderDao.getOrder(input.getOrderId());
         try {
-            orderDao.deleteOrder(order.getOrderId());
+            orderDao.deleteOrder(input.getOrderId());
         } catch (OrderDoesNotExistException e) {
             return DeleteOrderResponse.builder().willItWork(false).build();
         }

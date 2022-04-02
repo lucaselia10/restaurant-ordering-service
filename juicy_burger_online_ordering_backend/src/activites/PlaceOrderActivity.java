@@ -46,11 +46,11 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
         for (Map.Entry<String, Integer> entry : request.getOrderDescription().entrySet()) {
             if (!menuItemsMap.containsKey(entry.getKey())) {
                 logger.log("Unable to process request: menuItem does not exist");
-                throw new InvalidOrderException();
+                throw new InvalidOrderException("Request contains invalid menuItems!");
             }
             if (entry.getValue() <= 0) {
                 logger.log("Unable to process request: 0 or negative quantity value");
-                throw new InvalidOrderException();
+                throw new InvalidOrderException("Request contains negative or zero menuItems!");
             }
             orderMenuItems.put(menuItemsMap.get(entry.getKey()), entry.getValue());
         }

@@ -118,7 +118,7 @@ public class PhaseBeta {
 
     @Test
     @Order(5)
-    void getOrderActivity_withGetOrderRequest_throwsException() {
+    void getOrderActivity_withGetOrderRequest_throwsOrderDoesNotExistException() {
         // GIVEN
         GetOrderRequest getOrderRequest = testDataProvider.createGetOrderRequest(generatedOrderId);
 

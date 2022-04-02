@@ -36,7 +36,7 @@ public class OrderDao {
         try {
             this.dynamoDBMapper.save(order);
         } catch (Exception e) {
-            throw new OrderException("Could not save to DynamoDB", e);
+            throw new OrderException("Could not save to DynamoDB!", e);
         }
         return order;
     }
@@ -50,7 +50,7 @@ public class OrderDao {
     public Order getOrder(String partitionKey) {
         Order orderToReturn = this.dynamoDBMapper.load(Order.class, partitionKey);
         if (orderToReturn == null) {
-            throw new OrderDoesNotExistException();
+            throw new OrderDoesNotExistException("Order does not exist!");
         }
         return orderToReturn;
     }
@@ -80,9 +80,6 @@ public class OrderDao {
      */
     public void deleteOrder(String partitionKey) {
         Order toDelete = this.getOrder(partitionKey);
-        if (toDelete == null) {
-            throw new OrderDoesNotExistException();
-        }
         this.dynamoDBMapper.delete(toDelete);
     }
 }
