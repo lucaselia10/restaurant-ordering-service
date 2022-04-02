@@ -70,7 +70,6 @@ instructors by the end of the unit._
 1. Designed and defined the DAO, Dagger Modules/Dependency Injection, Utilities Classes, Converter Classes, Types, Data, and 
     Custom Exception classes 
 2. Designed and Implemented the PlaceOrderActivity and associated Provider class
-3. Designed and Implemented the DeleteOrderActivity and associated Provider class
 4. Designed and Implemented the UpdateOrderActivity and associated Provider class
 4. Implemented unit tests for written code as appropriate
 
@@ -92,23 +91,32 @@ instructors by the end of the unit._
 1. Implement additional endpoint to incorporate Global Secondary Indexes into DynamoDB tables
 2. Research and create/write Integeration Test plans. 
 3. Import Java code into AWS/Amazon environments
+4. Deploy a functional API
 
 **Activity:**
 
-1. Researched and watch videos about the different technologies/approaches to integeration tests
-2. Reserached how to form DynamoDB quries respective to parition/range keys and non-key attributes.
-3. Refactored code 
+1. Completed writing unit tests
+2. Researched and watch videos about the different technologies/approaches for integeration tests
+3. Reserached how to form DynamoDB quries respective to parition/range keys and non-key attributes.
+4. Implemented and completed manual Integration test classes for all endpoints
+5. Peformed AWS Lambda testing
 
 **Important Docs, Commits, or Code Reviews**:
+
+1. Performed a code review for the GetOrderActivity endpoint
+2. Performed a code review for the DeleteOrderActivity endpoint
+3. Performed a code review for the CreateSalesReportActivity
 
 **Things learned:**
 
 1. A query requires a full parition key or a partial range key match and filters can only be applied to non-key attributes
 3. Do not enforce invariants of a POJO when the POJO is used to generate a query expression as certain attributes can be missing 
-when generating the Object for withTheHashKey method
+when generating the the associated Object for withTheHashKey method
 4. A FileReader is exhausted once parsed. Attempting to read the same FileReader will result in an exception
 5. The distinction between LocalDateTime and ZonedDateTime and how to set the ZonedDateTime for different regions
-6. How to format a JSON Map data for Lambda JSON Event
+6. How to format a JSON Map for Lambda testing with a JSON Event within AWS Lambda
+7. The characters that are Reserved, Unsafe, and Unreserved for URL
+8. How to format the Integration Response to return proper response codes based on an error message thrown by Lambda
 
 ## Week 4
 
