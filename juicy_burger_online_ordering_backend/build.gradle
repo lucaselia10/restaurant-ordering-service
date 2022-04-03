@@ -65,7 +65,13 @@ dependencies {
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
-task buildZip(type: Zip) {
+
+task copyTask(type: Copy) {
+    from '../juicy_burger_online_ordering_frontend/res/menuitems.json'
+    into 'src/resources/'
+}
+
+task buildZip(type: Zip, dependsOn: copyTask) {
     from compileJava
     from processResources
     into('./lib') {
