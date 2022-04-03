@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 
 import com.amazonaws.services.dynamodbv2.model.GlobalSecondaryIndexDescription;
 
+import com.amazonaws.services.dynamodbv2.model.ProjectionType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +21,7 @@ public class PhaseAlpha {
 
     private static final String GSI_INDEX_NAME = "PlacedDateTimeIndex";
     private static final String GSI_PARTITION_KEY = "placed_date";
+    private static final String GSI_PROJECTION_TYPE = ProjectionType.ALL.toString();
     private static final String GSI_RANGE_KEY = "placed_time";
 
     private final DynamoDB client =
@@ -70,6 +72,14 @@ public class PhaseAlpha {
                         "Expected partitionKey name of %s but was unexpectedly: %s",
                         GSI_RANGE_KEY,
                         gsiDescription.getKeySchema().get(1).getAttributeName()
+                )
+        );
+
+        assertEquals(GSI_PROJECTION_TYPE, gsiDescription.getProjection().getProjectionType(),
+                String.format(
+                        "Expected projectionType of %s but was unexpectedly: %s",
+                        GSI_PROJECTION_TYPE,
+                        gsiDescription.getProjection().getProjectionType()
                 )
         );
     }

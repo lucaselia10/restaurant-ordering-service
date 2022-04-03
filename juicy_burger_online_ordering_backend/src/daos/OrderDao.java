@@ -3,20 +3,22 @@ package daos;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import data.types.Order;
 
 import exceptions.OrderDoesNotExistException;
 import exceptions.OrderException;
+import org.joda.time.format.DateTimeFormat;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * OrderDao defines the characteristics and behavior of a read and write
  * data access object for Order objects.
- * @author willi
  */
 public class OrderDao {
     private DynamoDBMapper dynamoDBMapper;
@@ -61,16 +63,22 @@ public class OrderDao {
      * @return List of Orders
      */
     public List<Order> getOrdersByPlacedDate(String placedDate) {
-        Order order = Order.builder()
-                .withPlacedDate(LocalDate.parse(placedDate))
-                .build();
+        try {
+            Order order = Order.builder()
+                    .withPlacedDate(LocalDate.parse(placedDate))
+                    .build();
 
-        DynamoDBQueryExpression<Order> queryExpression = new DynamoDBQueryExpression<Order>()
-                .withHashKeyValues(order)
-                .withConsistentRead(false)
-                .withIndexName(Order.PLACED_DATE_TIME_INDEX);
+            DynamoDBQueryExpression<Order> queryExpression = new DynamoDBQueryExpression<Order>()
+                    .withHashKeyValues(order)
+                    .withConsistentRead(false)
+                    .withIndexName(Order.PLACED_DATE_TIME_INDEX);
 
-        return new ArrayList<>(dynamoDBMapper.query(Order.class, queryExpression));
+            return new ArrayList<>(dynamoDBMapper.query(Order.class, queryExpression));
+        } catch (AmazonDynamoDBException e) {
+            throw new OrderException("Cannot query database!", e);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Bad date format!", e);
+        }
     }
 
     /**

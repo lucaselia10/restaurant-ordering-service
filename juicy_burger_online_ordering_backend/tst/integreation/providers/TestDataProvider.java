@@ -3,23 +3,28 @@ package integreation.providers;
 import activites.*;
 
 import com.amazonaws.services.lambda.runtime.Context;
-import data.requests.DeleteOrderRequest;
-import data.requests.GetOrderRequest;
-import data.requests.PlaceOrderRequest;
-import data.requests.UpdateOrderRequest;
-import data.responses.DeleteOrderResponse;
-import data.responses.GetOrderResponse;
-import data.responses.PlaceOrderResponse;
-import data.responses.UpdateOrderResponse;
+import data.requests.*;
+import data.responses.*;
 import integreation.contexts.TestContext;
 
 import java.util.Map;
 
 public class TestDataProvider {
-    private final PlaceOrderActivity placeOrderActivity = TestServiceProvider.providePlaceOrderActivity();
-    private final DeleteOrderActivity deleteOrderActivity = TestServiceProvider.provideDeleteOrderActivity();
-    private final UpdateOrderActivity updateOrderActivity = TestServiceProvider.provideUpdateOrderActivity();
-    private final GetOrderActivity getOrderActivity = TestServiceProvider.provideGetOrderActivity();
+    private final PlaceOrderActivity placeOrderActivity =
+            TestServiceProvider.providePlaceOrderActivity();
+
+    private final DeleteOrderActivity deleteOrderActivity =
+            TestServiceProvider.provideDeleteOrderActivity();
+
+    private final UpdateOrderActivity updateOrderActivity =
+            TestServiceProvider.provideUpdateOrderActivity();
+
+    private final GetOrderActivity getOrderActivity =
+            TestServiceProvider.provideGetOrderActivity();
+
+    private final CreateSalesReportActivity createSalesReportActivity =
+            TestServiceProvider.provideCreateSalesReportActivity();
+
     private final Context testContext = new TestContext();
 
     public PlaceOrderResponse placeOrder(PlaceOrderRequest placeOrderRequest) {
@@ -61,6 +66,16 @@ public class TestDataProvider {
     public DeleteOrderRequest createDeleteOrderRequest(String orderId) {
         return new DeleteOrderRequest().builder()
                 .withOrderId(orderId)
+                .build();
+    }
+
+    public CreateSalesReportResponse createSalesReport(CreateSalesReportRequest createSalesReportRequest) {
+        return createSalesReportActivity.handleRequest(createSalesReportRequest, testContext);
+    }
+
+    public CreateSalesReportRequest createSalesReportRequest(String date) {
+        return CreateSalesReportRequest.builder()
+                .withSalesForDate(date)
                 .build();
     }
 }
