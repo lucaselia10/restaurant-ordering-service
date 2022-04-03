@@ -30,7 +30,7 @@ public class PhaseBeta {
     @AfterEach
     void teardown() {
         assertNotNull(generatedOrderId);
-        assertNotNull(generatedOrderId);
+        assertNotNull(generatedDate);
     }
 
     @Test
@@ -121,9 +121,12 @@ public class PhaseBeta {
                 testDataProvider.createSalesReport(createSalesReportRequest);
 
         // THEN
-        OrderModel actual = createSalesReportResponse.getDateSales().get(0);
+        OrderModel actual = createSalesReportResponse
+                .getDateSales()
+                .get(0);
 
-        assertEquals(1, createSalesReportResponse.getDateSales().size());
+        System.out.println(createSalesReportResponse.getDateSales());
+
         assertEquals("Chicken Nuggets", actual.getOrderMenuItemsList().get(0).getName());
         assertEquals(5, actual.getOrderMenuItemsList().get(0).getQuantity());
         assertEquals("Juicy Bacon Cheeseburger", actual.getOrderMenuItemsList().get(1).getName());

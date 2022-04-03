@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
+import comprators.types.OrderDateTimeComparator;
 import data.types.Order;
 
 import exceptions.OrderDoesNotExistException;
@@ -14,6 +15,8 @@ import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -58,11 +61,16 @@ public class OrderDao {
     }
 
     /**
-     * Retrieves a List of Orders by specified placed Date
+     * Retrieves a List of Orders by specified placed Date sorted by
+     * placed date and then by placed time
      * @param placedDate String of Date in (YYYY-MM-DD) format
-     * @return List of Orders
+     * @return List of sorted Orders
      */
     public List<Order> getOrdersByPlacedDate(String placedDate) {
+        return getOrdersByPlacedDate(placedDate, Collections.reverseOrder(new OrderDateTimeComparator()));
+    }
+
+    public List<Order> getOrdersByPlacedDate(String placedDate, Comparator<Order> comparator) {
         try {
             Order order = Order.builder()
                     .withPlacedDate(LocalDate.parse(placedDate))
@@ -73,7 +81,10 @@ public class OrderDao {
                     .withConsistentRead(false)
                     .withIndexName(Order.PLACED_DATE_TIME_INDEX);
 
-            return new ArrayList<>(dynamoDBMapper.query(Order.class, queryExpression));
+            List<Order> listOfOrders = new ArrayList<>(dynamoDBMapper.query(Order.class, queryExpression));
+            listOfOrders.sort(comparator);
+
+            return listOfOrders;
         } catch (AmazonDynamoDBException e) {
             throw new OrderException("Cannot query database!", e);
         } catch (DateTimeParseException e) {

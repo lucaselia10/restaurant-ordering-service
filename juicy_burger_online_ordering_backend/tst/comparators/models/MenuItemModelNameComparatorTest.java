@@ -34,7 +34,7 @@ public class MenuItemModelNameComparatorTest {
     }
 
     @Test
-    void compare_menuItemModelWithLexicographicalGreaterName_returnsZero() {
+    void compare_menuItemModelWithLexicographicalGreaterName_returnsIntGreaterThanZero() {
         // GIVEN
         MenuItemModel menuItemModel_1 = MenuItemModel.builder()
                 .withName("ZTest1")
@@ -52,7 +52,7 @@ public class MenuItemModelNameComparatorTest {
     }
 
     @Test
-    void compare_menuItemModelWithLexicographicalSmallerName_returnsZero() {
+    void compare_menuItemModelWithLexicographicalSmallerName_returnsIntLessThanZero() {
         // GIVEN
         MenuItemModel menuItemModel_1 = MenuItemModel.builder()
                 .withName("ATest1")
