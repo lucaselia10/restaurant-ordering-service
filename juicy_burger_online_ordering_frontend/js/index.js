@@ -9,7 +9,8 @@ window.onload = async function(evt) {
 
   renderItems();
 }
-
+let clienturl = "https://876po99426.execute-api.us-west-2.amazonaws.com/client/orders";
+let adminurl = "https://876po99426.execute-api.us-west-2.amazonaws.com/client/admin";
 let headers = {
   authorization: {
     'x-api-key': 'FyWu0VPqWuanyt47uz7fD3SmmCBZLRHC6Xg08JLg'
@@ -198,13 +199,13 @@ function checkout() {
   showNav(`#overlayDiv`);
 //  setTimeout(function () {hideNav(`#overlayDiv`)}, 3000)
   console.log("Sending Data " + JSON.stringify(order));
-  axios.post(url, order, headers)
+  axios.post(clienturl, order, headers)
     .then((res) => {
       console.log(res);
       window.location.reload();
     });
 }
-//"#overlayDiv"
+
 function showNav(ele) {
   document.querySelector(ele).style.height = "100%";
 }
