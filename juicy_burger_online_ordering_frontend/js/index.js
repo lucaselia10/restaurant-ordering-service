@@ -1,50 +1,20 @@
-var json = [
-             {
-               "name": "Juicy Cheeseburger",
-               "price": 300,
-               "description": "The original, award winning Juicy Cheeseburger"
-             },
-             {
-               "name": "Juicy Bacon Cheeseburger",
-               "price": 500,
-               "description": "Our award winning Juicy Cheeseburger with something extra"
-             },
-             {
-               "name": "Pepsi",
-               "price": 150,
-               "description": "150cent pepsi"
-             },
-             {
-               "name": "Sprite",
-               "price": 150,
-               "description": "150cent sprite"
-             },
-             {
-               "name": "Chicken Nuggets",
-               "price": 150,
-               "description": "150cent nuggets"
-             }
-           ];
+var json = [];
 
 window.onload = async function(evt) {
   evt.preventDefault();
   console.log("Loading .JSON");
-//  const response = await fetch("res/menuItems.json");
-//  json = await response.json();
+  const response = await fetch("res/menuItems.json");
+  json = await response.json();
   console.log("Loaded .JSON");
 
   renderItems();
-
-//  axios.get("https://svebsuap66.execute-api.us-west-2.amazonaws.com/prod/menuitems", {
-//    authorization: {
-//      'x-api-key': 'K7CHRL6aqt1C6eGJ9EHyFaZCn86G0fyI2sTZKSkW'
-//    }
-//  }).then((res) => {
-//    console.log(res.data);
-//    populateMenuItems(res.data.menuitems);
-//  })
 }
 
+let headers = {
+  authorization: {
+    'x-api-key': 'FyWu0VPqWuanyt47uz7fD3SmmCBZLRHC6Xg08JLg'
+  }
+}
 
 const itemsDiv = document.querySelector("#menudiv");
 const cartDiv = document.querySelector("#cartitems");
@@ -174,9 +144,9 @@ function renderTotal() {
   });
   tax = Math.round((subTotal*tax)/100);
   grandTotal = subTotal + tax;
-  subtotalDiv.innerText = formatPrice(subTotal);
-  taxDiv.innerText = formatPrice(tax);
-  totalDiv.innerText = formatPrice(grandTotal);
+  subtotalDiv.innerText = `$${formatPrice(subTotal)}`;
+  taxDiv.innerText = `$${formatPrice(tax)}`;
+  totalDiv.innerText = `$${formatPrice(grandTotal)}`;
 }
 
 function renderCartItems() {
@@ -218,6 +188,7 @@ function updateQuantity(name, qty, absolute=false) {
 }
 
 function checkout() {
+  if (cart === undefined || cart.length == 0) return;
   const orderDescription = {};
   cart.forEach((item) => {
     orderDescription[item.name] = item.quantity;
@@ -225,8 +196,13 @@ function checkout() {
   const order = {'orderDescription': orderDescription};
 
   showNav(`#overlayDiv`);
-  setTimeout(function () {hideNav(`#overlayDiv`)}, 3000)
+//  setTimeout(function () {hideNav(`#overlayDiv`)}, 3000)
   console.log("Sending Data " + JSON.stringify(order));
+  axios.post(url, order, headers)
+    .then((res) => {
+      console.log(res);
+      window.location.reload();
+    });
 }
 //"#overlayDiv"
 function showNav(ele) {

@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Juicy Cheeseburger",
+    "price": 300,
+    "description": "The original, award winning Juicy Cheeseburger"
+  },
+  {
+    "name": "Juicy Bacon Cheeseburger",
+    "price": 500,
+    "description": "Our award winning Juicy Cheeseburger with something extra"
+  },
+  {
+    "name": "Pepsi",
+    "price": 150,
+    "description": "150cent pepsi"
+  },
+  {
+    "name": "Sprite",
+    "price": 150,
+    "description": "150cent sprite"
+  },
+  {
+    "name": "Chicken Nuggets",
+    "price": 150,
+    "description": "150cent nuggets"
+  }
+]
