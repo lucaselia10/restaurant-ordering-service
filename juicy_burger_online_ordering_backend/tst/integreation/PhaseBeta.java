@@ -125,8 +125,6 @@ public class PhaseBeta {
                 .getDateSales()
                 .get(0);
 
-        System.out.println(createSalesReportResponse.getDateSales());
-
         assertEquals("Chicken Nuggets", actual.getOrderMenuItemsList().get(0).getName());
         assertEquals(5, actual.getOrderMenuItemsList().get(0).getQuantity());
         assertEquals("Juicy Bacon Cheeseburger", actual.getOrderMenuItemsList().get(1).getName());
