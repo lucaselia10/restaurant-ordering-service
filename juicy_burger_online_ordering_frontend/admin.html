@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Juicy^3 Burgers! [admin]</title>
+    <style></style>
+</head>
+<body>
+    <form>
+        <input type="date" id="lookupId">
+        <input type="submit" value="Get Order">
+    </form>
+    <div id="orderInfo">RenderOrderInfo</div>
+    <div id="orderEdit">RenderOrderEdit</div>
+    <form>
+        Radio: Date-Item...n
+        or
+        Dropdown: Date-(price)
+        <input type="radio">
+        <label>Item</label>
+        <input type="number" value="1" min="1" max="99" pattern="\d*">
+    </form>
+
+    <script>
+        let adminurl = "https://876po99426.execute-api.us-west-2.amazonaws.com/client/admin";
+        let headers = {
+          authorization: {
+            'x-api-key': 'FyWu0VPqWuanyt47uz7fD3SmmCBZLRHC6Xg08JLg'
+          }
+        }
+        axios.put(clienturl, order, headers)
+        .then((res) => {
+            console.log(res);
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>
