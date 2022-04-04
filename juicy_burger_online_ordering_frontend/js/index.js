@@ -10,7 +10,6 @@ window.onload = async function(evt) {
   renderItems();
 }
 let clienturl = "https://876po99426.execute-api.us-west-2.amazonaws.com/client/orders";
-let adminurl = "https://876po99426.execute-api.us-west-2.amazonaws.com/client/admin";
 let headers = {
   authorization: {
     'x-api-key': 'FyWu0VPqWuanyt47uz7fD3SmmCBZLRHC6Xg08JLg'
@@ -197,7 +196,7 @@ function checkout() {
   const order = {'orderDescription': orderDescription};
 
   showNav(`#overlayDiv`);
-//  setTimeout(function () {hideNav(`#overlayDiv`)}, 3000)
+  setTimeout(function () {hideNav(`#overlayDiv`)}, 3000)
   console.log("Sending Data " + JSON.stringify(order));
   axios.post(clienturl, order, headers)
     .then((res) => {
