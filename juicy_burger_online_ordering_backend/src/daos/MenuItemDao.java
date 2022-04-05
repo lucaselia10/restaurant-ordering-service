@@ -25,7 +25,7 @@ public class MenuItemDao {
 
     @Inject
     public MenuItemDao(JSONParser jsonParser) {
-        this(jsonParser, "menuitems.json");
+        this(jsonParser, "menuItems.json");
     }
 
     /**

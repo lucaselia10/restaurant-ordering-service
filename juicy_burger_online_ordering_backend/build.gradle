@@ -67,7 +67,7 @@ dependencies {
 
 
 task copyTask(type: Copy) {
-    from '../juicy_burger_online_ordering_frontend/res/menuitems.json'
+    from '../juicy_burger_online_ordering_frontend/res/menuItems.json'
     into 'src/resources/'
 }
 
