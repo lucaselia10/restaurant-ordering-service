@@ -67,10 +67,8 @@ function saveOrder(orderId) {
     'orderDescription': editedOrder
     };
     disableInterface(true);
-    axios.put(adminurl, {
-      headers: headers,
-      data: newOrder
-    }).then((res) => {
+    console.log("sending: " + JSON.stringify(newOrder));
+    axios.put(adminurl, newOrder, {headers: headers}).then((res) => {
       disableInterface(false);
       console.log(res);
       getOrders(lookupDate);
@@ -82,7 +80,7 @@ function deleteOrder(orderId) {
   disableInterface(true);
   axios.delete(adminurl, {
     headers: headers,
-    data: { 'orderId': orderId }
+    data: { orderId: orderId }
   }).then((res) => {
     disableInterface(false);
     console.log(res);
