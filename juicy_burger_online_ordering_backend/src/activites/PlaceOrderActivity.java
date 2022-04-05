@@ -46,12 +46,10 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
         for (Map.Entry<String, Integer> entry : request.getOrderDescription().entrySet()) {
             if (!menuItemsMap.containsKey(entry.getKey())) {
                 logger.log("Unable to process request: menuItem does not exist");
-//                throw new InvalidOrderException("Request contains invalid menuItems!");
                 throw new InvalidOrderException("Bad request!");
             }
-            if (entry.getValue() <= 0) {
+            if (entry.getValue() <= 0 || entry.getValue() > 99) {
                 logger.log("Unable to process request: 0 or negative quantity value");
-//                throw new InvalidOrderException("Request contains negative or zero menuItems!");
                 throw new InvalidOrderException("Bad request!");
             }
             orderMenuItems.put(menuItemsMap.get(entry.getKey()), entry.getValue());
@@ -68,7 +66,6 @@ public class PlaceOrderActivity implements RequestHandler<PlaceOrderRequest, Pla
                         .withTotalPrice(OrderUtilities.calculateTotalPrice(orderMenuItems))
                         .build()
         );
-        logger.log(order.toString());
 
         return PlaceOrderResponse.builder()
                 .withOrderModel(ModelConverter.orderModelConverter(order))

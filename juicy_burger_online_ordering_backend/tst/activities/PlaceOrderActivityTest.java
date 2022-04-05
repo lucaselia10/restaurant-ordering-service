@@ -67,7 +67,7 @@ public class PlaceOrderActivityTest {
                 Map.of(menuItem1.getName(), menuItem1, menuItem2.getName(), menuItem2)
         );
 
-        Map<MenuItem, Integer> mapOfOrderMenuItems = Map.of(menuItem1, 1, menuItem2, 2);
+        Map<MenuItem, Integer> mapOfOrderMenuItems = Map.of(menuItem1, 1, menuItem2, 99);
 
         List<MenuItemModel> listOfMenuItemModels = List.of(
                 MenuItemModel.builder()
@@ -80,7 +80,7 @@ public class PlaceOrderActivityTest {
                         .withName(menuItem2.getName())
                         .withPrice(menuItem2.getPrice())
                         .withDescription(menuItem2.getDescription())
-                        .withQuantity(2)
+                        .withQuantity(99)
                         .build()
         );
 
@@ -97,7 +97,7 @@ public class PlaceOrderActivityTest {
 
         PlaceOrderRequest placeOrderRequest = PlaceOrderRequest.builder()
                 .withOrderItems(
-                        Map.of(menuItem1.getName(), 1, menuItem2.getName(), 2)
+                        Map.of(menuItem1.getName(), 1, menuItem2.getName(), 99)
                 ).build();
 
         when(menuItemDao.getMapOfMenuItems()).thenReturn(menuItemMap);
@@ -116,7 +116,38 @@ public class PlaceOrderActivityTest {
     }
 
     @Test
-    void handleRequest_withInvalidPlaceOrderRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
+    void handleRequest_withInvalidNameInRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
+        // GIVEN
+        MenuItem menuItem1 = MenuItem.builder()
+                .withName("MenuItem1")
+                .withPrice(350)
+                .withDescription("MenuItemDescription1")
+                .build();
+
+        MenuItem menuItem2 = MenuItem.builder()
+                .withName("MenuItem2")
+                .withPrice(250)
+                .withDescription("MenuItemDescription2")
+                .build();
+
+        Map<String, MenuItem> menuItemMap = new HashMap<>(
+                Map.of("menuItem", menuItem1, menuItem2.getName(), menuItem2)
+        );
+
+        PlaceOrderRequest placeOrderRequest = PlaceOrderRequest.builder()
+                .withOrderItems(
+                        Map.of(menuItem1.getName(), 1, menuItem2.getName(), 0)
+                ).build();
+
+        when(menuItemDao.getMapOfMenuItems()).thenReturn(menuItemMap);
+        when(context.getLogger()).thenReturn(lambdaLogger);
+
+        // WHEN - THEN
+        assertThrows(InvalidOrderException.class, () -> placeOrderActivity.handleRequest(placeOrderRequest, context));
+    }
+
+    @Test
+    void handleRequest_withZeroQuantityInRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
         // GIVEN
         MenuItem menuItem1 = MenuItem.builder()
                 .withName("MenuItem1")
@@ -137,6 +168,68 @@ public class PlaceOrderActivityTest {
         PlaceOrderRequest placeOrderRequest = PlaceOrderRequest.builder()
                 .withOrderItems(
                         Map.of(menuItem1.getName(), 1, menuItem2.getName(), 0)
+                ).build();
+
+        when(menuItemDao.getMapOfMenuItems()).thenReturn(menuItemMap);
+        when(context.getLogger()).thenReturn(lambdaLogger);
+
+        // WHEN - THEN
+        assertThrows(InvalidOrderException.class, () -> placeOrderActivity.handleRequest(placeOrderRequest, context));
+    }
+
+    @Test
+    void handleRequest_withNegativeQuantityInRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
+        // GIVEN
+        MenuItem menuItem1 = MenuItem.builder()
+                .withName("MenuItem1")
+                .withPrice(350)
+                .withDescription("MenuItemDescription1")
+                .build();
+
+        MenuItem menuItem2 = MenuItem.builder()
+                .withName("MenuItem2")
+                .withPrice(250)
+                .withDescription("MenuItemDescription2")
+                .build();
+
+        Map<String, MenuItem> menuItemMap = new HashMap<>(
+                Map.of(menuItem1.getName(), menuItem1, menuItem2.getName(), menuItem2)
+        );
+
+        PlaceOrderRequest placeOrderRequest = PlaceOrderRequest.builder()
+                .withOrderItems(
+                        Map.of(menuItem1.getName(), 1, menuItem2.getName(), -1)
+                ).build();
+
+        when(menuItemDao.getMapOfMenuItems()).thenReturn(menuItemMap);
+        when(context.getLogger()).thenReturn(lambdaLogger);
+
+        // WHEN - THEN
+        assertThrows(InvalidOrderException.class, () -> placeOrderActivity.handleRequest(placeOrderRequest, context));
+    }
+
+    @Test
+    void handleRequest_withMaxQuantityInRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
+        // GIVEN
+        MenuItem menuItem1 = MenuItem.builder()
+                .withName("MenuItem1")
+                .withPrice(350)
+                .withDescription("MenuItemDescription1")
+                .build();
+
+        MenuItem menuItem2 = MenuItem.builder()
+                .withName("MenuItem2")
+                .withPrice(250)
+                .withDescription("MenuItemDescription2")
+                .build();
+
+        Map<String, MenuItem> menuItemMap = new HashMap<>(
+                Map.of(menuItem1.getName(), menuItem1, menuItem2.getName(), menuItem2)
+        );
+
+        PlaceOrderRequest placeOrderRequest = PlaceOrderRequest.builder()
+                .withOrderItems(
+                        Map.of(menuItem1.getName(), 1, menuItem2.getName(), 100)
                 ).build();
 
         when(menuItemDao.getMapOfMenuItems()).thenReturn(menuItemMap);
