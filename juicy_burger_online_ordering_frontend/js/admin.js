@@ -80,7 +80,7 @@ function deleteOrder(orderId) {
   disableInterface(true);
   axios.delete(adminurl, {
     headers: headers,
-    data: { orderId: orderId }
+    params: { orderId: orderId }
   }).then((res) => {
     disableInterface(false);
     console.log(res);
