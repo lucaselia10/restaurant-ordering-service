@@ -94,7 +94,7 @@ function renderItems() {
     itemsDiv.innerHTML += `
       <div id="item-${parsedname}" class="item-base">
         <div class="item-image">
-          <img src="./images/${parsedname}.png" onerror="this.onerror=null; this.src='./images/fallback.png';" />
+          <img src="./images/${parsedname}.png" onerror="this.onerror=null; this.src='./images/Fallback.png';" />
         </div>
         <div class="item-details">
           <div class="item-name">${item.name}</div>
@@ -156,7 +156,7 @@ function renderCartItems() {
     cartDiv.innerHTML += `
       <div id="cart-${parsedname}" class="cart-base">
         <div class="cart-image">
-          <img src="./images/${parsedname}.png" onerror="this.onerror=null; this.src='./images/fallback.png';" />
+          <img src="./images/${parsedname}.png" onerror="this.onerror=null; this.src='./images/Fallback.png';" />
         </div>
         <div class="cart-details">
           <div class="cart-name">${item.name}</div>
@@ -196,12 +196,19 @@ function checkout() {
   const order = {'orderDescription': orderDescription};
 
   showNav(`#overlayDiv`);
-  setTimeout(function () {hideNav(`#overlayDiv`)}, 3000)
+//  setTimeout(function () {hideNav(`#overlayDiv`)}, 3000)
   console.log("Sending Data " + JSON.stringify(order));
   axios.post(clienturl, order, headers)
     .then((res) => {
       console.log(res);
-      window.location.reload();
+      console.log(res.status);
+      cart = [];
+      updateCart();
+      let returnstatus = "Something went wrong, try again later.";
+      (res.status === 200) ? returnstatus = "Order Placed Successfully!" : returnstatus;
+      overlayDiv.innerHTML = `<p>${returnstatus}</p>`;
+//      hideNav(`#overlayDiv`);
+//      window.location.reload();
     });
 }
 
