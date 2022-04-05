@@ -4,6 +4,7 @@ import activites.PlaceOrderActivity;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
 import daos.MenuItemDao;
 import daos.OrderDao;
 
@@ -12,10 +13,13 @@ import data.responses.PlaceOrderResponse;
 import data.types.MenuItem;
 import data.types.Order;
 import data.types.models.MenuItemModel;
+
 import exceptions.InvalidOrderException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+
 import utilities.OrderUtilities;
 
 import java.time.LocalDateTime;
@@ -49,7 +53,7 @@ public class PlaceOrderActivityTest {
     }
 
     @Test
-    void handleRequest_withValidPlaceOrderRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
+    void handleRequest_withValidPlaceOrderRequest_returnsPlaceOrderResponse() {
         // GIVEN
         MenuItem menuItem1 = MenuItem.builder()
                 .withName("MenuItem1")
@@ -116,7 +120,7 @@ public class PlaceOrderActivityTest {
     }
 
     @Test
-    void handleRequest_withInvalidNameInRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
+    void handleRequest_withInvalidNameInRequest_throwsInvalidOrderException() {
         // GIVEN
         MenuItem menuItem1 = MenuItem.builder()
                 .withName("MenuItem1")
@@ -147,7 +151,7 @@ public class PlaceOrderActivityTest {
     }
 
     @Test
-    void handleRequest_withZeroQuantityInRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
+    void handleRequest_withZeroQuantityInRequest_throwsInvalidOrderException() {
         // GIVEN
         MenuItem menuItem1 = MenuItem.builder()
                 .withName("MenuItem1")
@@ -178,7 +182,7 @@ public class PlaceOrderActivityTest {
     }
 
     @Test
-    void handleRequest_withNegativeQuantityInRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
+    void handleRequest_withNegativeQuantityInRequest_throwsInvalidOrderException() {
         // GIVEN
         MenuItem menuItem1 = MenuItem.builder()
                 .withName("MenuItem1")
@@ -209,7 +213,7 @@ public class PlaceOrderActivityTest {
     }
 
     @Test
-    void handleRequest_withMaxQuantityInRequest_addsAnOrderToPersistentLayerAndReturnsPlaceOrderResponse() {
+    void handleRequest_withMaxQuantityInRequest_throwsInvalidOrderException() {
         // GIVEN
         MenuItem menuItem1 = MenuItem.builder()
                 .withName("MenuItem1")

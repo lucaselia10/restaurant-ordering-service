@@ -21,7 +21,5 @@ public interface Services {
 
     GetOrderActivity providesGetOrderActivity();
 
-    GetMenuItemsActivity providesGetMenuItemsActivity();
-
     CreateSalesReportActivity providesCreateSalesReportActivity();
 }

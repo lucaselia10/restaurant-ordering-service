@@ -42,7 +42,7 @@ public class DeleteOrderRequest {
         this.orderId = builder.orderId;
     }
 
-    public Builder builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
