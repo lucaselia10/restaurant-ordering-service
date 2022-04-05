@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * PhaseBeta tests runs through all the base case scenarios
  * for all the endpoints. Test must be run all at once!
+ *
+ * String menuItem names in the orderDescription must be
+ * current with the menuItems.json file!
  */
 @TestMethodOrder(OrderAnnotation.class)
 public class PhaseBeta {
@@ -40,7 +43,7 @@ public class PhaseBeta {
         Map<String, Integer> orderDescription = Map.of(
                 "Juicy Cheeseburger", 12,
                 "Juicy Bacon Cheeseburger", 34,
-                "Chicken Nuggets", 56,
+                "3 Piece Chicken Nuggets", 56,
                 "Sprite", 78
         );
 
@@ -52,7 +55,7 @@ public class PhaseBeta {
         generatedDate = response.getOrderModel().getPlacedDate();
 
         // THEN
-        assertEquals("Chicken Nuggets", response.getOrderModel().getOrderMenuItemsList().get(0).getName());
+        assertEquals("3 Piece Chicken Nuggets", response.getOrderModel().getOrderMenuItemsList().get(0).getName());
         assertEquals(56, response.getOrderModel().getOrderMenuItemsList().get(0).getQuantity());
         assertEquals("Juicy Bacon Cheeseburger", response.getOrderModel().getOrderMenuItemsList().get(1).getName());
         assertEquals(34, response.getOrderModel().getOrderMenuItemsList().get(1).getQuantity());
@@ -69,7 +72,7 @@ public class PhaseBeta {
         Map<String, Integer> orderDescription = Map.of(
                 "Juicy Cheeseburger", 1,
                 "Juicy Bacon Cheeseburger", 3,
-                "Chicken Nuggets", 5,
+                "3 Piece Chicken Nuggets", 5,
                 "Sprite", 7
         );
 
@@ -80,7 +83,7 @@ public class PhaseBeta {
         UpdateOrderResponse updateOrderResponse = testDataProvider.updateOrder(updateOrderRequest);
 
         // THEN
-        assertEquals("Chicken Nuggets", updateOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getName());
+        assertEquals("3 Piece Chicken Nuggets", updateOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getName());
         assertEquals(5, updateOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getQuantity());
         assertEquals("Juicy Bacon Cheeseburger", updateOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getName());
         assertEquals(3, updateOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getQuantity());
@@ -100,7 +103,7 @@ public class PhaseBeta {
         GetOrderResponse getOrderResponse = testDataProvider.getOrder(getOrderRequest);
 
         // THEN
-        assertEquals("Chicken Nuggets", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getName());
+        assertEquals("3 Piece Chicken Nuggets", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getName());
         assertEquals(5, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(0).getQuantity());
         assertEquals("Juicy Bacon Cheeseburger", getOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getName());
         assertEquals(3, getOrderResponse.getOrderModel().getOrderMenuItemsList().get(1).getQuantity());
@@ -125,7 +128,7 @@ public class PhaseBeta {
                 .getDateSales()
                 .get(0);
 
-        assertEquals("Chicken Nuggets", actual.getOrderMenuItemsList().get(0).getName());
+        assertEquals("3 Piece Chicken Nuggets", actual.getOrderMenuItemsList().get(0).getName());
         assertEquals(5, actual.getOrderMenuItemsList().get(0).getQuantity());
         assertEquals("Juicy Bacon Cheeseburger", actual.getOrderMenuItemsList().get(1).getName());
         assertEquals(3, actual.getOrderMenuItemsList().get(1).getQuantity());
