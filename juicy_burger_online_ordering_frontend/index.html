@@ -13,20 +13,14 @@
         <div class="loader"></div>
     </div>
     <div>
-        <img src="images/Logo.png">
+        <img id="headerimg" src="images/Logo.png">
     </div>
-    <h2>MENU</h2>
+    <h2></h2>
     <div id="menudiv"></div>
-    <h2>CART</h2>
+
     <div id="cartdiv" class="shopping-cart">
-        <div class="column-labels">
-            <label class="item-image">Image</label>
-            <label class="item-name">Name</label>
-            <label class="item-description">Description</label>
-            <label class="item-price">Price</label>
-            <label class="item-quantity">Quantity</label>
-            <label class="item-total">Total</label>
-        </div>
+        <fieldset>
+        <legend>CART</legend>
         <div id="cartitems"></div>
         <div class="totals">
             <div class="totals-item">
@@ -43,6 +37,8 @@
             </div>
         </div>
         <button id="checkout-button" class="btn" role="button" onclick="checkout()">Checkout</button>
+        </fieldset>
     </div>
+
 </body>
 </html>

@@ -196,7 +196,6 @@ function checkout() {
   const order = {'orderDescription': orderDescription};
 
   showNav(`#overlayDiv`);
-//  setTimeout(function () {hideNav(`#overlayDiv`)}, 3000)
   console.log("Sending Data " + JSON.stringify(order));
   axios.post(clienturl, order, headers)
     .then((res) => {
@@ -204,11 +203,10 @@ function checkout() {
       console.log(res.status);
       cart = [];
       updateCart();
-      let returnstatus = "Something went wrong, try again later.";
+      let returnstatus = "Something went wrong, please try again later.";
       (res.status === 200) ? returnstatus = "Order Placed Successfully!" : returnstatus;
       overlayDiv.innerHTML = `<p>${returnstatus}</p>`;
-//      hideNav(`#overlayDiv`);
-//      window.location.reload();
+//      setTimeout(function () {window.location.reload()}, 3000);
     });
 }
 
@@ -218,7 +216,3 @@ function showNav(ele) {
 function hideNav(ele) {
   document.querySelector(ele).style.height = "0%";
 }
-// UUID regex:/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-//TODO axios.get page for orderId
-//TODO delete api takes UUID
-//TODO getorder api takes date
