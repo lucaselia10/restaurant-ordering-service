@@ -41,6 +41,39 @@
         "responses": {
           "200": {
             "description": "Successful Operation"
+          },
+          "400": {
+            "description": "Bad date format!"
+          },
+          "500": {
+            "description": "Could not query database!"
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates an order",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation"
+          },
+          "400": {
+            "description": "Bad request!"
+          },
+          "404": {
+            "description": "Order does not exist!"
+          },
+          "500": {
+            "description": "Could not save to DynamoBD!"
           }
         }
       }
@@ -70,6 +103,27 @@
       },
       "post": {
         "summary": "Posts an order",
+        "parameters": [
+          {
+            "name": "orderDescription",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "menuItems": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Operation"
