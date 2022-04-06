@@ -38,38 +38,82 @@ instructors by the end of the unit._
 
 **Goals:**
 
+Initial FrontEnd Design discussion and implementation
+
 **Activity:**
+
+Mock FrontEnd Design for iteration
 
 **Important Docs, Commits, or Code Reviews**:
 
+Initial FrontEnd commit of index.html and associated scripts
+
 **Things learned:**
+
+Usage of QuerySelector over getElement
 
 ## Week 2
 
 **Goals:**
 
+Iterate on FrontEnd html and javascript
+Prepare FrontEnd for API integration
+
 **Activity:**
+
+More FrontEnd iteration on Design
+Created placeholder functions for API integration
 
 **Important Docs, Commits, or Code Reviews**:
 
+Segregated scripts/css/resources/images into subfolders for clarity
+
+Created a class-based approach to FrontEnd Design with MenuItem and Cart classes, 
+as well as a class combining certain input elements
+
 **Things learned:**
+
+Javascript is still awful, and == is a loose (truthy/falsey) comparison, strict comparisons require ===
 
 ## Week 3
 
 **Goals:**
 
+Finish FrontEnd functionality implementation
+
 **Activity:**
+
+Rewrite entire frontend codebase to use innerHTML for clarity,
+to track down and fix a bug with context/handler loss from the class-based approach
 
 **Important Docs, Commits, or Code Reviews**:
 
+Full rewrite of index.html and init and completion of admin.html
+
 **Things learned:**
+
+You need to be careful with creating elements in a loop,
+as when an element is added to the DOM it can cause some context/handler loss
+a new class reference is done in the same loop
 
 ## Week 4
 
 **Goals:**
 
+Finalize css design
+
 **Activity:**
+
+Implement Grid and Flexbox attributes to style programmatic elements appropriately
+
+Apply general styling
 
 **Important Docs, Commits, or Code Reviews**:
 
+Full styling commit
+
 **Things learned:**
+
+Testing for transparency during design should be considered
+
+Being a colorblind UI designer sucks
